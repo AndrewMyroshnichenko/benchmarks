@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Benchmarks</string>
+    <string name="toolbar_second_fragment_name">Collection &amp; Maps</string>
 </resources>
