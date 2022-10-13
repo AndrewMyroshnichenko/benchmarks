@@ -19,12 +19,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/poppins"
             android:text="@string/toolbar_second_fragment_name"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
     </androidx.appcompat.widget.Toolbar>
+
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mainTabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tab_background"
+
+        app:tabIndicator="@drawable/tab_item_left_background"
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorGravity="stretch"
+        app:tabSelectedTextColor="@color/white"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/mainViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainTabLayout" />
+
+
 
 
 

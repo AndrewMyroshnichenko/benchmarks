@@ -3,13 +3,48 @@ package com.example.benchmarks;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+
+import com.example.benchmarks.databinding.ActivityMainBinding;
+import com.example.benchmarks.utils.ViewPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    TabLayout mainTabLayout;
+    private ActivityMainBinding bind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        bind = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(bind.getRoot());
+
+        bind.mainViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
+
+        bind.mainTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(mainTabLayout.getSelectedTabPosition() == 0) {
+                    mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.tab_item_left_background));
+                } else {
+                    mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.tab_item_right_background));
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
     }
 
 }
