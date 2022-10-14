@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
         bind.mainTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(mainTabLayout.getSelectedTabPosition() == 0) {
-                    mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.tab_item_left_background));
+                if(bind.mainTabLayout.getSelectedTabPosition() == 0) {
+                    bind.mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.tab_item_left_background));
                 } else {
-                    mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.tab_item_right_background));
+                    bind.mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.tab_item_right_background));
                 }
             }
 

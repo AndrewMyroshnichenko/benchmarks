@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.CollectionsFragment" >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ed_collections"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:hint="@string/et_fragment_hint"
+        android:textColorHint="@color/hint_text_color"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintWidth_percent="0.86">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_maps_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/views_background"
+            android:text="@string/et_fragment_text"
+            android:inputType="number"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/bt_collections"
+        style="@style/bt_collections"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingVertical="20dp"
+        android:text="@string/bt_start"
+        app:layout_constraintBottom_toBottomOf="@+id/ed_collections"
+        app:layout_constraintEnd_toEndOf="@+id/ed_collections"
+        app:layout_constraintStart_toStartOf="@+id/ed_collections"
+        app:layout_constraintTop_toTopOf="@+id/ed_collections"
+        app:layout_constraintWidth_percent="0.30"
+        app:layout_constraintHorizontal_bias="1.0"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_collections"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_collections"
+        app:layout_constraintWidth_percent="0.86">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

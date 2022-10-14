@@ -38,7 +38,7 @@
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_dialog_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button style="@style/Button"
+    <Button style="@style/bt_collections"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="24dp"

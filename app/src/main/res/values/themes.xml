@@ -15,7 +15,7 @@
         <item name="fontFamily">@font/poppins</item>
     </style>
 
-    <style name="Button">
+    <style name="bt_collections">
         <item name="cornerRadius">10dp</item>
         <item name="android:backgroundTint">@color/main</item>
         <item name="android:textSize">14sp</item>
