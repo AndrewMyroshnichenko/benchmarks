@@ -10,10 +10,14 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.example.benchmarks.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -21,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class InputFragment extends Fragment implements TextWatcher {
 
     private EditText editText;
+    private Button button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,6 +39,22 @@ public class InputFragment extends Fragment implements TextWatcher {
         super.onViewCreated(view, savedInstanceState);
         editText = view.findViewById(R.id.ed_dialog_fragment);
         editText.addTextChangedListener(this);
+        button = view.findViewById(R.id.bt_input);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PopupWindow errorView = new PopupWindow(getLayoutInflater().inflate(R.layout.error_message, null), LinearLayout.LayoutParams.WRAP_CONTENT, 262, true);
+
+                if(TextUtils.isEmpty(editText.getText().toString()) || Integer.parseInt(editText.getText().toString()) < 1000000 || Integer.parseInt(editText.getText().toString()) > 10000000){
+                    editText.setBackground(getResources().getDrawable(R.drawable.et_error_backgroumd));
+                    errorView.showAsDropDown(editText, 125, 0);
+                } else {
+                    errorView.dismiss();
+                    editText.setBackground(getResources().getDrawable(R.drawable.et_standart_background));
+                }
+            }
+        });
     }
 
     @Override

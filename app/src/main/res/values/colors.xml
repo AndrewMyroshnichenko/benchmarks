@@ -11,6 +11,8 @@
     <color name="main">#FFAA00</color>
     <color name="views_background">#F3F2F5</color>
     <color name="hint_text_color">#8D8D8D</color>
+    <color name="error_message_red">#FF0000</color>
+    <color name="error_message_red_light">#FF8585</color>
 
 
 </resources>

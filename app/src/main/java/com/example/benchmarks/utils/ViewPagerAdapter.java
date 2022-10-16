@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.benchmarks.ui.CollectionsFragment;
+import com.example.benchmarks.ui.InputFragment;
 import com.example.benchmarks.ui.MapsFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
