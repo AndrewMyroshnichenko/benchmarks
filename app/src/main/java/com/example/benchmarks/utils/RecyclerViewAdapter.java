@@ -34,8 +34,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView;
-        ProgressBar progressBar;
+        private final TextView textView;
+        private final ProgressBar progressBar;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -19,7 +19,6 @@ import com.example.benchmarks.utils.RecyclerViewAdapter;
 public class MapsFragment extends Fragment {
 
     private RecyclerViewAdapter adapter;
-    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,7 +29,7 @@ public class MapsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.rv_maps);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_maps);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         adapter = new RecyclerViewAdapter();
         recyclerView.setAdapter(adapter);

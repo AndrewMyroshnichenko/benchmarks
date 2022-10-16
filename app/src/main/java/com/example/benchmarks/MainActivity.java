@@ -12,13 +12,10 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    TabLayout mainTabLayout;
-    private ActivityMainBinding bind;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bind = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
 
         bind.mainViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));

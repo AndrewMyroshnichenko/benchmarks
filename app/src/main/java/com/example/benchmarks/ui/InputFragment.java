@@ -22,10 +22,9 @@ import android.widget.PopupWindow;
 import com.example.benchmarks.R;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class InputFragment extends Fragment implements TextWatcher {
+public class InputFragment extends Fragment implements TextWatcher, View.OnClickListener {
 
     private EditText editText;
-    private Button button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,22 +38,8 @@ public class InputFragment extends Fragment implements TextWatcher {
         super.onViewCreated(view, savedInstanceState);
         editText = view.findViewById(R.id.ed_dialog_fragment);
         editText.addTextChangedListener(this);
-        button = view.findViewById(R.id.bt_input);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                PopupWindow errorView = new PopupWindow(getLayoutInflater().inflate(R.layout.error_message, null), LinearLayout.LayoutParams.WRAP_CONTENT, 262, true);
-
-                if(TextUtils.isEmpty(editText.getText().toString()) || Integer.parseInt(editText.getText().toString()) < 1000000 || Integer.parseInt(editText.getText().toString()) > 10000000){
-                    editText.setBackground(getResources().getDrawable(R.drawable.et_error_backgroumd));
-                    errorView.showAsDropDown(editText, 125, 0);
-                } else {
-                    errorView.dismiss();
-                    editText.setBackground(getResources().getDrawable(R.drawable.et_standart_background));
-                }
-            }
-        });
+        Button button = view.findViewById(R.id.bt_input);
+        button.setOnClickListener(this);
     }
 
     @Override
@@ -72,5 +57,18 @@ public class InputFragment extends Fragment implements TextWatcher {
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        PopupWindow errorView = new PopupWindow(getLayoutInflater().inflate(R.layout.error_message, null), LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
+        if(TextUtils.isEmpty(editText.getText().toString())){
+            editText.setBackground(getResources().getDrawable(R.drawable.et_error_backgroumd));
+            errorView.showAsDropDown(editText, 125, 0);
+        } else {
+            errorView.dismiss();
+            editText.setBackground(getResources().getDrawable(R.drawable.et_standart_background));
+        }
     }
 }

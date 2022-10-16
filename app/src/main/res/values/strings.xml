@@ -8,4 +8,9 @@
     <string name="et_fragment_text">Enter a number</string>
     <string name="bt_start">START</string>
 
+    <string-array name="name_tabs">
+        <item>Collections</item>
+        <item>Maps</item>
+    </string-array>
+
 </resources>

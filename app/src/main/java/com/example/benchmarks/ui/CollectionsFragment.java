@@ -18,8 +18,7 @@ import com.example.benchmarks.utils.RecyclerViewAdapter;
 
 public class CollectionsFragment extends Fragment {
 
-    private RecyclerViewAdapter adapter;
-    private RecyclerView recyclerView;
+    private final RecyclerViewAdapter adapter = new RecyclerViewAdapter();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,9 +29,8 @@ public class CollectionsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.rv_collections);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_collections);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
-        adapter = new RecyclerViewAdapter();
         recyclerView.setAdapter(adapter);
     }
 }
