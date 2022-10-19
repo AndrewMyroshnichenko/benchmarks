@@ -6,16 +6,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.benchmarks.ui.CollectionsFragment;
-import com.example.benchmarks.ui.InputFragment;
 import com.example.benchmarks.ui.MapsFragment;
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ChangeFragmentsAdapter extends FragmentPagerAdapter {
 
-    private String [] nameOfTabs = {"Collections", "Maps"};
+    private String [] nameOfTabs;
 
 
-    public ViewPagerAdapter(@NonNull FragmentManager fm) {
+    public ChangeFragmentsAdapter(@NonNull FragmentManager fm, String [] nameOfTabs) {
         super(fm);
+        this.nameOfTabs = nameOfTabs;
     }
 
     @NonNull

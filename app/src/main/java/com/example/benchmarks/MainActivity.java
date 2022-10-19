@@ -3,11 +3,9 @@ package com.example.benchmarks;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 
 import com.example.benchmarks.databinding.ActivityMainBinding;
-import com.example.benchmarks.utils.ViewPagerAdapter;
+import com.example.benchmarks.utils.ChangeFragmentsAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
 
-        bind.mainViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        bind.mainViewPager.setAdapter(new ChangeFragmentsAdapter(getSupportFragmentManager(), getResources().getStringArray(R.array.name_tabs)));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
 
         bind.mainTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

@@ -8,9 +8,33 @@
     <string name="et_fragment_text">Enter a number</string>
     <string name="bt_start">START</string>
 
+    <string name="str_array_ms">\" ArrayList N/A ms\"</string>
+    <string name="str_linked_ms">\" LinkedList N/A ms\"</string>
+    <string name="str_cow_ms">\" COWArrayList N/A ms\"</string>
+    <string name="str_tree_map_ms">TreeMap N/A ms</string>
+    <string name="str_hash_map_ms">HashMAps N/A ms</string>
+
     <string-array name="name_tabs">
         <item>Collections</item>
         <item>Maps</item>
     </string-array>
+
+    <string-array name="operations">
+        <item>Adding \n in the beginning </item>
+        <item>Adding \n in the middle </item>
+        <item>Adding \n in the end </item>
+        <item>Search \n by value </item>
+        <item>Removing \n in the beginning</item>
+        <item>Removing \n in the middle</item>
+        <item>Removing \n in the end </item>
+    </string-array>
+
+    <string-array name="maps_operations">
+        <item>Adding new in </item>
+        <item>Search by key in </item>
+        <item>Removing in </item>
+    </string-array>
+
+
 
 </resources>

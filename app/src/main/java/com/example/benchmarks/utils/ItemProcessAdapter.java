@@ -11,25 +11,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+import java.util.List;
 
-    public RecyclerViewAdapter() {
+public class ItemProcessAdapter extends RecyclerView.Adapter<ItemProcessAdapter.ViewHolder> {
+
+    List <ItemProcessHolder> listOfItems;
+
+    public ItemProcessAdapter(List <ItemProcessHolder> listOfItems) {
+        this.listOfItems = listOfItems;
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemProcessAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_process, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        holder.textView.setText("Adding\n" + "in the beginning ArrayList N/A ms");
+    public void onBindViewHolder(@NonNull ItemProcessAdapter.ViewHolder holder, int position) {
+        holder.bind(listOfItems.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 21;
+        return listOfItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,5 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textView = itemView.findViewById(R.id.tv_item);
             progressBar = itemView.findViewById(R.id.pb_loading);
         }
+
+        public void bind(ItemProcessHolder item){textView.setText(item.getTextItem());}
     }
 }
