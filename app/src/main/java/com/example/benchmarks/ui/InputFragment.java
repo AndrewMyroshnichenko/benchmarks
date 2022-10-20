@@ -1,9 +1,11 @@
 package com.example.benchmarks.ui;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -14,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -22,24 +25,27 @@ import android.widget.PopupWindow;
 import com.example.benchmarks.R;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class InputFragment extends Fragment implements TextWatcher, View.OnClickListener {
+public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 
     private EditText editText;
+    private Dialog dialog;
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_input, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        editText = view.findViewById(R.id.ed_dialog_fragment);
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        dialog = new Dialog(getContext()){
+            @Override
+            public void onBackPressed() {
+                //to forbid closing dialog fragment by back press
+            }
+        };
+        dialog.setContentView(R.layout.fragment_input);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        editText = dialog.findViewById(R.id.ed_dialog_fragment);
         editText.addTextChangedListener(this);
-        Button button = view.findViewById(R.id.bt_input);
+        Button button = dialog.findViewById(R.id.bt_input);
         button.setOnClickListener(this);
+        return  dialog;
     }
 
     @Override
@@ -69,6 +75,7 @@ public class InputFragment extends Fragment implements TextWatcher, View.OnClick
         } else {
             errorView.dismiss();
             editText.setBackground(getResources().getDrawable(R.drawable.et_standart_background));
+            dialog.dismiss();
         }
     }
 }

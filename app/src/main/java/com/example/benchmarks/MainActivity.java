@@ -1,11 +1,13 @@
 package com.example.benchmarks;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.benchmarks.databinding.ActivityMainBinding;
+import com.example.benchmarks.ui.InputFragment;
 import com.example.benchmarks.utils.ChangeFragmentsAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -21,8 +23,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
         bind.mainViewPager.setAdapter(new ChangeFragmentsAdapter(getSupportFragmentManager(), getResources().getStringArray(R.array.name_tabs)));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
-
         bind.mainTabLayout.addOnTabSelectedListener(this);
+        InputFragment inputFragment = new InputFragment();
+        inputFragment.show(getSupportFragmentManager(), null);
     }
 
     @Override

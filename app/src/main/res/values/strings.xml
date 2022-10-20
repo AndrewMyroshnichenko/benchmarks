@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Benchmarks</string>
     <string name="toolbar_second_fragment_name">Collection &amp; Maps</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="et_dialog_fragment_hint">Collection size</string>
     <string name="et_fragment_hint">Elements amount:</string>
