@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ItemProcessAdapter extends RecyclerView.Adapter<ItemProcessAdapter.ViewHolder> {
 
-    List <ItemProcessHolder> listOfItems;
+   private final List <ItemProcessHolder> listOfItems;
 
     public ItemProcessAdapter(List <ItemProcessHolder> listOfItems) {
         this.listOfItems = listOfItems;

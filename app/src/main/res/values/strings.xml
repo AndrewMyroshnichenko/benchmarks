@@ -13,6 +13,7 @@
     <string name="str_cow_ms">\" COWArrayList N/A ms\"</string>
     <string name="str_tree_map_ms">TreeMap N/A ms</string>
     <string name="str_hash_map_ms">HashMAps N/A ms</string>
+    <string name="tv_error_text">Error.You need enter elements count.</string>
 
     <string-array name="name_tabs">
         <item>Collections</item>

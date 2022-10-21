@@ -19,8 +19,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="238dp"
-        android:layout_height="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:backgroundTint="@color/error_message_red"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,19 +36,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="11dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Error.You need enter elements count."
+                android:text="@string/tv_error_text"
                 android:textColor="@color/black"
+                android:drawableEnd="@drawable/ic_alert_error"
+                android:drawablePadding="8dp"
                 android:textSize="10sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/ic_alert_error" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

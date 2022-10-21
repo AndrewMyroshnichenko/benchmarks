@@ -22,7 +22,8 @@ import java.util.List;
 
 public class MapsFragment extends Fragment {
 
-    private ItemProcessAdapter adapter;
+    private final List <ItemProcessHolder> list = new ArrayList<>();
+    private final ItemProcessAdapter adapter = new ItemProcessAdapter(list);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,20 +34,18 @@ public class MapsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new ItemProcessAdapter(fillRecyclerView());
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
+        fillRecyclerView();
     }
 
-    private List<ItemProcessHolder> fillRecyclerView(){
-        List <ItemProcessHolder> list = new ArrayList<>();
-        String[] maps_operations = getResources().getStringArray(R.array.maps_operations);
-        for (int i = 0; i < maps_operations.length; i++) {
-            list.add(new ItemProcessHolder( maps_operations[i] + getString(R.string.str_tree_map_ms), true));
-            list.add(new ItemProcessHolder( maps_operations[i] + getString(R.string.str_hash_map_ms),true));
+    private void fillRecyclerView(){
+        String[] mapsOperations = getResources().getStringArray(R.array.maps_operations);
+        for (String maps_operation : mapsOperations) {
+            list.add(new ItemProcessHolder(maps_operation + getString(R.string.str_tree_map_ms), true));
+            list.add(new ItemProcessHolder(maps_operation + getString(R.string.str_hash_map_ms), true));
         }
-        return list;
     }
 
 }
