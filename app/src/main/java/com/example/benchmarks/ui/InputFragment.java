@@ -28,17 +28,11 @@ import com.google.android.material.textfield.TextInputEditText;
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 
     private EditText editText;
-    private Dialog dialog;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        dialog = new Dialog(getContext()){
-            @Override
-            public void onBackPressed() {
-                //to forbid closing dialog fragment by back press
-            }
-        };
+        Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.fragment_input);
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         editText = dialog.findViewById(R.id.ed_dialog_fragment);
@@ -73,9 +67,12 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
             editText.setBackground(getResources().getDrawable(R.drawable.et_error_backgroumd));
             errorView.showAsDropDown(editText, 100, 0);
         } else {
-            errorView.dismiss();
+            if(errorView.isShowing()){
+                errorView.dismiss();
+            }
             editText.setBackground(getResources().getDrawable(R.drawable.et_standart_background));
-            dialog.dismiss();
+            dismiss();
+
         }
     }
 }

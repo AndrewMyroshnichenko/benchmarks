@@ -38,6 +38,9 @@ public class CollectionsFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         fillRecyclerView();
+        InputFragment inputFragment = new InputFragment();
+        inputFragment.setCancelable(false);
+        inputFragment.show(getChildFragmentManager(), null);
     }
 
     private void fillRecyclerView(){

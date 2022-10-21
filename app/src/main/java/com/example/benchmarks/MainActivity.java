@@ -24,18 +24,13 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         bind.mainViewPager.setAdapter(new ChangeFragmentsAdapter(getSupportFragmentManager(), getResources().getStringArray(R.array.name_tabs)));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
         bind.mainTabLayout.addOnTabSelectedListener(this);
-        InputFragment inputFragment = new InputFragment();
-        inputFragment.show(getSupportFragmentManager(), null);
 
     }
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        if(bind.mainTabLayout.getSelectedTabPosition() == 0) {
-            bind.mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.tab_item_left_background));
-        } else {
-            bind.mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(R.drawable.tab_item_right_background));
-        }
+        final int id = bind.mainTabLayout.getSelectedTabPosition() == 0 ? R.drawable.tab_item_left_background : R.drawable.tab_item_right_background;
+        bind.mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(id));
     }
 
     @Override
