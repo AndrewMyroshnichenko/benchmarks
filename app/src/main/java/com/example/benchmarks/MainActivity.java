@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         bind.mainTabLayout.addOnTabSelectedListener(this);
         InputFragment inputFragment = new InputFragment();
         inputFragment.show(getSupportFragmentManager(), null);
+
     }
 
     @Override
