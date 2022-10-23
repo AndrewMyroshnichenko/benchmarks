@@ -35,8 +35,8 @@ public class ItemProcessAdapter extends RecyclerView.Adapter<ItemProcessAdapter.
         return listOfItems.size();
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public  void fillAdapterList (List <ItemProcessHolder> items){
+
+    public  void fillAdapterList(List <ItemProcessHolder> items){
         listOfItems.clear();
         listOfItems.addAll(items);
         notifyDataSetChanged();

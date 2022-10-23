@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CollectionsFragment extends Fragment {
+public class CollectionsFragment extends Fragment implements View.OnClickListener{
 
     private final ItemProcessAdapter adapter = new ItemProcessAdapter();
+    private final InputFragment inputFragment = new InputFragment();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,11 +36,12 @@ public class CollectionsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextInputEditText editText = view.findViewById(R.id.ed_collections_fragment);
+        editText.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         fillRecyclerView();
-        InputFragment inputFragment = new InputFragment();
         inputFragment.show(getChildFragmentManager(), null);
     }
 
@@ -54,4 +56,8 @@ public class CollectionsFragment extends Fragment {
         adapter.fillAdapterList(list);
     }
 
+    @Override
+    public void onClick(View view) {
+        inputFragment.show(getChildFragmentManager(), null);
+    }
 }

@@ -15,14 +15,16 @@ import android.view.ViewGroup;
 import com.example.benchmarks.R;
 import com.example.benchmarks.utils.ItemProcessHolder;
 import com.example.benchmarks.utils.ItemProcessAdapter;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MapsFragment extends Fragment {
+public class MapsFragment extends Fragment implements View.OnClickListener {
 
     private final ItemProcessAdapter adapter = new ItemProcessAdapter();
+    private final InputFragment inputFragment = new InputFragment();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +35,8 @@ public class MapsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextInputEditText editText = view.findViewById(R.id.ed_collections_fragment);
+        editText.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
@@ -49,4 +53,8 @@ public class MapsFragment extends Fragment {
         adapter.fillAdapterList(list);
     }
 
+    @Override
+    public void onClick(View view) {
+        inputFragment.show(getChildFragmentManager(), null);
+    }
 }

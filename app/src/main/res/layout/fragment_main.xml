@@ -29,8 +29,7 @@
             android:layout_height="match_parent"
             android:backgroundTint="@color/views_background"
             android:text="@string/et_fragment_text"
-            android:inputType="number"
-            android:maxLength="16"/>
+            android:focusable="false"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
