@@ -52,6 +52,8 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         if(!TextUtils.isEmpty(editText.getText())){
             editText.setTextSize(20);
+        } else {
+            editText.setTextSize(14);
         }
     }
 
