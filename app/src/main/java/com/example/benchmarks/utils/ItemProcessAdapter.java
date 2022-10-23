@@ -1,5 +1,6 @@
 package com.example.benchmarks.utils;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemProcessAdapter extends RecyclerView.Adapter<ItemProcessAdapter.ViewHolder> {
 
-   private final List <ItemProcessHolder> listOfItems;
-
-    public ItemProcessAdapter(List <ItemProcessHolder> listOfItems) {
-        this.listOfItems = listOfItems;
-    }
+   private final List <ItemProcessHolder> listOfItems = new ArrayList<>();
 
     @NonNull
     @Override
@@ -35,6 +33,13 @@ public class ItemProcessAdapter extends RecyclerView.Adapter<ItemProcessAdapter.
     @Override
     public int getItemCount() {
         return listOfItems.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public  void fillAdapterList (List <ItemProcessHolder> items){
+        listOfItems.clear();
+        listOfItems.addAll(items);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

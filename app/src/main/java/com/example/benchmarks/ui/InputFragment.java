@@ -39,6 +39,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         editText.addTextChangedListener(this);
         Button button = dialog.findViewById(R.id.bt_input);
         button.setOnClickListener(this);
+        setCancelable(false);
         return  dialog;
     }
 

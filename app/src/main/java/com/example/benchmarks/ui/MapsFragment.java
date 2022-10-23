@@ -22,8 +22,7 @@ import java.util.List;
 
 public class MapsFragment extends Fragment {
 
-    private final List <ItemProcessHolder> list = new ArrayList<>();
-    private final ItemProcessAdapter adapter = new ItemProcessAdapter(list);
+    private final ItemProcessAdapter adapter = new ItemProcessAdapter();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,11 +40,13 @@ public class MapsFragment extends Fragment {
     }
 
     private void fillRecyclerView(){
+        final List <ItemProcessHolder> list = new ArrayList<>();
         String[] mapsOperations = getResources().getStringArray(R.array.maps_operations);
         for (String maps_operation : mapsOperations) {
             list.add(new ItemProcessHolder(maps_operation + getString(R.string.str_tree_map_ms), true));
             list.add(new ItemProcessHolder(maps_operation + getString(R.string.str_hash_map_ms), true));
         }
+        adapter.fillAdapterList(list);
     }
 
 }

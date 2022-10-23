@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.utils.ItemProcessHolder;
 import com.example.benchmarks.utils.ItemProcessAdapter;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,7 @@ import java.util.List;
 
 public class CollectionsFragment extends Fragment {
 
-    private final List <ItemProcessHolder> list = new ArrayList<>();
-    private final ItemProcessAdapter adapter = new ItemProcessAdapter(list);
+    private final ItemProcessAdapter adapter = new ItemProcessAdapter();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,17 +40,18 @@ public class CollectionsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         fillRecyclerView();
         InputFragment inputFragment = new InputFragment();
-        inputFragment.setCancelable(false);
         inputFragment.show(getChildFragmentManager(), null);
     }
 
     private void fillRecyclerView(){
+        final List <ItemProcessHolder> list = new ArrayList<>();
         String[] operations = getResources().getStringArray(R.array.operations);
         for (String operation : operations) {
             list.add(new ItemProcessHolder(operation + getString(R.string.str_array_ms), true));
             list.add(new ItemProcessHolder(operation + getString(R.string.str_linked_ms), true));
             list.add(new ItemProcessHolder(operation + getString(R.string.str_cow_ms), true));
         }
+        adapter.fillAdapterList(list);
     }
 
 }
