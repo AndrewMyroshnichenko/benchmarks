@@ -43,7 +43,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
         adapter.setItems(fillRecyclerView());
     }
 
-    private List fillRecyclerView(){
+    private List<ItemProcessHolder> fillRecyclerView(){
         final List <ItemProcessHolder> list = new ArrayList<>();
         String[] mapsOperations = getResources().getStringArray(R.array.maps_operations);
         for (String maps_operation : mapsOperations) {

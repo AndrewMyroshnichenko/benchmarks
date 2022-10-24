@@ -45,7 +45,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         adapter.setItems(fillRecyclerView());
     }
 
-    private List fillRecyclerView(){
+    private List<ItemProcessHolder> fillRecyclerView(){
         final List <ItemProcessHolder> list = new ArrayList<>();
         String[] operations = getResources().getStringArray(R.array.operations);
         for (String operation : operations) {

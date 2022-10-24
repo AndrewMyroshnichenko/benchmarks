@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
@@ -16,9 +17,13 @@ import com.example.benchmarks.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemProcessAdapter extends RecyclerView.Adapter<ItemProcessAdapter.ViewHolder> {
+public class ItemProcessAdapter extends ListAdapter<ItemProcessHolder, ItemProcessAdapter.ViewHolder> {
 
    private final List <ItemProcessHolder> listOfItems = new ArrayList<>();
+
+    public ItemProcessAdapter() {
+        super(new ItemProcessCallback());
+    }
 
     @NonNull
     @Override
