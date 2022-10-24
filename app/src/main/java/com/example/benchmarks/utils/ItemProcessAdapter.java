@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
@@ -36,10 +37,20 @@ public class ItemProcessAdapter extends RecyclerView.Adapter<ItemProcessAdapter.
     }
 
 
-    public  void fillAdapterList(List <ItemProcessHolder> items){
-        listOfItems.clear();
-        listOfItems.addAll(items);
-        notifyDataSetChanged();
+    public  void setItems(List items){
+        if(listOfItems.isEmpty()){
+            listOfItems.addAll(items);
+            notifyDataSetChanged();
+        } else {
+            final ItemProcessDiffUtilCallback itemProcessDiffUtilCallback = new ItemProcessDiffUtilCallback(listOfItems, items);
+            final DiffUtil.DiffResult itemProcessDiffResult = DiffUtil.calculateDiff(itemProcessDiffUtilCallback);
+            listOfItems.clear();
+            listOfItems.addAll(items);
+            itemProcessDiffResult.dispatchUpdatesTo(this);
+        }
+
+
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

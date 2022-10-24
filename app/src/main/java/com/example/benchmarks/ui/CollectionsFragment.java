@@ -41,11 +41,11 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
-        fillRecyclerView();
         inputFragment.show(getChildFragmentManager(), null);
+        adapter.setItems(fillRecyclerView());
     }
 
-    private void fillRecyclerView(){
+    private List fillRecyclerView(){
         final List <ItemProcessHolder> list = new ArrayList<>();
         String[] operations = getResources().getStringArray(R.array.operations);
         for (String operation : operations) {
@@ -53,7 +53,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
             list.add(new ItemProcessHolder(operation + getString(R.string.str_linked_ms), true));
             list.add(new ItemProcessHolder(operation + getString(R.string.str_cow_ms), true));
         }
-        adapter.fillAdapterList(list);
+        return list;
     }
 
     @Override

@@ -40,17 +40,17 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
-        fillRecyclerView();
+        adapter.setItems(fillRecyclerView());
     }
 
-    private void fillRecyclerView(){
+    private List fillRecyclerView(){
         final List <ItemProcessHolder> list = new ArrayList<>();
         String[] mapsOperations = getResources().getStringArray(R.array.maps_operations);
         for (String maps_operation : mapsOperations) {
             list.add(new ItemProcessHolder(maps_operation + getString(R.string.str_tree_map_ms), true));
             list.add(new ItemProcessHolder(maps_operation + getString(R.string.str_hash_map_ms), true));
         }
-        adapter.fillAdapterList(list);
+        return list;
     }
 
     @Override

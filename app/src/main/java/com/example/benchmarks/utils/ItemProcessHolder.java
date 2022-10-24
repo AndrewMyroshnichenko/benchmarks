@@ -1,5 +1,7 @@
 package com.example.benchmarks.utils;
 
+import java.util.Objects;
+
 public class ItemProcessHolder {
 
     private String textItem;
@@ -24,5 +26,18 @@ public class ItemProcessHolder {
 
     public void setVisibleLoading(boolean visibleLoading) {
         isVisibleLoading = visibleLoading;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemProcessHolder that = (ItemProcessHolder) o;
+        return isVisibleLoading == that.isVisibleLoading && Objects.equals(textItem, that.textItem);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(textItem, isVisibleLoading);
     }
 }
