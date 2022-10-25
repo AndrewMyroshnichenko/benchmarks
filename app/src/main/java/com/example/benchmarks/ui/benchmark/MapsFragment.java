@@ -47,7 +47,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
         final List<BenchmarkItem> list = new ArrayList<>();
         final String[] mapsOperations = getResources().getStringArray(R.array.maps_operations);
         for (String maps_operation : mapsOperations) {
-            list.add(new BenchmarkItem(maps_operation + getString(R.string.str_tree_map_ms), true));
+            list.add(new BenchmarkItem(maps_operation + getString(R.string.str_tree_map_ms), false));
             list.add(new BenchmarkItem(maps_operation + getString(R.string.str_hash_map_ms), true));
         }
         return list;

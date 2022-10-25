@@ -1,5 +1,6 @@
 package com.example.benchmarks.ui.benchmark;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
             new DiffUtil.ItemCallback<BenchmarkItem>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
-                    return false;
+                    return oldItem.getTextItem().equals(newItem.getTextItem());
                 }
 
                 @Override
@@ -79,8 +80,10 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
             progressBar = itemView.findViewById(R.id.pb_loading);
         }
 
+
         public void bind(BenchmarkItem item) {
             textView.setText(item.getTextItem());
+            progressBar.setVisibility(item.isVisibleLoading() ? View.VISIBLE : View.INVISIBLE);
         }
     }
 }

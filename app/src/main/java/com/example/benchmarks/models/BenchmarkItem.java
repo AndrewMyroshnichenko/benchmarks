@@ -1,15 +1,19 @@
 package com.example.benchmarks.models;
 
+import android.view.View;
+
 import java.util.Objects;
 
 public class BenchmarkItem {
 
     private String textItem;
     private boolean isVisibleLoading;
+    private long durationOfOperation;
 
     public BenchmarkItem(String textItem, boolean isVisibleLoading) {
         this.textItem = textItem;
         this.isVisibleLoading = isVisibleLoading;
+
     }
 
     public String getTextItem() {
@@ -26,6 +30,14 @@ public class BenchmarkItem {
 
     public void setVisibleLoading(boolean visibleLoading) {
         isVisibleLoading = visibleLoading;
+    }
+
+    public long getDurationOfOperation() {
+        return durationOfOperation;
+    }
+
+    public void setDurationOfOperation(long durationOfOperation) {
+        this.durationOfOperation = durationOfOperation;
     }
 
     @Override
