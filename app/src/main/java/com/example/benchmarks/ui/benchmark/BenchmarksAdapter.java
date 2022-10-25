@@ -22,8 +22,21 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
     private final List<BenchmarkItem> listOfItems = new ArrayList<>();
 
     public BenchmarksAdapter() {
-        super(new ItemProcessCallback());
+        super(DIFF_CALLBACK);
     }
+
+    private static final DiffUtil.ItemCallback<BenchmarkItem> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<BenchmarkItem>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
+                    return false;
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
+                    return (oldItem.equals(newItem));
+                }
+            };
 
     @NonNull
     @Override
