@@ -59,7 +59,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
                 true
         );
 
-        if (TextUtils.isEmpty(editText.getText().toString())) {
+        if (TextUtils.isEmpty(editText.getText())) {
             editText.setBackground(getResources().getDrawable(R.drawable.et_error_backgroumd));
             errorView.showAsDropDown(editText, 80, 0);
         } else {
