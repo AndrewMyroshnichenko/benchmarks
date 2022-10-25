@@ -1,17 +1,14 @@
-package com.example.benchmarks;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
+package com.example.benchmarks.ui;
 
 import android.os.Bundle;
-import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.ActivityMainBinding;
-import com.example.benchmarks.ui.InputFragment;
-import com.example.benchmarks.utils.ChangeFragmentsAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     private ActivityMainBinding bind;
 
@@ -21,10 +18,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
 
-        bind.mainViewPager.setAdapter(new ChangeFragmentsAdapter(getSupportFragmentManager(), getResources().getStringArray(R.array.name_tabs)));
+        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), getResources().getStringArray(R.array.name_tabs)));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
         bind.mainTabLayout.addOnTabSelectedListener(this);
-
     }
 
     @Override

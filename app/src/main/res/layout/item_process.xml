@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="105dp"
     android:layout_height="105dp"
-    android:layout_margin="5dp"
     android:layout_gravity="center"
+    android:layout_margin="5dp"
     android:background="@drawable/rv_item_background">
 
     <TextView
@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Adding \n in the beginning ArrayList N/A ms"
         android:textColor="@color/black"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +20,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.491" />
+        app:layout_constraintVertical_bias="0.491"
+        tools:text="Adding \n in the beginning ArrayList N/A ms" />
 
     <ProgressBar
         android:id="@+id/pb_loading"

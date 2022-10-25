@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -25,23 +25,21 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/mainTabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/tab_background"
 
-        app:tabIndicator="@drawable/tab_item_left_background"
-        app:tabIndicatorColor="@color/black"
-        app:tabIndicatorGravity="stretch"
-        app:tabSelectedTextColor="@color/white"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"/>
+        app:tabIndicator="@drawable/tab_item_left_background"
+
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorGravity="stretch"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/mainViewPager"
@@ -51,10 +49,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainTabLayout" />
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

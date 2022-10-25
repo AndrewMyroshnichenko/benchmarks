@@ -1,13 +1,13 @@
-package com.example.benchmarks.utils;
+package com.example.benchmarks.models;
 
 import java.util.Objects;
 
-public class ItemProcessHolder {
+public class BenchmarkItem {
 
     private String textItem;
     private boolean isVisibleLoading;
 
-    public ItemProcessHolder(String textItem, boolean isVisibleLoading) {
+    public BenchmarkItem(String textItem, boolean isVisibleLoading) {
         this.textItem = textItem;
         this.isVisibleLoading = isVisibleLoading;
     }
@@ -32,7 +32,7 @@ public class ItemProcessHolder {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ItemProcessHolder that = (ItemProcessHolder) o;
+        BenchmarkItem that = (BenchmarkItem) o;
         return isVisibleLoading == that.isVisibleLoading && Objects.equals(textItem, that.textItem);
     }
 

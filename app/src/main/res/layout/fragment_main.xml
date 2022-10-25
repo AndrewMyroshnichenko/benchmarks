@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.CollectionsFragment" >
+    android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_collections"
@@ -28,8 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="@color/views_background"
-            android:text="@string/et_fragment_text"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:text="@string/et_fragment_text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,10 +41,10 @@
         android:text="@string/bt_start"
         app:layout_constraintBottom_toBottomOf="@+id/til_collections"
         app:layout_constraintEnd_toEndOf="@+id/til_collections"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/til_collections"
         app:layout_constraintTop_toTopOf="@+id/til_collections"
-        app:layout_constraintWidth_percent="0.30"
-        app:layout_constraintHorizontal_bias="1.0"/>
+        app:layout_constraintWidth_percent="0.30" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_main"
@@ -56,11 +54,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_collections"
-        app:layout_constraintWidth_percent="0.86">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
+        app:layout_constraintWidth_percent="0.86" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

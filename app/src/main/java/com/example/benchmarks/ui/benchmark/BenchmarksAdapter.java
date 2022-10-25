@@ -1,6 +1,5 @@
-package com.example.benchmarks.utils;
+package com.example.benchmarks.ui.benchmark;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,26 +12,27 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
+import com.example.benchmarks.models.BenchmarkItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemProcessAdapter extends ListAdapter<ItemProcessHolder, ItemProcessAdapter.ViewHolder> {
+public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdapter.ViewHolder> {
 
-   private final List <ItemProcessHolder> listOfItems = new ArrayList<>();
+    private final List<BenchmarkItem> listOfItems = new ArrayList<>();
 
-    public ItemProcessAdapter() {
+    public BenchmarksAdapter() {
         super(new ItemProcessCallback());
     }
 
     @NonNull
     @Override
-    public ItemProcessAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BenchmarksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_process, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemProcessAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BenchmarksAdapter.ViewHolder holder, int position) {
         holder.bind(listOfItems.get(position));
     }
 
@@ -42,8 +42,8 @@ public class ItemProcessAdapter extends ListAdapter<ItemProcessHolder, ItemProce
     }
 
 
-    public  void setItems(List items){
-        if(listOfItems.isEmpty()){
+    public void setItems(List items) {
+        if (listOfItems.isEmpty()) {
             listOfItems.addAll(items);
             notifyDataSetChanged();
         } else {
@@ -53,9 +53,6 @@ public class ItemProcessAdapter extends ListAdapter<ItemProcessHolder, ItemProce
             listOfItems.addAll(items);
             itemProcessDiffResult.dispatchUpdatesTo(this);
         }
-
-
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -69,6 +66,8 @@ public class ItemProcessAdapter extends ListAdapter<ItemProcessHolder, ItemProce
             progressBar = itemView.findViewById(R.id.pb_loading);
         }
 
-        public void bind(ItemProcessHolder item){textView.setText(item.getTextItem());}
+        public void bind(BenchmarkItem item) {
+            textView.setText(item.getTextItem());
+        }
     }
 }

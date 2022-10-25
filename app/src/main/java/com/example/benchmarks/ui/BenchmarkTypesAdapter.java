@@ -1,19 +1,18 @@
-package com.example.benchmarks.utils;
+package com.example.benchmarks.ui;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.benchmarks.ui.CollectionsFragment;
-import com.example.benchmarks.ui.MapsFragment;
+import com.example.benchmarks.ui.benchmark.CollectionsFragment;
+import com.example.benchmarks.ui.benchmark.MapsFragment;
 
-public class ChangeFragmentsAdapter extends FragmentPagerAdapter {
+public class BenchmarkTypesAdapter extends FragmentPagerAdapter {
 
-    private String [] nameOfTabs;
+    private String[] nameOfTabs;
 
-
-    public ChangeFragmentsAdapter(@NonNull FragmentManager fm, String [] nameOfTabs) {
+    public BenchmarkTypesAdapter(@NonNull FragmentManager fm, String[] nameOfTabs) {
         super(fm);
         this.nameOfTabs = nameOfTabs;
     }
@@ -21,12 +20,10 @@ public class ChangeFragmentsAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-
-        switch (position){
+        switch (position) {
             case 1:
                 return new MapsFragment();
         }
-
         return new CollectionsFragment();
     }
 
@@ -39,6 +36,4 @@ public class ChangeFragmentsAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return nameOfTabs[position];
     }
-
-
 }

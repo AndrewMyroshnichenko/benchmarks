@@ -1,9 +1,10 @@
-package com.example.benchmarks.utils;
+package com.example.benchmarks.ui.benchmark;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
 public class ItemProcessCallback extends DiffUtil.ItemCallback {
+
     @Override
     public boolean areItemsTheSame(@NonNull Object oldItem, @NonNull Object newItem) {
         return false;

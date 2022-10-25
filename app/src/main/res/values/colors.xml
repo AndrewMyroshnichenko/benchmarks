@@ -13,6 +13,4 @@
     <color name="hint_text_color">#8D8D8D</color>
     <color name="error_message_red">#FF0000</color>
     <color name="error_message_red_light">#FF8585</color>
-
-
 </resources>

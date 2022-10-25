@@ -1,15 +1,17 @@
-package com.example.benchmarks.utils;
+package com.example.benchmarks.ui.benchmark;
 
 import androidx.recyclerview.widget.DiffUtil;
+
+import com.example.benchmarks.models.BenchmarkItem;
 
 import java.util.List;
 
 public class ItemProcessDiffUtilCallback extends DiffUtil.Callback {
 
-    private final List<ItemProcessHolder> oldItemProcessHolders;
-    private final List<ItemProcessHolder> newItemProcessHolders;
+    private final List<BenchmarkItem> oldItemProcessHolders;
+    private final List<BenchmarkItem> newItemProcessHolders;
 
-    public ItemProcessDiffUtilCallback(List<ItemProcessHolder> oldItemProcessHolders, List<ItemProcessHolder> newItemProcessHolders) {
+    public ItemProcessDiffUtilCallback(List<BenchmarkItem> oldItemProcessHolders, List<BenchmarkItem> newItemProcessHolders) {
         this.oldItemProcessHolders = oldItemProcessHolders;
         this.newItemProcessHolders = newItemProcessHolders;
     }
@@ -31,8 +33,8 @@ public class ItemProcessDiffUtilCallback extends DiffUtil.Callback {
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-        ItemProcessHolder itemOld = oldItemProcessHolders.get(oldItemPosition);
-        ItemProcessHolder itemNew = newItemProcessHolders.get(oldItemPosition);
+        BenchmarkItem itemOld = oldItemProcessHolders.get(oldItemPosition);
+        BenchmarkItem itemNew = newItemProcessHolders.get(oldItemPosition);
         return itemOld.equals(itemNew);
     }
 }

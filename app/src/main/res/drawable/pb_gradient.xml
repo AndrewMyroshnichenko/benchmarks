@@ -14,7 +14,6 @@
             android:endColor="#BC512F"
             android:startColor="#FFFFFF"
             android:type="sweep"
-            android:useLevel="false"            />
+            android:useLevel="false" />
     </shape>
-
 </rotate>
