@@ -6,38 +6,26 @@ import java.util.Objects;
 
 public class BenchmarkItem {
 
-    private String textItem;
-    private boolean isVisibleLoading;
-    private long durationOfOperation;
+    public final String textItem;
+    public final boolean isVisibleLoading;
+    public final long durationOfOperation;
 
-    public BenchmarkItem(String textItem, boolean isVisibleLoading) {
+    public BenchmarkItem(String textItem, boolean isVisibleLoading, long durationOfOperation) {
         this.textItem = textItem;
         this.isVisibleLoading = isVisibleLoading;
-
+        this.durationOfOperation = durationOfOperation;
     }
 
     public String getTextItem() {
         return textItem;
     }
 
-    public void setTextItem(String textItem) {
-        this.textItem = textItem;
-    }
-
     public boolean isVisibleLoading() {
         return isVisibleLoading;
     }
 
-    public void setVisibleLoading(boolean visibleLoading) {
-        isVisibleLoading = visibleLoading;
-    }
-
     public long getDurationOfOperation() {
         return durationOfOperation;
-    }
-
-    public void setDurationOfOperation(long durationOfOperation) {
-        this.durationOfOperation = durationOfOperation;
     }
 
     @Override
