@@ -42,7 +42,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         inputFragment.show(getChildFragmentManager(), null);
-        adapter.setItems(fillRecyclerView());
+        adapter.submitList(fillRecyclerView());
     }
 
     private List<BenchmarkItem> fillRecyclerView() {

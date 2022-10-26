@@ -14,12 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.benchmarks.R;
 import com.example.benchmarks.models.BenchmarkItem;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdapter.ViewHolder> {
-
-    private final List<BenchmarkItem> listOfItems = new ArrayList<>();
+public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdapter.BenchmarksViewHolder> {
 
     public BenchmarksAdapter() {
         super(DIFF_CALLBACK);
@@ -40,40 +35,21 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
 
     @NonNull
     @Override
-    public BenchmarksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_process, parent, false));
+    public BenchmarksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new BenchmarksViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_process, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BenchmarksAdapter.ViewHolder holder, int position) {
-        holder.bind(listOfItems.get(position));
+    public void onBindViewHolder(@NonNull BenchmarksViewHolder holder, int position) {
+        holder.bind(getItem(position));
     }
 
-    @Override
-    public int getItemCount() {
-        return listOfItems.size();
-    }
-
-
-    public void setItems(List items) {
-        if (listOfItems.isEmpty()) {
-            listOfItems.addAll(items);
-            notifyDataSetChanged();
-        } else {
-            final ItemProcessDiffUtilCallback itemProcessDiffUtilCallback = new ItemProcessDiffUtilCallback(listOfItems, items);
-            final DiffUtil.DiffResult itemProcessDiffResult = DiffUtil.calculateDiff(itemProcessDiffUtilCallback);
-            listOfItems.clear();
-            listOfItems.addAll(items);
-            itemProcessDiffResult.dispatchUpdatesTo(this);
-        }
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class BenchmarksViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView textView;
         private final ProgressBar progressBar;
 
-        public ViewHolder(@NonNull View itemView) {
+        public BenchmarksViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.tv_item);
             progressBar = itemView.findViewById(R.id.pb_loading);

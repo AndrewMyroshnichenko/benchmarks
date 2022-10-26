@@ -40,7 +40,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
-        adapter.setItems(fillRecyclerView());
+        adapter.submitList(fillRecyclerView());
     }
 
     private List<BenchmarkItem> fillRecyclerView() {
