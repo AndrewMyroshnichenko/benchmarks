@@ -25,6 +25,7 @@ import java.util.Objects;
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 
     private EditText editText;
+    private PopupWindow errorView;
 
     @NonNull
     @Override
@@ -37,6 +38,11 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         Button button = dialog.findViewById(R.id.bt_input);
         button.setOnClickListener(this);
         setCancelable(false);
+        errorView = new PopupWindow(
+                getLayoutInflater().inflate(R.layout.error_message, null),
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
+        );
         return dialog;
     }
 
@@ -57,13 +63,6 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     @Override
     public void onClick(View view) {
-
-        final PopupWindow errorView = new PopupWindow(
-                getLayoutInflater().inflate(R.layout.error_message, null),
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
-                true
-        );
-
 
         if (TextUtils.isEmpty(editText.getText())) {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
