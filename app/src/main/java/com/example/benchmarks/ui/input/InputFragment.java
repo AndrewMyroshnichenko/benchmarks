@@ -14,9 +14,13 @@ import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.benchmarks.R;
+
+import java.util.Objects;
 
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 
@@ -60,13 +64,13 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         );
 
         if (TextUtils.isEmpty(editText.getText())) {
-            editText.setBackground(getResources().getDrawable(R.drawable.et_error_backgroumd));
+            editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
             errorView.showAsDropDown(editText, 80, 0);
         } else {
             if (errorView.isShowing()) {
                 errorView.dismiss();
             }
-            editText.setBackground(getResources().getDrawable(R.drawable.et_standart_background));
+            editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
             dismiss();
         }
     }
