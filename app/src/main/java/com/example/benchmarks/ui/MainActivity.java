@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
 
-        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), 0, getResources().getStringArray(R.array.name_tabs)));
+        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), 1, getResources().getStringArray(R.array.name_tabs)));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
         bind.mainTabLayout.addOnTabSelectedListener(this);
     }
