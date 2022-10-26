@@ -8,7 +8,7 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Please enter collection size and number of elements to compare"
+        android:text="@string/tv_message_input_fragment"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
