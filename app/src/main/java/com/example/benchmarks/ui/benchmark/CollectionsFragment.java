@@ -49,9 +49,9 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         final List<BenchmarkItem> list = new ArrayList<>();
         final String[] operations = getResources().getStringArray(R.array.operations);
         for (String operation : operations) {
-            list.add(new BenchmarkItem(operation + getString(R.string.str_array_ms), false));
-            list.add(new BenchmarkItem(operation + getString(R.string.str_linked_ms), true));
-            list.add(new BenchmarkItem(operation + getString(R.string.str_cow_ms), false));
+            list.add(new BenchmarkItem(operation + getString(R.string.str_array_ms), false, 0));
+            list.add(new BenchmarkItem(operation + getString(R.string.str_linked_ms), true, 0));
+            list.add(new BenchmarkItem(operation + getString(R.string.str_cow_ms), false, 0));
         }
         return list;
     }

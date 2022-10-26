@@ -1,7 +1,5 @@
 package com.example.benchmarks.models;
 
-import android.view.View;
-
 import java.util.Objects;
 
 public class BenchmarkItem {
