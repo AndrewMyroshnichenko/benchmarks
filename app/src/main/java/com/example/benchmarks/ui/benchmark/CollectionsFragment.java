@@ -15,12 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.models.MainViewModel;
+import com.example.benchmarks.models.BenchmarksViewModel;
 import com.example.benchmarks.ui.input.InputFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -46,7 +45,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         recyclerView.setAdapter(adapter);
         inputFragment.show(getChildFragmentManager(), null);
         adapter.submitList(fillRecyclerView());
-        MainViewModel viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        BenchmarksViewModel viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
         viewModel.getSizeOfCollection().observe(getViewLifecycleOwner(), new Observer<Long>() {
             @Override
             public void onChanged(Long aLong) {

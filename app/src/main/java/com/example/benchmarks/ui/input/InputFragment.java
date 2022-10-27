@@ -14,21 +14,18 @@ import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.models.MainViewModel;
-
-import java.util.Objects;
+import com.example.benchmarks.models.BenchmarksViewModel;
 
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 
     private EditText editText;
     private PopupWindow errorView;
-    private MainViewModel viewModel;
+    private BenchmarksViewModel viewModel;
 
     @NonNull
     @Override
@@ -46,7 +43,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
                 true
         );
-        viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
         return dialog;
     }
 

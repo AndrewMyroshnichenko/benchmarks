@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class MainViewModel extends ViewModel {
+public class BenchmarksViewModel extends ViewModel {
 
     private final MutableLiveData<Long> sizeOfCollection = new MutableLiveData<>();
 

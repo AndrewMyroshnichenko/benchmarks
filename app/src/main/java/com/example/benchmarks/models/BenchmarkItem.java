@@ -5,8 +5,7 @@ import java.util.Objects;
 public class BenchmarkItem {
 
     public final String textItem;
-
-    public boolean isVisibleLoading;
+    public final boolean isVisibleLoading;
     public final long durationOfOperation;
 
     public BenchmarkItem(String textItem, boolean isVisibleLoading, long durationOfOperation) {

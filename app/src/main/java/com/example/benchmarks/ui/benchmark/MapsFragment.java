@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.models.MainViewModel;
+import com.example.benchmarks.models.BenchmarksViewModel;
 import com.example.benchmarks.ui.input.InputFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -44,7 +44,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         adapter.submitList(fillRecyclerView());
-        MainViewModel viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        BenchmarksViewModel viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
         viewModel.getSizeOfCollection().observe(getViewLifecycleOwner(), new Observer<Long>() {
             @Override
             public void onChanged(Long aLong) {
