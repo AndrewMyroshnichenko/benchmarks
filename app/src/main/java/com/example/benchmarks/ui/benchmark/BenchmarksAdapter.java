@@ -24,7 +24,7 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
             new DiffUtil.ItemCallback<BenchmarkItem>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
-                    return oldItem.getTextItem().equals(newItem.getTextItem());
+                    return oldItem.textItem.equals(newItem.textItem);
                 }
 
                 @Override
@@ -57,9 +57,9 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
 
 
         public void bind(BenchmarkItem item) {
-            textView.setText(item.getTextItem());
+            textView.setText(item.textItem);
             progressBar.animate();
-            progressBar.setVisibility(item.isVisibleLoading() ? View.VISIBLE : View.INVISIBLE);
+            progressBar.setVisibility(item.isVisibleLoading ? View.VISIBLE : View.INVISIBLE);
 
         }
     }

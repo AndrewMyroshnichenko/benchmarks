@@ -15,22 +15,6 @@ public class BenchmarkItem {
         this.durationOfOperation = durationOfOperation;
     }
 
-    public void setVisibleLoading(boolean visibleLoading) {
-        isVisibleLoading = visibleLoading;
-    }
-
-    public String getTextItem() {
-        return textItem;
-    }
-
-    public boolean isVisibleLoading() {
-        return isVisibleLoading;
-    }
-
-    public long getDurationOfOperation() {
-        return durationOfOperation;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
