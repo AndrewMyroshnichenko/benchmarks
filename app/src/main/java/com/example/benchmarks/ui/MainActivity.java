@@ -3,6 +3,7 @@ package com.example.benchmarks.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.ActivityMainBinding;
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
 
-        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), 1, getResources().getStringArray(R.array.name_tabs)));
+        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, getResources().getStringArray(R.array.name_tabs)));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
         bind.mainTabLayout.addOnTabSelectedListener(this);
     }
