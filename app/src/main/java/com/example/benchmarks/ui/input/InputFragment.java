@@ -17,8 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.benchmarks.R;
+import com.example.benchmarks.models.MainViewModel;
 
 import java.util.Objects;
 
@@ -26,6 +28,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     private EditText editText;
     private PopupWindow errorView;
+    private MainViewModel viewModel;
 
     @NonNull
     @Override
@@ -43,6 +46,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
                 true
         );
+        viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         return dialog;
     }
 
@@ -71,6 +75,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
             if (errorView.isShowing()) {
                 errorView.dismiss();
             }
+            viewModel.saveSizeOfCollection(Long.parseLong(editText.getText().toString()));
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
             dismiss();
         }

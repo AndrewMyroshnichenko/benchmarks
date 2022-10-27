@@ -5,13 +5,18 @@ import java.util.Objects;
 public class BenchmarkItem {
 
     public final String textItem;
-    public final boolean isVisibleLoading;
+
+    public boolean isVisibleLoading;
     public final long durationOfOperation;
 
     public BenchmarkItem(String textItem, boolean isVisibleLoading, long durationOfOperation) {
         this.textItem = textItem;
         this.isVisibleLoading = isVisibleLoading;
         this.durationOfOperation = durationOfOperation;
+    }
+
+    public void setVisibleLoading(boolean visibleLoading) {
+        isVisibleLoading = visibleLoading;
     }
 
     public String getTextItem() {
