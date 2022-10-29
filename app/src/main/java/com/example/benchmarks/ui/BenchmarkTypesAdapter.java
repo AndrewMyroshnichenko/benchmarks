@@ -12,8 +12,8 @@ public class BenchmarkTypesAdapter extends FragmentPagerAdapter {
 
     private String[] nameOfTabs;
 
-    public BenchmarkTypesAdapter(@NonNull FragmentManager fm, int behavior, String[] nameOfTabs) {
-        super(fm, behavior);
+    public BenchmarkTypesAdapter(@NonNull FragmentManager fm, String[] nameOfTabs) {
+        super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.nameOfTabs = nameOfTabs;
     }
 

@@ -58,9 +58,7 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
 
         public void bind(BenchmarkItem item) {
             textView.setText(item.textItem);
-            progressBar.animate();
             progressBar.setVisibility(item.isVisibleLoading ? View.VISIBLE : View.INVISIBLE);
-
         }
     }
 }
