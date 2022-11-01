@@ -44,13 +44,12 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         adapter.submitList(fillRecyclerView());
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         BenchmarksViewModel viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
-        viewModel.getSizeOfCollection().observe(getViewLifecycleOwner(), new Observer<Long>() {
-            @Override
-            public void onChanged(Long aLong) {
-                editText.setText(String.valueOf(aLong));
-            }
-        });
     }
 
     private List<BenchmarkItem> fillRecyclerView() {
