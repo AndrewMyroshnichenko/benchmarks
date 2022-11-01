@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +45,12 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         recyclerView.setAdapter(adapter);
         inputFragment.show(getChildFragmentManager(), null);
         adapter.submitList(fillRecyclerView());
+        getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                editText.setText(result.getString(InputFragment.COLLECTION_SIZE_KEY));
+            }
+        });
     }
 
     @Override

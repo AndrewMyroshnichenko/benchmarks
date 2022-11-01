@@ -26,6 +26,8 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
     private EditText editText;
     private PopupWindow errorView;
     private BenchmarksViewModel viewModel;
+    public final static String COLLECTION_SIZE_KEY = "KEY_COLLECTION";
+    public final static String INPUT_REQUEST_KEY = "KEY_INPUTFRAGMENT";
 
     @NonNull
     @Override
@@ -64,6 +66,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
             showPopupError();
         } else {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
+            sendCollectionSize();
             dismiss();
         }
     }
@@ -75,5 +78,11 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
                 true
         );
         errorView.showAsDropDown(editText, 80, 0);
+    }
+
+    private void sendCollectionSize(){
+        Bundle result = new Bundle();
+        result.putString(COLLECTION_SIZE_KEY, editText.getText().toString());
+        getParentFragmentManager().setFragmentResult(INPUT_REQUEST_KEY, result);
     }
 }
