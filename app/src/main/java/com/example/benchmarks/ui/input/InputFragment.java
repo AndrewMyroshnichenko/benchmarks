@@ -38,11 +38,6 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         Button button = dialog.findViewById(R.id.bt_input);
         button.setOnClickListener(this);
         setCancelable(false);
-        errorView = new PopupWindow(
-                getLayoutInflater().inflate(R.layout.error_message, null),
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
-                true
-        );
         viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
         return dialog;
     }
@@ -64,17 +59,21 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     @Override
     public void onClick(View view) {
-
         if (TextUtils.isEmpty(editText.getText())) {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
-            errorView.showAsDropDown(editText, 80, 0);
+            showPopupError();
         } else {
-            if (errorView.isShowing()) {
-                errorView.dismiss();
-            }
-            viewModel.saveSizeOfCollection(Long.parseLong(editText.getText().toString()));
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
             dismiss();
         }
+    }
+
+    private void showPopupError(){
+        errorView = new PopupWindow(
+                getLayoutInflater().inflate(R.layout.error_message, null),
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
+        );
+        errorView.showAsDropDown(editText, 80, 0);
     }
 }
