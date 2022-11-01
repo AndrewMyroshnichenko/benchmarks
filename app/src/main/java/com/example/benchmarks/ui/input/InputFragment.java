@@ -61,12 +61,13 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     @Override
     public void onClick(View view) {
-        if (TextUtils.isEmpty(editText.getText())) {
+        String collectionSize = editText.getText().toString();
+        if (collectionSize.isEmpty()) {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
             showPopupError();
         } else {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
-            sendCollectionSize();
+            sendCollectionSize(collectionSize);
             dismiss();
         }
     }
@@ -80,9 +81,9 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         errorView.showAsDropDown(editText, 80, 0);
     }
 
-    private void sendCollectionSize(){
+    private void sendCollectionSize(String size){
         Bundle result = new Bundle();
-        result.putString(COLLECTION_SIZE_KEY, editText.getText().toString());
+        result.putString(COLLECTION_SIZE_KEY, size);
         getParentFragmentManager().setFragmentResult(INPUT_REQUEST_KEY, result);
     }
 }
