@@ -9,6 +9,8 @@ import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.ActivityMainBinding;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     private ActivityMainBinding bind;
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
 
-        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), getResources().getStringArray(R.array.name_tabs)));
+        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), Arrays.asList(getResources().getStringArray(R.array.name_tabs))));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
         bind.mainTabLayout.addOnTabSelectedListener(this);
     }

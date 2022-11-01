@@ -8,11 +8,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.benchmarks.ui.benchmark.CollectionsFragment;
 import com.example.benchmarks.ui.benchmark.MapsFragment;
 
+import java.util.List;
+
 public class BenchmarkTypesAdapter extends FragmentPagerAdapter {
 
-    private final String[] nameOfTabs;
+    private final List<String> nameOfTabs;
 
-    public BenchmarkTypesAdapter(@NonNull FragmentManager fm, String[] nameOfTabs) {
+    public BenchmarkTypesAdapter(@NonNull FragmentManager fm, List<String> nameOfTabs) {
         super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.nameOfTabs = nameOfTabs;
     }
@@ -29,11 +31,11 @@ public class BenchmarkTypesAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return nameOfTabs.length;
+        return nameOfTabs.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return nameOfTabs[position];
+        return nameOfTabs.get(position);
     }
 }
