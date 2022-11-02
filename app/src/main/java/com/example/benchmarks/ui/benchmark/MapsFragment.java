@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,10 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MapsFragment extends Fragment implements View.OnClickListener {
+public class MapsFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
 
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
+    private TextInputEditText editText;
 
     @Override
     public View onCreateView(
@@ -39,18 +41,13 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TextInputEditText editText = view.findViewById(R.id.ed_collections_fragment);
+        editText = view.findViewById(R.id.ed_collections_fragment);
         editText.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         adapter.submitList(fillRecyclerView());
-        getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                editText.setText(result.getString(InputFragment.COLLECTION_SIZE_KEY));
-            }
-        });
+        getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
     @Override
@@ -72,5 +69,10 @@ public class MapsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         inputFragment.show(getChildFragmentManager(), null);
+    }
+
+    @Override
+    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+        editText.setText(result.getString(InputFragment.COLLECTION_SIZE_KEY));
     }
 }
