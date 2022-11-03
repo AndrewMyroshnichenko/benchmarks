@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.models.BenchmarksViewModel;
+import com.example.benchmarks.ViewModel.BenchmarksViewModel;
 import com.example.benchmarks.ui.input.InputFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
