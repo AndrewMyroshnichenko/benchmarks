@@ -66,9 +66,13 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
             showPopupError();
         } else {
-            editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
-            sendCollectionSize(collectionSize);
-            dismiss();
+            if (BenchmarksViewModel.isNumberCorrect(collectionSize)){
+                editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
+                sendCollectionSize(collectionSize);
+                dismiss();
+            } else {
+                showPopupError();
+            }
         }
     }
 
@@ -83,7 +87,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     private void sendCollectionSize(String size){
         Bundle result = new Bundle();
-        result.putString(COLLECTION_SIZE_KEY, size);
+        result.putLong(COLLECTION_SIZE_KEY, Long.parseLong(size));
         getParentFragmentManager().setFragmentResult(INPUT_REQUEST_KEY, result);
     }
 }

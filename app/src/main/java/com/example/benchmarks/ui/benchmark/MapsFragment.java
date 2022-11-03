@@ -71,6 +71,6 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
 
     @Override
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-        editText.setText(result.getString(InputFragment.COLLECTION_SIZE_KEY));
+        editText.setText(String.valueOf(result.getLong(InputFragment.COLLECTION_SIZE_KEY)));
     }
 }

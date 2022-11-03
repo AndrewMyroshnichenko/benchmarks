@@ -73,6 +73,6 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-        editText.setText(result.getString(InputFragment.COLLECTION_SIZE_KEY));
+        editText.setText(String.valueOf(result.getLong(InputFragment.COLLECTION_SIZE_KEY)));
     }
 }
