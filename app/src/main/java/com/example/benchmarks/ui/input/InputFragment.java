@@ -19,7 +19,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.ViewModel.BenchmarksViewModel;
+import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
 
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 

@@ -1,4 +1,4 @@
-package com.example.benchmarks.ViewModel;
+package com.example.benchmarks.ui.benchmark;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
