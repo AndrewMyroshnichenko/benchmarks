@@ -87,7 +87,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     private void sendCollectionSize(String size){
         Bundle result = new Bundle();
-        result.putLong(COLLECTION_SIZE_KEY, Long.parseLong(size));
+        result.putString(COLLECTION_SIZE_KEY, size);
         getParentFragmentManager().setFragmentResult(INPUT_REQUEST_KEY, result);
     }
 }
