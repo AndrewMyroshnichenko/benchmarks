@@ -1,8 +1,9 @@
 package com.example.benchmarks.ui.benchmark;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.benchmarks.models.BenchmarkItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,9 @@ I am only thinking how to realize logic of creating Threads and mark duration of
  */
 
 public class BenchmarksViewModel extends ViewModel {
-    List<String> collections = new ArrayList<>();
-    List<String> operations = new ArrayList<>();
+
+    public final MutableLiveData<List<BenchmarkItem>> collectionsList = new MutableLiveData<>();
+    public final MutableLiveData<List<BenchmarkItem>> mapsList = new MutableLiveData<>();
 
     public static boolean isNumberCorrect(String number){
         long temp;
@@ -25,13 +27,24 @@ public class BenchmarksViewModel extends ViewModel {
         return (temp > 0);
     }
 
-    public void startProcess(){
-        for (int i = 0; i < collections.size(); i++) {
-            for (int j = 0; j < operations.size(); j++) {
-                new Thread(new OperationsCollections(100000)).start();
+    public List<BenchmarkItem> fillCollectionsRecyclerView(){
+        final List<BenchmarkItem> list = new ArrayList<>();
+        for (int i = 0; i < BenchmarksDataClass.operationsOfCollections.size(); i++) {
+            for (int j = 0; j < BenchmarksDataClass.namesOfCollections.size(); j++) {
+                list.add(new BenchmarkItem(BenchmarksDataClass.operationsOfCollections.get(i), BenchmarksDataClass.namesOfCollections.get(j), true, 0));
             }
         }
+        return list;
     }
 
+    public List<BenchmarkItem> fillMapsRecyclerView(){
+        final List<BenchmarkItem> list = new ArrayList<>();
+        for (int i = 0; i < BenchmarksDataClass.operationsOfMaps.size(); i++) {
+            for (int j = 0; j < BenchmarksDataClass.namesOfMaps.size(); j++) {
+                list.add(new BenchmarkItem(BenchmarksDataClass.operationsOfMaps.get(i), BenchmarksDataClass.namesOfMaps.get(j), true, 0));
+            }
+        }
+        return list;
+    }
 
 }

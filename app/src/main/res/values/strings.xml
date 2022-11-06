@@ -21,7 +21,7 @@
         <item>Maps</item>
     </string-array>
 
-    <string-array name="operations">
+    <string-array name="collections_operations">
         <item>Adding \n in the beginning </item>
         <item>Adding \n in the middle </item>
         <item>Adding \n in the end </item>
@@ -35,6 +35,17 @@
         <item>Adding new in </item>
         <item>Search by key in </item>
         <item>Removing in </item>
+    </string-array>
+
+    <string-array name="name_collections">
+        <item>ArrayList</item>
+        <item>LinkedList</item>
+        <item>CopyOnWriteArrayList</item>
+    </string-array>
+
+    <string-array name="name_maps">
+        <item>TreeMap</item>
+        <item>HashMap</item>
     </string-array>
 
 </resources>

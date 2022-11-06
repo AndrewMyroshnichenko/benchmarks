@@ -8,8 +8,8 @@ public class BenchmarkItem {
     public final boolean isVisibleLoading;
     public final long durationOfOperation;
 
-    public BenchmarkItem(String textItem, boolean isVisibleLoading, long durationOfOperation) {
-        this.textItem = textItem;
+    public BenchmarkItem(String nameOfOperation, String nameOfCollection, boolean isVisibleLoading, long durationOfOperation) {
+        this.textItem = nameOfOperation + " " + nameOfOperation + " " + durationOfOperation;
         this.isVisibleLoading = isVisibleLoading;
         this.durationOfOperation = durationOfOperation;
     }

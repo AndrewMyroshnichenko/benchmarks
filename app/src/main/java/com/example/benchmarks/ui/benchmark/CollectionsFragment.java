@@ -27,6 +27,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
     private TextInputEditText editText;
+    private BenchmarksViewModel viewModel;
 
     @Override
     public View onCreateView(
@@ -38,31 +39,20 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      editText = view.findViewById(R.id.ed_collections_fragment);
+        editText = view.findViewById(R.id.ed_collections_fragment);
         editText.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         inputFragment.show(getChildFragmentManager(), null);
-        adapter.submitList(fillRecyclerView());
+        adapter.submitList(viewModel.fillCollectionsRecyclerView());
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BenchmarksViewModel viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
-    }
-
-    private List<BenchmarkItem> fillRecyclerView() {
-        final List<BenchmarkItem> list = new ArrayList<>();
-        final String[] operations = getResources().getStringArray(R.array.operations);
-        for (String operation : operations) {
-            list.add(new BenchmarkItem(operation + getString(R.string.str_array_ms), false, 0));
-            list.add(new BenchmarkItem(operation + getString(R.string.str_linked_ms), true, 0));
-            list.add(new BenchmarkItem(operation + getString(R.string.str_cow_ms), false, 0));
-        }
-        return list;
+        viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
     }
 
     @Override

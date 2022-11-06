@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.ActivityMainBinding;
+import com.example.benchmarks.ui.benchmark.BenchmarksAdapter;
+import com.example.benchmarks.ui.benchmark.BenchmarksDataClass;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Arrays;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
+        BenchmarksDataClass.fillLists(this);
 
         bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), Arrays.asList(getResources().getStringArray(R.array.name_tabs))));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);

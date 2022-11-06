@@ -12,25 +12,29 @@ I am only thinking how to realize logic of creating Threads and mark duration of
 public class OperationsCollections implements Runnable {
 
     private final long sizeOfCollection;
-
+    String s;
     public OperationsCollections(long sizeOfCollection) {
         this.sizeOfCollection = sizeOfCollection;
     }
 
     public List<Integer> createCollection(int numberOfCollection){
         List<Integer> list;
+
         switch (numberOfCollection){
             case 1:
                 list = new LinkedList<Integer>();
                 fillCollection(list);
+                s = "Lin";
                 break;
             case 2:
                 list = new CopyOnWriteArrayList<Integer>();
                 fillCollection(list);
+                s = "Copy";
                 break;
             default:
                 list = new ArrayList<Integer>();
                 fillCollection(list);
+                s = "Arraylist";
                 break;
         }
         return list;
