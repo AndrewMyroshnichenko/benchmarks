@@ -25,7 +25,6 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     private EditText editText;
     private PopupWindow errorView;
-    private BenchmarksViewModel viewModel;
     public final static String COLLECTION_SIZE_KEY = "KEY_COLLECTION";
     public final static String INPUT_REQUEST_KEY = "KEY_INPUTFRAGMENT";
 
@@ -40,7 +39,6 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         Button button = dialog.findViewById(R.id.bt_input);
         button.setOnClickListener(this);
         setCancelable(false);
-        viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
         return dialog;
     }
 
@@ -62,6 +60,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
     @Override
     public void onClick(View view) {
         String collectionSize = editText.getText().toString();
+
         if (collectionSize.isEmpty()) {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
             showPopupError();
@@ -69,6 +68,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
             if (BenchmarksViewModel.isNumberCorrect(collectionSize)){
                 editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
                 sendCollectionSize(collectionSize);
+                BenchmarksViewModel.sizeOfCollection.setValue(Long.parseLong(collectionSize));
                 dismiss();
             } else {
                 showPopupError();

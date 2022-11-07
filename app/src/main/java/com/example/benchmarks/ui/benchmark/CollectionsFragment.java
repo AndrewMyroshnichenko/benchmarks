@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +28,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
+    private Button startStop;
     private TextInputEditText editText;
     private BenchmarksViewModel viewModel;
 
@@ -41,11 +44,14 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         super.onViewCreated(view, savedInstanceState);
         editText = view.findViewById(R.id.ed_collections_fragment);
         editText.setOnClickListener(this);
+        startStop = view.findViewById(R.id.bt_collections);
+        startStop.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         inputFragment.show(getChildFragmentManager(), null);
         adapter.submitList(viewModel.fillCollectionsRecyclerView());
+        viewModel.collectionsList.observe(getViewLifecycleOwner(), adapter::submitList);
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -57,7 +63,15 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        inputFragment.show(getChildFragmentManager(), null);
+        switch (view.getId()){
+            case R.id.ed_collections_fragment:
+                inputFragment.show(getChildFragmentManager(), null);
+                break;
+            case R.id.bt_collections:
+                viewModel.startCollectionProcess();
+                break;
+        }
+
     }
 
     @Override

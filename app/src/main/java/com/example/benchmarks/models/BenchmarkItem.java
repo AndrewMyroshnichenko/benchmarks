@@ -9,7 +9,7 @@ public class BenchmarkItem {
     public final long durationOfOperation;
 
     public BenchmarkItem(String nameOfOperation, String nameOfCollection, boolean isVisibleLoading, long durationOfOperation) {
-        this.textItem = nameOfOperation + " " + nameOfOperation + " " + durationOfOperation;
+        this.textItem = nameOfOperation + " " + nameOfCollection + " " + durationOfOperation;
         this.isVisibleLoading = isVisibleLoading;
         this.durationOfOperation = durationOfOperation;
     }

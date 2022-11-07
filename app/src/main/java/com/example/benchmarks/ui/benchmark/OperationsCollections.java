@@ -11,65 +11,77 @@ I am only thinking how to realize logic of creating Threads and mark duration of
 
 public class OperationsCollections implements Runnable {
 
+    private List<Integer> list;
     private final long sizeOfCollection;
-    String s;
-    public OperationsCollections(long sizeOfCollection) {
-        this.sizeOfCollection = sizeOfCollection;
+    private final int operationType;
+    private final int collectionType;
+    private final BenchmarksViewModel benchmarksViewModel;
+    private String hashOfList;
+    private String hashOfOperation;
+
+    public OperationsCollections(BenchmarksViewModel benchmarksViewModel, int operationType, int collectionType) {
+        this.benchmarksViewModel = benchmarksViewModel;
+        this.operationType = operationType;
+        this.collectionType = collectionType;
+        sizeOfCollection = benchmarksViewModel.sizeOfCollection.getValue();
     }
 
-    public List<Integer> createCollection(int numberOfCollection){
-        List<Integer> list;
+    public void createCollection(int numberOfCollection){
 
         switch (numberOfCollection){
+            case 0:
+                list = new ArrayList<Integer>();
+                fillCollection(list);
+                hashOfList = BenchmarksDataClass.namesOfCollections.get(numberOfCollection);
+                break;
             case 1:
                 list = new LinkedList<Integer>();
                 fillCollection(list);
-                s = "Lin";
+                hashOfList = BenchmarksDataClass.namesOfCollections.get(numberOfCollection);
                 break;
             case 2:
                 list = new CopyOnWriteArrayList<Integer>();
                 fillCollection(list);
-                s = "Copy";
-                break;
-            default:
-                list = new ArrayList<Integer>();
-                fillCollection(list);
-                s = "Arraylist";
+                hashOfList = BenchmarksDataClass.namesOfCollections.get(numberOfCollection);
                 break;
         }
-        return list;
     }
 
-    public long markTheTimeOperation(List<Integer> list, int numberOfOperation){
-        long time = 0;
+    public void markDurationOfOperation(int numberOfOperation){
         final int valueForSearching = 200;
         long startTime = System.nanoTime();
         switch (numberOfOperation){
             case 0:
                 list.add(0, (int) (Math.random() * 100));
+                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
                 break;
             case 1:
                 list.add(list.size() / 2, valueForSearching);
+                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
                 break;
             case 2:
                 list.add((int) (Math.random() * 100));
+                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
                 break;
             case 3:
                 list.indexOf(valueForSearching);
+                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
                 break;
             case 4:
                 list.remove(0);
+                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
                 break;
             case 5:
                 list.remove(list.size() / 2);
+                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
                 break;
             case 6:
                 list.remove(list.size() - 1);
+                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
                 break;
         }
         long endTime = System.nanoTime();
-
-        return endTime - startTime;
+        benchmarksViewModel.updateValueDurationOperation(endTime - startTime, hashOfList, hashOfOperation);
     }
 
     private void fillCollection(List<Integer> listOfCollection){
@@ -80,6 +92,7 @@ public class OperationsCollections implements Runnable {
 
     @Override
     public void run() {
-
+        createCollection(collectionType);
+        markDurationOfOperation(operationType);
     }
 }
