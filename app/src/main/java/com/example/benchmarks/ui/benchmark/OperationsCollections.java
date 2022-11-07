@@ -81,7 +81,7 @@ public class OperationsCollections implements Runnable {
                 break;
         }
         long endTime = System.nanoTime();
-        benchmarksViewModel.updateValueDurationOperation(endTime - startTime, hashOfList, hashOfOperation);
+        benchmarksViewModel.updateCollectionDurationOperation(endTime - startTime, hashOfList, hashOfOperation);
     }
 
     private void fillCollection(List<Integer> listOfCollection){

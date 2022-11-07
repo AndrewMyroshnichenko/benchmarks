@@ -69,6 +69,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
                 editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
                 sendCollectionSize(collectionSize);
                 BenchmarksViewModel.sizeOfCollection.setValue(Long.parseLong(collectionSize));
+                BenchmarksViewModel.sizeOfMap.setValue(Long.parseLong(collectionSize));
                 dismiss();
             } else {
                 showPopupError();
