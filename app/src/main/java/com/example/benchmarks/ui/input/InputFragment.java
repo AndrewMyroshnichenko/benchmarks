@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
+import com.example.benchmarks.ui.benchmark.CollectionsFragment;
 
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 
@@ -68,8 +69,11 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
             if (BenchmarksViewModel.isNumberCorrect(collectionSize)){
                 editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
                 sendCollectionSize(collectionSize);
-                BenchmarksViewModel.sizeOfCollection.setValue(Long.parseLong(collectionSize));
-                BenchmarksViewModel.sizeOfMap.setValue(Long.parseLong(collectionSize));
+                if(getParentFragment().getClass().equals(CollectionsFragment.class)){
+                    BenchmarksViewModel.sizeOfCollection.setValue(Long.parseLong(collectionSize));
+                }else{
+                    BenchmarksViewModel.sizeOfMap.setValue(Long.parseLong(collectionSize));
+                }
                 dismiss();
             } else {
                 showPopupError();

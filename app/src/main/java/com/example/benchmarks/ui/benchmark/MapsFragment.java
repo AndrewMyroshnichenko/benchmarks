@@ -49,6 +49,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         adapter.submitList(viewModel.fillMapsRecyclerView());
+        viewModel.mapsList.observe(getViewLifecycleOwner(), adapter::submitList);
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
