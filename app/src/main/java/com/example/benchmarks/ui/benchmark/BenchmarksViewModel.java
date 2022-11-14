@@ -27,8 +27,6 @@ public class BenchmarksViewModel extends ViewModel {
     public final Map<String, Long> durationOperationMap = new HashMap<>();
     private ThreadPoolExecutor executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
     public boolean isStartButtonPressed = false;
-    private OperationsCollections [][] arrayOfCollections;
-    private OperationsCollections [][] arrayOfMaps;
 
     public static boolean isNumberCorrect(Long number) {
         return (number > 0);
@@ -75,11 +73,9 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void startCollectionProcess() {
-        arrayOfCollections = new OperationsCollections[BenchmarksDataClass.operationsOfCollections.size()][BenchmarksDataClass.namesOfCollections.size()];
-        for (int i = 0; i < BenchmarksDataClass.operationsOfCollections.size(); i++) {
+         for (int i = 0; i < BenchmarksDataClass.operationsOfCollections.size(); i++) {
             for (int j = 0; j < BenchmarksDataClass.namesOfCollections.size(); j++) {
-                arrayOfCollections[i][j] = new OperationsCollections(this, i, j);
-                executor.execute(arrayOfCollections[i][j]);
+                executor.execute(new OperationsCollections(this, i, j));
             }
         }
     }
