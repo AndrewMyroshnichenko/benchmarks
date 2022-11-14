@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /* This class is not finished
 I am only thinking how to realize logic of creating Threads and mark duration of operations
@@ -22,17 +25,10 @@ public class BenchmarksViewModel extends ViewModel {
     public static final MutableLiveData<Long> sizeOfMap = new MutableLiveData<>();
     public final Map<String, Long> durationOperationCollection = new HashMap<>();
     public final Map<String, Long> durationOperationMap = new HashMap<>();
+    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
 
-
-
-    public static boolean isNumberCorrect(String number){
-        long temp;
-        try{
-            temp = Long.parseLong(number);
-        } catch (NumberFormatException exception){
-            return false;
-        }
-        return (temp > 0);
+    public static boolean isNumberCorrect(Long number){
+        return (number > 0);
     }
 
     public List<BenchmarkItem> fillCollectionsRecyclerView(){
@@ -78,7 +74,7 @@ public class BenchmarksViewModel extends ViewModel {
     public void startCollectionProcess(){
         for (int i = 0; i < BenchmarksDataClass.operationsOfCollections.size(); i++) {
             for (int j = 0; j < BenchmarksDataClass.namesOfCollections.size(); j++) {
-                new Thread(new OperationsCollections(this, i, j)).start();
+                executor.execute(new OperationsCollections(this, i, j));
             }
         }
     }
@@ -86,7 +82,7 @@ public class BenchmarksViewModel extends ViewModel {
     public void startMapProcess(){
         for (int i = 0; i < BenchmarksDataClass.operationsOfMaps.size(); i++) {
             for (int j = 0; j < BenchmarksDataClass.namesOfMaps.size(); j++) {
-                new Thread(new OperationMaps(this, i, j)).start();
+                executor.execute(new OperationMaps(this, i, j));
             }
         }
     }
