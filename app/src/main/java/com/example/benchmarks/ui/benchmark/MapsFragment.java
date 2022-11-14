@@ -66,8 +66,17 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                viewModel.startMapProcess();
-                break;
+                if(!viewModel.isStartButtonPressed){
+                    viewModel.startMapProcess();
+                    startStop.setText(getResources().getString(R.string.bt_stop));
+                    viewModel.isStartButtonPressed = true;
+                    break;
+                } else {
+                    viewModel.onStopProcess();
+                    startStop.setText(getResources().getString(R.string.bt_start));
+                    viewModel.isStartButtonPressed = false;
+                    break;
+                }
         }
     }
 

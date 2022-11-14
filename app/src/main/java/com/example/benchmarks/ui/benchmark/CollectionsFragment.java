@@ -68,8 +68,18 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                viewModel.startCollectionProcess();
-                break;
+                if(!viewModel.isStartButtonPressed){
+                    viewModel.startCollectionProcess();
+                    startStop.setText(getResources().getString(R.string.bt_stop));
+                    viewModel.isStartButtonPressed = true;
+                    break;
+                } else {
+                    viewModel.onStopProcess();
+                    startStop.setText(getResources().getString(R.string.bt_start));
+                    viewModel.isStartButtonPressed = false;
+                    break;
+                }
+
         }
 
     }

@@ -25,13 +25,16 @@ public class BenchmarksViewModel extends ViewModel {
     public static final MutableLiveData<Long> sizeOfMap = new MutableLiveData<>();
     public final Map<String, Long> durationOperationCollection = new HashMap<>();
     public final Map<String, Long> durationOperationMap = new HashMap<>();
-    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
+    private ThreadPoolExecutor executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
+    public boolean isStartButtonPressed = false;
+    private OperationsCollections [][] arrayOfCollections;
+    private OperationsCollections [][] arrayOfMaps;
 
-    public static boolean isNumberCorrect(Long number){
+    public static boolean isNumberCorrect(Long number) {
         return (number > 0);
     }
 
-    public List<BenchmarkItem> fillCollectionsRecyclerView(){
+    public List<BenchmarkItem> fillCollectionsRecyclerView() {
         final List<BenchmarkItem> list = new ArrayList<>();
         for (String operation : BenchmarksDataClass.operationsOfCollections) {
             for (String listName : BenchmarksDataClass.namesOfCollections) {
@@ -45,7 +48,7 @@ public class BenchmarksViewModel extends ViewModel {
         return list;
     }
 
-    public List<BenchmarkItem> fillMapsRecyclerView(){
+    public List<BenchmarkItem> fillMapsRecyclerView() {
         final List<BenchmarkItem> list = new ArrayList<>();
         for (String operation : BenchmarksDataClass.operationsOfMaps) {
             for (String mapName : BenchmarksDataClass.namesOfMaps) {
@@ -61,30 +64,38 @@ public class BenchmarksViewModel extends ViewModel {
         return list;
     }
 
-    public void updateCollectionDurationOperation(Long duration, String list, String operation){
+    public void updateCollectionDurationOperation(Long duration, String list, String operation) {
         durationOperationCollection.put(list + " " + operation, duration);
         collectionsList.postValue(fillCollectionsRecyclerView());
     }
 
-    public void updateMapDurationOperation(Long duration, String map, String operation){
+    public void updateMapDurationOperation(Long duration, String map, String operation) {
         durationOperationMap.put(map + " " + operation, duration);
         mapsList.postValue(fillMapsRecyclerView());
     }
 
-    public void startCollectionProcess(){
+    public void startCollectionProcess() {
+        arrayOfCollections = new OperationsCollections[BenchmarksDataClass.operationsOfCollections.size()][BenchmarksDataClass.namesOfCollections.size()];
         for (int i = 0; i < BenchmarksDataClass.operationsOfCollections.size(); i++) {
             for (int j = 0; j < BenchmarksDataClass.namesOfCollections.size(); j++) {
-                executor.execute(new OperationsCollections(this, i, j));
+                arrayOfCollections[i][j] = new OperationsCollections(this, i, j);
+                executor.execute(arrayOfCollections[i][j]);
             }
         }
     }
 
-    public void startMapProcess(){
+    public void startMapProcess() {
         for (int i = 0; i < BenchmarksDataClass.operationsOfMaps.size(); i++) {
             for (int j = 0; j < BenchmarksDataClass.namesOfMaps.size(); j++) {
                 executor.execute(new OperationMaps(this, i, j));
             }
         }
+    }
+
+    public void onStopProcess() {
+        executor.shutdownNow();
+        executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
+        System.gc();
     }
 
 }
