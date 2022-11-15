@@ -49,7 +49,7 @@ public class OperationsCollections implements Runnable {
 
     public void markDurationOfOperation(int numberOfOperation){
         final int valueForSearching = 200;
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         switch (numberOfOperation){
             case 0:
                 list.add(0, (int) (Math.random() * 100));
@@ -80,8 +80,8 @@ public class OperationsCollections implements Runnable {
                 hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
                 break;
         }
-        long endTime = System.nanoTime();
-        benchmarksViewModel.updateCollectionDurationOperation(endTime - startTime, hashOfList, hashOfOperation);
+        long endTime = System.currentTimeMillis();;
+        benchmarksViewModel.updateDurationOperation(endTime - startTime, hashOfList, hashOfOperation, BenchmarksDataClass.operationsOfCollections, BenchmarksDataClass.namesOfCollections);
     }
 
     private void fillCollection(List<Integer> listOfCollection){

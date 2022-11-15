@@ -10,18 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.models.BenchmarkItem;
 import com.example.benchmarks.ui.input.InputFragment;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class CollectionsFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
@@ -31,6 +26,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     private Button startStop;
     private TextInputEditText editText;
     private BenchmarksViewModel viewModel;
+    public static final String KEY_OF_COLLECTION_FRAGMENT = "CollectionsFragment";
 
     @Override
     public View onCreateView(
@@ -50,7 +46,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         inputFragment.show(getChildFragmentManager(), null);
-        adapter.submitList(viewModel.fillCollectionsRecyclerView());
+        adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfCollections, BenchmarksDataClass.namesOfCollections));
         viewModel.collectionsList.observe(getViewLifecycleOwner(), adapter::submitList);
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
@@ -68,17 +64,9 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                if(!viewModel.isStartButtonPressed){
-                    viewModel.startCollectionProcess();
-                    startStop.setText(getResources().getString(R.string.bt_stop));
-                    viewModel.isStartButtonPressed = true;
-                    break;
-                } else {
-                    viewModel.onStopProcess();
-                    startStop.setText(getResources().getString(R.string.bt_start));
-                    viewModel.isStartButtonPressed = false;
-                    break;
-                }
+                startStop.setText(viewModel.switchStartStop(BenchmarksDataClass.namesOfCollections, BenchmarksDataClass.operationsOfCollections, KEY_OF_COLLECTION_FRAGMENT) ?
+                        getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
+                break;
 
         }
 
@@ -86,6 +74,8 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-        editText.setText(result.getString(InputFragment.COLLECTION_SIZE_KEY));
+        String size = result.getString(InputFragment.COLLECTION_SIZE_KEY);
+        editText.setText(size);
+        viewModel.sizeOfCollection.postValue(Long.parseLong(size));
     }
 }

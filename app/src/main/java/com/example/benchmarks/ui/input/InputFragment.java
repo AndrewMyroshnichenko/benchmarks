@@ -60,24 +60,14 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     @Override
     public void onClick(View view) {
-        Long collectionSize;
-        try {
-            collectionSize = Long.parseLong(editText.getText().toString());
-        }catch (NumberFormatException exception){
-                collectionSize = 0L;
-        }
-        if (collectionSize == 0L) {
+        String collectionSize = editText.getText().toString();
+        if (collectionSize.isEmpty()) {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
             showPopupError();
         } else {
             if (BenchmarksViewModel.isNumberCorrect(collectionSize)){
                 editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
-                sendCollectionSize(String.valueOf(collectionSize));
-                if(getParentFragment().getClass().equals(CollectionsFragment.class)){
-                    BenchmarksViewModel.sizeOfCollection.setValue(collectionSize);
-                }else{
-                    BenchmarksViewModel.sizeOfMap.setValue(collectionSize);
-                }
+                sendCollectionSize(collectionSize);
                 dismiss();
             } else {
                 showPopupError();

@@ -18,7 +18,7 @@ public class OperationMaps implements Runnable{
         this.benchmarksViewModel = benchmarksViewModel;
         this.operationType = operationType;
         this.mapType = mapType;
-        sizeOfMap = benchmarksViewModel.sizeOfMap.getValue();
+        sizeOfMap = benchmarksViewModel.sizeOfCollection.getValue();
     }
 
     public void createMaps(int numberOfMap) {
@@ -39,7 +39,7 @@ public class OperationMaps implements Runnable{
     }
 
     public void markDurationOfOperation(int numberOfOperation){
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         switch (numberOfOperation){
             case 0:
                 map.put(map.size(), (int) (Math.random() * 100));
@@ -54,8 +54,8 @@ public class OperationMaps implements Runnable{
                 hashOfOperation = BenchmarksDataClass.operationsOfMaps.get(numberOfOperation);
                 break;
         }
-        long endTime = System.nanoTime();
-        benchmarksViewModel.updateMapDurationOperation(endTime - startTime, hashOfMap, hashOfOperation);
+        long endTime = System.currentTimeMillis();
+        benchmarksViewModel.updateDurationOperation(endTime - startTime, hashOfMap, hashOfOperation, BenchmarksDataClass.operationsOfMaps, BenchmarksDataClass.namesOfMaps);
     }
 
         private void fillMap(Map<Integer, Integer> mapList){

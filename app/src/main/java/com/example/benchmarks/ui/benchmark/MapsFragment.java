@@ -15,12 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.models.BenchmarkItem;
 import com.example.benchmarks.ui.input.InputFragment;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MapsFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
@@ -30,6 +26,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
     private Button startStop;
     private TextInputEditText editText;
     private BenchmarksViewModel viewModel;
+    private final String KEY_OF_MAPS_FRAGMENT = "MapsFragment";
 
     @Override
     public View onCreateView(
@@ -48,8 +45,8 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
-        adapter.submitList(viewModel.fillMapsRecyclerView());
-        viewModel.mapsList.observe(getViewLifecycleOwner(), adapter::submitList);
+        adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfMaps, BenchmarksDataClass.namesOfMaps));
+        viewModel.collectionsList.observe(getViewLifecycleOwner(), adapter::submitList);
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -66,22 +63,16 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                if(!viewModel.isStartButtonPressed){
-                    viewModel.startMapProcess();
-                    startStop.setText(getResources().getString(R.string.bt_stop));
-                    viewModel.isStartButtonPressed = true;
-                    break;
-                } else {
-                    viewModel.onStopProcess();
-                    startStop.setText(getResources().getString(R.string.bt_start));
-                    viewModel.isStartButtonPressed = false;
-                    break;
-                }
+                startStop.setText(viewModel.switchStartStop(BenchmarksDataClass.namesOfMaps, BenchmarksDataClass.operationsOfMaps, KEY_OF_MAPS_FRAGMENT) ?
+                        getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
+                break;
         }
     }
 
     @Override
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-        editText.setText(result.getString(InputFragment.COLLECTION_SIZE_KEY));
+        String size = result.getString(InputFragment.COLLECTION_SIZE_KEY);
+        editText.setText(size);
+        viewModel.sizeOfCollection.postValue(Long.parseLong(size));
     }
 }
