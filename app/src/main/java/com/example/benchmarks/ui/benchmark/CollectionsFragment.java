@@ -72,8 +72,8 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                startStop.setText(viewModel.onButtonToggle(BenchmarksDataClass.namesOfCollections, BenchmarksDataClass.operationsOfCollections, KEY_OF_COLLECTION_FRAGMENT) ?
-                        getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
+                viewModel.onButtonToggle(BenchmarksDataClass.namesOfCollections, BenchmarksDataClass.operationsOfCollections, KEY_OF_COLLECTION_FRAGMENT);
+                startStop.setText(viewModel.calculationStartLiveData.getValue() ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
                 break;
 
         }

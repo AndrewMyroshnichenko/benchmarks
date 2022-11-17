@@ -66,15 +66,15 @@ public class BenchmarksViewModel extends ViewModel {
         System.gc();
     }
 
-    public boolean onButtonToggle(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
+    public void onButtonToggle(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
         if (Boolean.FALSE.equals(calculationStartLiveData.getValue())) {
             startProcess(namesOfCollections, namesOfOperations, nameOfFragment);
             calculationStartLiveData.postValue(true);
-            return true;
+        } else {
+            onStopProcess();
+            calculationStartLiveData.postValue(false);
         }
-        onStopProcess();
-        calculationStartLiveData.postValue(false);
-        return false;
+
     }
 
 }
