@@ -61,21 +61,17 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
     @Override
     public void onClick(View view) {
         String collectionSize = editText.getText().toString();
-        if (collectionSize.isEmpty()) {
+        if (BenchmarksViewModel.isNumberCorrect(collectionSize)) {
+            editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
+            sendCollectionSize(collectionSize);
+            dismiss();
+        } else {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
             showPopupError();
-        } else {
-            if (BenchmarksViewModel.isNumberCorrect(collectionSize)){
-                editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
-                sendCollectionSize(collectionSize);
-                dismiss();
-            } else {
-                showPopupError();
-            }
         }
     }
 
-    private void showPopupError(){
+    private void showPopupError() {
         errorView = new PopupWindow(
                 getLayoutInflater().inflate(R.layout.error_message, null),
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -84,7 +80,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         errorView.showAsDropDown(editText, 80, 0);
     }
 
-    private void sendCollectionSize(String size){
+    private void sendCollectionSize(String size) {
         Bundle result = new Bundle();
         result.putString(COLLECTION_SIZE_KEY, size);
         getParentFragmentManager().setFragmentResult(INPUT_REQUEST_KEY, result);

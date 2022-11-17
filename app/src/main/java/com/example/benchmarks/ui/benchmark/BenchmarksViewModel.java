@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class BenchmarksViewModel extends ViewModel {
 
     public final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
-    public final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
+    public static final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
     public final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
     public final Map<String, Long> durationOperation = new HashMap<>();
     private ThreadPoolExecutor executor;
@@ -25,6 +25,9 @@ public class BenchmarksViewModel extends ViewModel {
         long temp;
         try {
             temp = Long.parseLong(number);
+            if(temp > 0) {
+                testSizeLiveData.postValue(temp);
+            }
         } catch (NumberFormatException exception) {
             return false;
         }
