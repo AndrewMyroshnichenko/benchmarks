@@ -23,7 +23,7 @@ public class BenchmarksViewModel extends AndroidViewModel {
     public final MutableLiveData<Long> sizeOfCollection = new MutableLiveData<>();
     public final Map<String, Long> durationOperation = new HashMap<>();
     public final MutableLiveData<Boolean> isStartButtonPressed = new MutableLiveData<>(false);
-    private ThreadPoolExecutor executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
+    private ThreadPoolExecutor executor;
 
     public BenchmarksViewModel(@NonNull Application application) {
         super(application);
@@ -58,6 +58,7 @@ public class BenchmarksViewModel extends AndroidViewModel {
     }
 
     public void startProcess(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
+        executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
         for (int i = 0; i < namesOfOperations.size(); i++) {
             for (int j = 0; j < namesOfCollections.size(); j++) {
                 executor.execute(nameOfFragment.equals(CollectionsFragment.KEY_OF_COLLECTION_FRAGMENT) ?
@@ -68,7 +69,7 @@ public class BenchmarksViewModel extends AndroidViewModel {
 
     public void onStopProcess() {
         executor.shutdownNow();
-        executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
+        executor = null;
         System.gc();
     }
 
