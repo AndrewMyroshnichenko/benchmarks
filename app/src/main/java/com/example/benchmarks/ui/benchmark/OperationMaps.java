@@ -18,7 +18,7 @@ public class OperationMaps implements Runnable{
         this.benchmarksViewModel = benchmarksViewModel;
         this.operationType = operationType;
         this.mapType = mapType;
-        sizeOfMap = benchmarksViewModel.sizeOfCollection.getValue();
+        sizeOfMap = benchmarksViewModel.testSizeLiveData.getValue();
     }
 
     public void createMaps(int numberOfMap) {

@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.models.BenchmarkItem;
 
@@ -19,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 
 public class BenchmarksViewModel extends AndroidViewModel {
 
-    public final MutableLiveData<List<BenchmarkItem>> collectionsList = new MutableLiveData<>();
-    public final MutableLiveData<Long> sizeOfCollection = new MutableLiveData<>();
+    public final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
+    public final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
     public final Map<String, Long> durationOperation = new HashMap<>();
-    public final MutableLiveData<Boolean> isStartButtonPressed = new MutableLiveData<>(false);
+    public final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
     private ThreadPoolExecutor executor;
 
     public BenchmarksViewModel(@NonNull Application application) {
@@ -54,7 +53,7 @@ public class BenchmarksViewModel extends AndroidViewModel {
 
     public void updateDurationOperation(Long duration, String list, String operation, List<String> operations, List<String> collections) {
         durationOperation.put(list + " " + operation, duration);
-        collectionsList.postValue(fillRecyclerView(operations, collections));
+        itemsLiveData.postValue(fillRecyclerView(operations, collections));
     }
 
     public void startProcess(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
@@ -74,13 +73,13 @@ public class BenchmarksViewModel extends AndroidViewModel {
     }
 
     public boolean switchStartStop(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
-        if (Boolean.FALSE.equals(isStartButtonPressed.getValue())) {
+        if (Boolean.FALSE.equals(calculationStartLiveData.getValue())) {
             startProcess(namesOfCollections, namesOfOperations, nameOfFragment);
-            isStartButtonPressed.postValue(true);
+            calculationStartLiveData.postValue(true);
             return true;
         }
         onStopProcess();
-        isStartButtonPressed.postValue(false);
+        calculationStartLiveData.postValue(false);
         return false;
     }
 

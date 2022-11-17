@@ -46,7 +46,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfMaps, BenchmarksDataClass.namesOfMaps));
-        viewModel.collectionsList.observe(getViewLifecycleOwner(), adapter::submitList);
+        viewModel.itemsLiveData.observe(getViewLifecycleOwner(), adapter::submitList);
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -73,6 +73,6 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
         String size = result.getString(InputFragment.COLLECTION_SIZE_KEY);
         editText.setText(size);
-        viewModel.sizeOfCollection.postValue(Long.parseLong(size));
+        viewModel.testSizeLiveData.postValue(Long.parseLong(size));
     }
 }

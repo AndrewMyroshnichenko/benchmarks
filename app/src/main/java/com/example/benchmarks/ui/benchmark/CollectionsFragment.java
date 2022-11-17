@@ -47,7 +47,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         recyclerView.setAdapter(adapter);
         inputFragment.show(getChildFragmentManager(), null);
         adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfCollections, BenchmarksDataClass.namesOfCollections));
-        viewModel.collectionsList.observe(getViewLifecycleOwner(), adapter::submitList);
+        viewModel.itemsLiveData.observe(getViewLifecycleOwner(), adapter::submitList);
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -76,6 +76,6 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
         String size = result.getString(InputFragment.COLLECTION_SIZE_KEY);
         editText.setText(size);
-        viewModel.sizeOfCollection.postValue(Long.parseLong(size));
+        viewModel.testSizeLiveData.postValue(Long.parseLong(size));
     }
 }
