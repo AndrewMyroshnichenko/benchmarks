@@ -1,10 +1,7 @@
 package com.example.benchmarks.ui.benchmark;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.models.BenchmarkItem;
 
@@ -16,19 +13,13 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class BenchmarksViewModel extends AndroidViewModel {
+public class BenchmarksViewModel extends ViewModel {
 
     public final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
     public final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
-    public final Map<String, Long> durationOperation = new HashMap<>();
     public final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
+    public final Map<String, Long> durationOperation = new HashMap<>();
     private ThreadPoolExecutor executor;
-
-    public BenchmarksViewModel(@NonNull Application application) {
-        super(application);
-        BenchmarksDataClass.fillLists(application.getApplicationContext());
-    }
-
 
     public static boolean isNumberCorrect(String number) {
         long temp;
@@ -72,7 +63,7 @@ public class BenchmarksViewModel extends AndroidViewModel {
         System.gc();
     }
 
-    public boolean switchStartStop(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
+    public boolean onButtonToggle(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
         if (Boolean.FALSE.equals(calculationStartLiveData.getValue())) {
             startProcess(namesOfCollections, namesOfOperations, nameOfFragment);
             calculationStartLiveData.postValue(true);

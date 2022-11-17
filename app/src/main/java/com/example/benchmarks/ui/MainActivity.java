@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
-
+        BenchmarksDataClass.fillLists(this);
         bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), Arrays.asList(getResources().getStringArray(R.array.name_tabs))));
         bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
         bind.mainTabLayout.addOnTabSelectedListener(this);

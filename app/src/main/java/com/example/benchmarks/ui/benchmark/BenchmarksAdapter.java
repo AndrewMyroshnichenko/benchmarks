@@ -42,6 +42,7 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
     @Override
     public void onBindViewHolder(@NonNull BenchmarksViewHolder holder, int position) {
         holder.bind(getItem(position));
+
     }
 
     public static class BenchmarksViewHolder extends RecyclerView.ViewHolder {

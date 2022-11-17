@@ -45,5 +45,29 @@
         <item>TreeMap</item>
         <item>HashMap</item>
     </string-array>
+    
+    <string-array name="fragment_collections">
+        <item>ArrayList Adding in the beginning</item>
+        <item>LinkedList Adding in the beginning</item>
+        <item>CopyOnWriteArrayList Adding in the beginning</item>
+        <item>ArrayList Adding in the middle</item>
+        <item>LinkedList Adding in the middle</item>
+        <item>CopyOnWriteArrayList Adding in the middle</item>
+        <item>ArrayList Adding in the end</item>
+        <item>LinkedList Adding in the end</item>
+        <item>CopyOnWriteArrayList Adding in the end</item>
+        <item>ArrayList Search by value</item>
+        <item>LinkedList Search by value</item>
+        <item>CopyOnWriteArrayList Search by value</item>
+        <item>ArrayList Removing in the beginning</item>
+        <item>LinkedList Removing in the beginning</item>
+        <item>CopyOnWriteArrayList Removing in the beginning</item>
+        <item>ArrayList Removing in the middle</item>
+        <item>LinkedList Removing in the middle</item>
+        <item>CopyOnWriteArrayList Removing in the middle</item>
+        <item>ArrayList Removing in the end</item>
+        <item>LinkedList Removing in the end</item>
+        <item>CopyOnWriteArrayList Removing in the end</item>
+    </string-array>
 
 </resources>

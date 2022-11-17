@@ -63,7 +63,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                startStop.setText(viewModel.switchStartStop(BenchmarksDataClass.namesOfMaps, BenchmarksDataClass.operationsOfMaps, KEY_OF_MAPS_FRAGMENT) ?
+                startStop.setText(viewModel.onButtonToggle(BenchmarksDataClass.namesOfMaps, BenchmarksDataClass.operationsOfMaps, KEY_OF_MAPS_FRAGMENT) ?
                         getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
                 break;
         }

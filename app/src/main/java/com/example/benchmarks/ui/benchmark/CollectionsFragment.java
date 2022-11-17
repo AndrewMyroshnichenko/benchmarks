@@ -18,6 +18,10 @@ import com.example.benchmarks.R;
 import com.example.benchmarks.ui.input.InputFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class CollectionsFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
 
@@ -38,6 +42,10 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        List<String> list = new ArrayList<>();
+        list.addAll(Arrays.asList(view.getResources().getStringArray(R.array.fragment_collections)));
+
         editText = view.findViewById(R.id.ed_collections_fragment);
         editText.setOnClickListener(this);
         startStop = view.findViewById(R.id.bt_collections);
@@ -64,7 +72,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                startStop.setText(viewModel.switchStartStop(BenchmarksDataClass.namesOfCollections, BenchmarksDataClass.operationsOfCollections, KEY_OF_COLLECTION_FRAGMENT) ?
+                startStop.setText(viewModel.onButtonToggle(BenchmarksDataClass.namesOfCollections, BenchmarksDataClass.operationsOfCollections, KEY_OF_COLLECTION_FRAGMENT) ?
                         getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
                 break;
 
