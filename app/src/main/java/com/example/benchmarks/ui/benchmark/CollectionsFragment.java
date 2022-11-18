@@ -55,7 +55,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         recyclerView.setAdapter(adapter);
         inputFragment.show(getChildFragmentManager(), null);
         adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfCollections, BenchmarksDataClass.namesOfCollections));
-        viewModel.itemsLiveData.observe(getViewLifecycleOwner(), adapter::submitList);
+        viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 

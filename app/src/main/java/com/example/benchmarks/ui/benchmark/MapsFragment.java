@@ -46,7 +46,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfMaps, BenchmarksDataClass.namesOfMaps));
-        viewModel.itemsLiveData.observe(getViewLifecycleOwner(), adapter::submitList);
+        viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -64,7 +64,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
                 break;
             case R.id.bt_collections:
                 viewModel.onButtonToggle(BenchmarksDataClass.namesOfMaps, BenchmarksDataClass.operationsOfMaps, KEY_OF_MAPS_FRAGMENT);
-                startStop.setText( viewModel.calculationStartLiveData.getValue() ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
+                startStop.setText(viewModel.calculationStartLiveData.getValue() ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
                 break;
         }
     }

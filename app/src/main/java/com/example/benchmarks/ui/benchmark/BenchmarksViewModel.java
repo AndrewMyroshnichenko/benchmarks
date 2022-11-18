@@ -15,10 +15,10 @@ import java.util.concurrent.TimeUnit;
 
 public class BenchmarksViewModel extends ViewModel {
 
-    public final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
     public static final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
     public final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
-    public final Map<String, Long> durationOperation = new HashMap<>();
+    private final Map<String, Long> durationOperation = new HashMap<>();
     private ThreadPoolExecutor executor;
 
     public static boolean isNumberCorrect(String number) {
@@ -60,7 +60,7 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    public void onStopProcess() {
+    private void onStopProcess() {
         executor.shutdownNow();
         executor = null;
         System.gc();
@@ -69,16 +69,16 @@ public class BenchmarksViewModel extends ViewModel {
     public void onButtonToggle(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
         if (Boolean.FALSE.equals(calculationStartLiveData.getValue())) {
             startProcess(namesOfCollections, namesOfOperations, nameOfFragment);
-            calculationStartLiveData.postValue(true);
+            calculationStartLiveData.setValue(true);
         } else {
             onStopProcess();
-            calculationStartLiveData.postValue(false);
+            calculationStartLiveData.setValue(false);
         }
-
     }
 
-}
+    public MutableLiveData<List<BenchmarkItem>> getItemsLiveData() {
+        return itemsLiveData;
+    }
 
-/*
- *
- * */
+
+}
