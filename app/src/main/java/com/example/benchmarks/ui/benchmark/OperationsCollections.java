@@ -23,7 +23,7 @@ public class OperationsCollections implements Runnable {
         this.benchmarksViewModel = benchmarksViewModel;
         this.operationType = operationType;
         this.collectionType = collectionType;
-        sizeOfCollection = benchmarksViewModel.testSizeLiveData.getValue();
+        sizeOfCollection = benchmarksViewModel.getTestSizeLiveData().getValue();
     }
 
     public void createCollection(int numberOfCollection){

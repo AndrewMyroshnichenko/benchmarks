@@ -1,5 +1,7 @@
 package com.example.benchmarks.ui.benchmark;
 
+import android.util.Pair;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,22 +18,19 @@ import java.util.concurrent.TimeUnit;
 public class BenchmarksViewModel extends ViewModel {
 
     private final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
-    public static final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
     public final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
     private final Map<String, Long> durationOperation = new HashMap<>();
     private ThreadPoolExecutor executor;
 
-    public static boolean isNumberCorrect(String number) {
-        long temp;
+
+    public static Pair<Boolean, Long> isNumberCorrect(String number) {
         try {
-            temp = Long.parseLong(number);
-            if(temp > 0) {
-                testSizeLiveData.postValue(temp);
-            }
+            long temp = Long.parseLong(number);
+            return new Pair<>(temp > 0,  temp);
         } catch (NumberFormatException exception) {
-            return false;
+            return new Pair<>(false,  0L);
         }
-        return temp > 0;
     }
 
     public List<BenchmarkItem> fillRecyclerView(List<String> operations, List<String> collections) {
@@ -80,5 +79,11 @@ public class BenchmarksViewModel extends ViewModel {
         return itemsLiveData;
     }
 
+    public MutableLiveData<Long> getTestSizeLiveData() {
+        return testSizeLiveData;
+    }
 
+    public void setTestSizeLiveData(Long size){
+        testSizeLiveData.setValue(size);
+    }
 }
