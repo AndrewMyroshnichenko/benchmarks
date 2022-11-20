@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +28,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
-    private Button startStop;
+    private Button buttonStartStop;
     private TextInputEditText editText;
     private BenchmarksViewModel viewModel;
     public static final String KEY_OF_COLLECTION_FRAGMENT = "CollectionsFragment";
@@ -48,14 +49,14 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
         editText = view.findViewById(R.id.ed_collections_fragment);
         editText.setOnClickListener(this);
-        startStop = view.findViewById(R.id.bt_collections);
-        startStop.setOnClickListener(this);
+        buttonStartStop = view.findViewById(R.id.bt_collections);
+        buttonStartStop.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
-        inputFragment.show(getChildFragmentManager(), null);
         adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfCollections, BenchmarksDataClass.namesOfCollections));
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
+        viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> buttonStartStop.setText(aBoolean ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start)));
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -73,7 +74,6 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.bt_collections:
                 viewModel.onButtonToggle(BenchmarksDataClass.namesOfCollections, BenchmarksDataClass.operationsOfCollections, KEY_OF_COLLECTION_FRAGMENT);
-                startStop.setText(viewModel.calculationStartLiveData.getValue() ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
                 break;
 
         }

@@ -19,7 +19,7 @@ public class BenchmarksViewModel extends ViewModel {
 
     private final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
     private final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
-    public final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
     private final Map<String, Long> durationOperation = new HashMap<>();
     private ThreadPoolExecutor executor;
 
@@ -85,5 +85,13 @@ public class BenchmarksViewModel extends ViewModel {
 
     public void setTestSizeLiveData(Long size){
         testSizeLiveData.setValue(size);
+    }
+
+    public MutableLiveData<Boolean> getCalculationStartLiveData() {
+        return calculationStartLiveData;
+    }
+
+    public void settCalculationStartLiveData(boolean isStart){
+        calculationStartLiveData.setValue(isStart);
     }
 }

@@ -23,7 +23,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
 
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
-    private Button startStop;
+    private Button buttonStartStop;
     private TextInputEditText editText;
     private BenchmarksViewModel viewModel;
     private final String KEY_OF_MAPS_FRAGMENT = "MapsFragment";
@@ -40,13 +40,14 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
         super.onViewCreated(view, savedInstanceState);
         editText = view.findViewById(R.id.ed_collections_fragment);
         editText.setOnClickListener(this);
-        startStop = view.findViewById(R.id.bt_collections);
-        startStop.setOnClickListener(this);
+        buttonStartStop = view.findViewById(R.id.bt_collections);
+        buttonStartStop.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfMaps, BenchmarksDataClass.namesOfMaps));
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
+        viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> buttonStartStop.setText(aBoolean ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start)));
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -64,7 +65,6 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
                 break;
             case R.id.bt_collections:
                 viewModel.onButtonToggle(BenchmarksDataClass.namesOfMaps, BenchmarksDataClass.operationsOfMaps, KEY_OF_MAPS_FRAGMENT);
-                startStop.setText(viewModel.calculationStartLiveData.getValue() ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start));
                 break;
         }
     }
