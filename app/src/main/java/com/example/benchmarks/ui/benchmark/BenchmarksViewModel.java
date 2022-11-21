@@ -2,6 +2,7 @@ package com.example.benchmarks.ui.benchmark;
 
 import android.util.Pair;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -75,11 +76,11 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    public MutableLiveData<List<BenchmarkItem>> getItemsLiveData() {
+    public LiveData<List<BenchmarkItem>> getItemsLiveData() {
         return itemsLiveData;
     }
 
-    public MutableLiveData<Long> getTestSizeLiveData() {
+    public LiveData<Long> getTestSizeLiveData() {
         return testSizeLiveData;
     }
 
@@ -87,7 +88,7 @@ public class BenchmarksViewModel extends ViewModel {
         testSizeLiveData.setValue(size);
     }
 
-    public MutableLiveData<Boolean> getCalculationStartLiveData() {
+    public LiveData<Boolean> getCalculationStartLiveData() {
         return calculationStartLiveData;
     }
 
