@@ -33,7 +33,7 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    public List<BenchmarkItem> fillRecyclerView(List<String> itemsCollection) {
+    private List<BenchmarkItem> fillRecyclerView(List<String> itemsCollection) {
         final List<BenchmarkItem> list = new ArrayList<>();
         for (String listName : itemsCollection) {
             long duration = (durationOperation.get(listName) != null) ? durationOperation.get(listName) : 0;
