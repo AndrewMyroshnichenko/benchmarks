@@ -92,7 +92,7 @@ public class BenchmarksViewModel extends ViewModel {
         return calculationStartLiveData;
     }
 
-    public void settCalculationStartLiveData(boolean isStart){
+    private void settCalculationStartLiveData(boolean isStart){
         calculationStartLiveData.setValue(isStart);
     }
 }
