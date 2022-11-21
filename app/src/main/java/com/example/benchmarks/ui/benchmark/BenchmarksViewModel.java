@@ -24,39 +24,34 @@ public class BenchmarksViewModel extends ViewModel {
     private final Map<String, Long> durationOperation = new HashMap<>();
     private ThreadPoolExecutor executor;
 
-
     public static Pair<Boolean, Long> isNumberCorrect(String number) {
         try {
             long temp = Long.parseLong(number);
-            return new Pair<>(temp > 0,  temp);
+            return new Pair<>(temp > 0, temp);
         } catch (NumberFormatException exception) {
-            return new Pair<>(false,  0L);
+            return new Pair<>(false, 0L);
         }
     }
 
-    public List<BenchmarkItem> fillRecyclerView(List<String> operations, List<String> collections) {
+    public List<BenchmarkItem> fillRecyclerView(List<String> itemsCollection) {
         final List<BenchmarkItem> list = new ArrayList<>();
-        for (String operation : operations) {
-            for (String listName : collections) {
-                long duration = (durationOperation.get(listName + " " + operation) != null) ? durationOperation.get(listName + " " + operation) : 0;
-                list.add(new BenchmarkItem(operation, listName, false, duration));
-            }
+        for (String listName : itemsCollection) {
+            long duration = (durationOperation.get(listName) != null) ? durationOperation.get(listName) : 0;
+            list.add(new BenchmarkItem(listName, false, duration));
         }
         return list;
     }
 
-    public void updateDurationOperation(Long duration, String list, String operation, List<String> operations, List<String> collections) {
-        durationOperation.put(list + " " + operation, duration);
-        itemsLiveData.postValue(fillRecyclerView(operations, collections));
+    public void updateDurationOperation(Long duration, String nameOfItem, List<String> itemsCollection) {
+        durationOperation.put(nameOfItem, duration);
+        itemsLiveData.postValue(fillRecyclerView(itemsCollection));
     }
 
-    public void startProcess(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
+    public void startProcess(List<String> itemsCollection, String nameOfFragment) {
         executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
-        for (int i = 0; i < namesOfOperations.size(); i++) {
-            for (int j = 0; j < namesOfCollections.size(); j++) {
-                executor.execute(nameOfFragment.equals(CollectionsFragment.KEY_OF_COLLECTION_FRAGMENT) ?
-                        new OperationsCollections(this, i, j) : new OperationMaps(this, i, j));
-            }
+        for (int i = 0; i < itemsCollection.size(); i++) {
+            executor.execute(nameOfFragment.equals(CollectionsFragment.KEY_OF_COLLECTION_FRAGMENT) ?
+                    new OperationsCollections(this, BenchmarksDataClass.listOfCollections.get(i)) : new OperationMaps(this, BenchmarksDataClass.listOfMaps.get(i)));
         }
     }
 
@@ -66,9 +61,9 @@ public class BenchmarksViewModel extends ViewModel {
         System.gc();
     }
 
-    public void onButtonToggle(List<String> namesOfCollections, List<String> namesOfOperations, String nameOfFragment) {
-        if (calculationStartLiveData.getValue()) {
-            startProcess(namesOfCollections, namesOfOperations, nameOfFragment);
+    public void onButtonToggle(List<String> itemsCollection, String nameOfFragment) {
+        if (!calculationStartLiveData.getValue()) {
+            startProcess(itemsCollection, nameOfFragment);
             calculationStartLiveData.setValue(true);
         } else {
             onStopProcess();
@@ -84,7 +79,7 @@ public class BenchmarksViewModel extends ViewModel {
         return testSizeLiveData;
     }
 
-    public void setSizeCollectionLiveData(Long size){
+    public void setSizeCollectionLiveData(Long size) {
         testSizeLiveData.setValue(size);
     }
 
@@ -92,7 +87,7 @@ public class BenchmarksViewModel extends ViewModel {
         return calculationStartLiveData;
     }
 
-    private void settCalculationStartLiveData(boolean isStart){
+    private void settCalculationStartLiveData(boolean isStart) {
         calculationStartLiveData.setValue(isStart);
     }
 }

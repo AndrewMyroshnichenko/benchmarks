@@ -64,7 +64,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                viewModel.onButtonToggle(BenchmarksDataClass.namesOfMaps, BenchmarksDataClass.operationsOfMaps, KEY_OF_MAPS_FRAGMENT);
+                viewModel.onButtonToggle(BenchmarksDataClass.listOfMaps, KEY_OF_MAPS_FRAGMENT);
                 break;
         }
     }

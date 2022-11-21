@@ -13,78 +13,53 @@ public class OperationsCollections implements Runnable {
 
     private List<Integer> list;
     private final long sizeOfCollection;
-    private final int operationType;
-    private final int collectionType;
     private final BenchmarksViewModel benchmarksViewModel;
-    private String hashOfList;
-    private String hashOfOperation;
+    String nameOfItem;
 
-    public OperationsCollections(BenchmarksViewModel benchmarksViewModel, int operationType, int collectionType) {
+    public OperationsCollections(BenchmarksViewModel benchmarksViewModel, String nameOfItem) {
         this.benchmarksViewModel = benchmarksViewModel;
-        this.operationType = operationType;
-        this.collectionType = collectionType;
+        this.nameOfItem = nameOfItem;
         sizeOfCollection = benchmarksViewModel.getTestSizeLiveData().getValue();
     }
 
-    public void createCollection(int numberOfCollection){
-
-        switch (numberOfCollection){
-            case 0:
-                list = new ArrayList<Integer>();
-                fillCollection(list);
-                hashOfList = BenchmarksDataClass.namesOfCollections.get(numberOfCollection);
-                break;
-            case 1:
-                list = new LinkedList<Integer>();
-                fillCollection(list);
-                hashOfList = BenchmarksDataClass.namesOfCollections.get(numberOfCollection);
-                break;
-            case 2:
-                list = new CopyOnWriteArrayList<Integer>();
-                fillCollection(list);
-                hashOfList = BenchmarksDataClass.namesOfCollections.get(numberOfCollection);
-                break;
+    public void createCollection(String nameOfItem) {
+        if (nameOfItem.contains("ArrayList")) {
+            list = new ArrayList<Integer>();
+            fillCollection(list);
+        } else if (nameOfItem.contains("LinkedList")) {
+            list = new LinkedList<Integer>();
+            fillCollection(list);
+        } else {
+            list = new CopyOnWriteArrayList<Integer>();
+            fillCollection(list);
         }
     }
 
-    public void markDurationOfOperation(int numberOfOperation){
+    public void markDurationOfOperation(String nameOfItem) {
+
         final int valueForSearching = 200;
         long startTime = System.currentTimeMillis();
-        switch (numberOfOperation){
-            case 0:
-                list.add(0, (int) (Math.random() * 100));
-                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
-                break;
-            case 1:
-                list.add(list.size() / 2, valueForSearching);
-                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
-                break;
-            case 2:
-                list.add((int) (Math.random() * 100));
-                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
-                break;
-            case 3:
-                list.indexOf(valueForSearching);
-                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
-                break;
-            case 4:
-                list.remove(0);
-                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
-                break;
-            case 5:
-                list.remove(list.size() / 2);
-                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
-                break;
-            case 6:
-                list.remove(list.size() - 1);
-                hashOfOperation = BenchmarksDataClass.operationsOfCollections.get(numberOfOperation);
-                break;
+
+        if (nameOfItem.contains("Adding in the beginning")) {
+            list.add(0, (int) (Math.random() * 100));
+        } else if (nameOfItem.contains("Adding in the middle")) {
+            list.add(list.size() / 2, valueForSearching);
+        } else if (nameOfItem.contains("Adding in the end")) {
+            list.add((int) (Math.random() * 100));
+        } else if (nameOfItem.contains("Search by value")) {
+            list.indexOf(valueForSearching);
+        } else if (nameOfItem.contains("Removing in the beginning")) {
+            list.remove(0);
+        } else if (nameOfItem.contains("Removing in the middle")) {
+            list.remove(list.size() / 2);
+        } else {
+            list.remove(list.size() - 1);
         }
-        long endTime = System.currentTimeMillis();;
-        benchmarksViewModel.updateDurationOperation(endTime - startTime, hashOfList, hashOfOperation, BenchmarksDataClass.operationsOfCollections, BenchmarksDataClass.namesOfCollections);
+        long endTime = System.currentTimeMillis();
+        benchmarksViewModel.updateDurationOperation(endTime - startTime, nameOfItem, BenchmarksDataClass.listOfCollections);
     }
 
-    private void fillCollection(List<Integer> listOfCollection){
+    private void fillCollection(List<Integer> listOfCollection) {
         for (int i = 0; i < sizeOfCollection; i++) {
             listOfCollection.add((int) (Math.random() * 100));
         }
@@ -92,7 +67,7 @@ public class OperationsCollections implements Runnable {
 
     @Override
     public void run() {
-        createCollection(collectionType);
-        markDurationOfOperation(operationType);
+        createCollection(nameOfItem);
+        markDurationOfOperation(nameOfItem);
     }
 }

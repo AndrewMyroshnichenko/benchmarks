@@ -44,7 +44,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         super.onViewCreated(view, savedInstanceState);
 
         List<String> list = new ArrayList<>();
-        list.addAll(Arrays.asList(view.getResources().getStringArray(R.array.fragment_collections)));
+        list.addAll(Arrays.asList(view.getResources().getStringArray(R.array.list_of_collections)));
 
         editText = view.findViewById(R.id.ed_collections_fragment);
         editText.setOnClickListener(this);
@@ -72,7 +72,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
-                viewModel.onButtonToggle(BenchmarksDataClass.namesOfCollections, BenchmarksDataClass.operationsOfCollections, KEY_OF_COLLECTION_FRAGMENT);
+                viewModel.onButtonToggle(BenchmarksDataClass.listOfCollections, KEY_OF_COLLECTION_FRAGMENT);
                 break;
 
         }

@@ -10,7 +10,6 @@
     <string name="bt_stop">STOP</string>
 
 
-
     <string name="tv_error_text">Error.You need enter elements count.</string>
     <string name="tv_message_input_fragment">Please enter collection size and number of elements to compare</string>
 
@@ -45,8 +44,8 @@
         <item>TreeMap</item>
         <item>HashMap</item>
     </string-array>
-    
-    <string-array name="fragment_collections">
+
+    <string-array name="list_of_collections">
         <item>ArrayList Adding in the beginning</item>
         <item>LinkedList Adding in the beginning</item>
         <item>CopyOnWriteArrayList Adding in the beginning</item>
@@ -68,6 +67,15 @@
         <item>ArrayList Removing in the end</item>
         <item>LinkedList Removing in the end</item>
         <item>CopyOnWriteArrayList Removing in the end</item>
+    </string-array>
+
+    <string-array name="list_of_maps">
+        <item>TreeMap Adding new in</item>
+        <item>HashMap Adding new in</item>
+        <item>TreeMap Search by key in</item>
+        <item>HashMap Search by key in</item>
+        <item>TreeMap Removing in</item>
+        <item>HashMap Removing in</item>
     </string-array>
 
 </resources>

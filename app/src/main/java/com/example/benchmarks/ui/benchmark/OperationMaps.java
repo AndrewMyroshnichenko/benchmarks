@@ -4,69 +4,54 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class OperationMaps implements Runnable{
+public class OperationMaps implements Runnable {
 
     private Map<Integer, Integer> map;
     private final long sizeOfMap;
-    private final int operationType;
-    private final int mapType;
     private final BenchmarksViewModel benchmarksViewModel;
-    private String hashOfMap;
-    private String hashOfOperation;
+    private final String nameOfItem;
 
-    public OperationMaps(BenchmarksViewModel benchmarksViewModel, int operationType, int mapType) {
+    public OperationMaps(BenchmarksViewModel benchmarksViewModel, String nameOfItem) {
         this.benchmarksViewModel = benchmarksViewModel;
-        this.operationType = operationType;
-        this.mapType = mapType;
+        this.nameOfItem = nameOfItem;
         sizeOfMap = benchmarksViewModel.getTestSizeLiveData().getValue();
     }
 
-    public void createMaps(int numberOfMap) {
-
-        switch (numberOfMap) {
-            case 0:
-                map = new TreeMap<>();
-                fillMap(map);
-                hashOfMap = BenchmarksDataClass.namesOfMaps.get(numberOfMap);
-                break;
-            case 1:
-                map = new HashMap<>();
-                fillMap(map);
-                hashOfMap = BenchmarksDataClass.namesOfMaps.get(numberOfMap);
-                break;
-
+    public void createMaps(String nameOfItem) {
+        if (nameOfItem.contains("TreeMap")) {
+            map = new TreeMap<>();
+            fillMap(map);
+        } else {
+            map = new HashMap<>();
+            fillMap(map);
         }
     }
 
-    public void markDurationOfOperation(int numberOfOperation){
+    public void markDurationOfOperation(String nameOfItem) {
+
         long startTime = System.currentTimeMillis();
-        switch (numberOfOperation){
-            case 0:
-                map.put(map.size(), (int) (Math.random() * 100));
-                hashOfOperation = BenchmarksDataClass.operationsOfMaps.get(numberOfOperation);
-                break;
-            case 1:
-                map.get(map.size() / 2);
-                hashOfOperation = BenchmarksDataClass.operationsOfMaps.get(numberOfOperation);
-                break;
-            case 2:
-                map.remove(map.size() / 2);
-                hashOfOperation = BenchmarksDataClass.operationsOfMaps.get(numberOfOperation);
-                break;
+
+        if (nameOfItem.contains("Adding new in")) {
+            map.put(map.size(), (int) (Math.random() * 100));
+        } else if (nameOfItem.contains("Search by key in")) {
+            map.get(map.size() / 2);
+        } else {
+            map.remove(map.size() / 2);
         }
+
         long endTime = System.currentTimeMillis();
-        benchmarksViewModel.updateDurationOperation(endTime - startTime, hashOfMap, hashOfOperation, BenchmarksDataClass.operationsOfMaps, BenchmarksDataClass.namesOfMaps);
+        benchmarksViewModel.updateDurationOperation(endTime - startTime, nameOfItem, BenchmarksDataClass.listOfMaps);
     }
 
-        private void fillMap(Map<Integer, Integer> mapList){
-            for (int i = 0; i < sizeOfMap; i++) {
-                mapList.put(i, (int) (Math.random() * 100));
-            }
+    private void fillMap(Map<Integer, Integer> mapList) {
+        for (int i = 0; i < sizeOfMap; i++) {
+            mapList.put(i, (int) (Math.random() * 100));
         }
+    }
 
     @Override
     public void run() {
-        createMaps(mapType);
-        markDurationOfOperation(operationType);
+        createMaps(nameOfItem);
+        markDurationOfOperation(nameOfItem);
     }
 }
