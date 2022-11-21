@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,7 +81,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-        viewModel.setTestSizeLiveData(result.getLong(InputFragment.LONG_COLLECTION_SIZE_KEY));
+        viewModel.setSizeCollectionLiveData(result.getLong(InputFragment.LONG_COLLECTION_SIZE_KEY));
         String size = result.getString(InputFragment.STRING_COLLECTION_SIZE_KEY);
         editText.setText(size);
     }

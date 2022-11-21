@@ -84,7 +84,7 @@ public class BenchmarksViewModel extends ViewModel {
         return testSizeLiveData;
     }
 
-    public void setTestSizeLiveData(Long size){
+    public void setSizeCollectionLiveData(Long size){
         testSizeLiveData.setValue(size);
     }
 
