@@ -5,10 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/* This class is not finished
-I am only thinking how to realize logic of creating Threads and mark duration of operations
- */
-
 public class OperationsCollections implements Runnable {
 
     private List<Integer> list;

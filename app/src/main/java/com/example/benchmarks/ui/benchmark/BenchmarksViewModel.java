@@ -47,11 +47,11 @@ public class BenchmarksViewModel extends ViewModel {
         itemsLiveData.postValue(fillRecyclerView(itemsCollection));
     }
 
-    public void startProcess(List<String> itemsCollection, String nameOfFragment) {
+    public void onStartProcess(List<String> itemsCollection, String nameOfFragment) {
         executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
         for (int i = 0; i < itemsCollection.size(); i++) {
             executor.execute(nameOfFragment.equals(CollectionsFragment.KEY_OF_COLLECTION_FRAGMENT) ?
-                    new OperationsCollections(this, BenchmarksDataClass.listOfCollections.get(i)) : new OperationMaps(this, BenchmarksDataClass.listOfMaps.get(i)));
+                    new OperationsCollections(this, itemsCollection.get(i)) : new OperationMaps(this, itemsCollection.get(i)));
         }
     }
 
@@ -62,8 +62,8 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onButtonToggle(List<String> itemsCollection, String nameOfFragment) {
-        if (!calculationStartLiveData.getValue()) {
-            startProcess(itemsCollection, nameOfFragment);
+        if (executor == null) {
+            onStartProcess(itemsCollection, nameOfFragment);
             calculationStartLiveData.setValue(true);
         } else {
             onStopProcess();
