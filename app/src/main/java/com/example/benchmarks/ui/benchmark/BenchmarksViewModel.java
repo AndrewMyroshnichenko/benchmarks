@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BenchmarksViewModel extends ViewModel {
 
@@ -22,7 +22,7 @@ public class BenchmarksViewModel extends ViewModel {
     private final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
     private final Map<String, Long> durationOperation = new HashMap<>();
-    private ThreadPoolExecutor executor;
+    private ExecutorService executor;
 
     public static Pair<Boolean, Long> isNumberCorrect(String number) {
         try {
@@ -47,8 +47,8 @@ public class BenchmarksViewModel extends ViewModel {
         itemsLiveData.postValue(fillRecyclerView(itemsCollection));
     }
 
-    public void onStartProcess(List<String> itemsCollection, String nameOfFragment) {
-        executor = new ThreadPoolExecutor(6, 21, 1, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>(100));
+    public void startProcess(List<String> itemsCollection, String nameOfFragment) {
+        executor = Executors.newCachedThreadPool();
         for (int i = 0; i < itemsCollection.size(); i++) {
             executor.execute(nameOfFragment.equals(CollectionsFragment.KEY_OF_COLLECTION_FRAGMENT) ?
                     new OperationsCollections(this, itemsCollection.get(i)) : new OperationMaps(this, itemsCollection.get(i)));
@@ -62,8 +62,8 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onButtonToggle(List<String> itemsCollection, String nameOfFragment) {
-        if (executor == null) {
-            onStartProcess(itemsCollection, nameOfFragment);
+        if (!calculationStartLiveData.getValue()) {
+            startProcess(itemsCollection, nameOfFragment);
             calculationStartLiveData.setValue(true);
         } else {
             onStopProcess();
