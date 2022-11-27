@@ -63,7 +63,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onButtonToggle(List<String> itemsCollection, String nameOfFragment) {
-        if (!calculationStartLiveData.getValue()) {
+        if (executor == null) {
             onStartProcess(itemsCollection, nameOfFragment);
         } else {
             onStopProcess();
