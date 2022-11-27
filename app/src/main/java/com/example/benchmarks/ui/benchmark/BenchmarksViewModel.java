@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -47,7 +46,8 @@ public class BenchmarksViewModel extends ViewModel {
         itemsLiveData.postValue(fillRecyclerView(itemsCollection));
     }
 
-    public void startProcess(List<String> itemsCollection, String nameOfFragment) {
+    public void onStartProcess(List<String> itemsCollection, String nameOfFragment) {
+        calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
         for (int i = 0; i < itemsCollection.size(); i++) {
             executor.execute(nameOfFragment.equals(CollectionsFragment.KEY_OF_COLLECTION_FRAGMENT) ?
@@ -56,6 +56,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     private void onStopProcess() {
+        calculationStartLiveData.setValue(false);
         executor.shutdownNow();
         executor = null;
         System.gc();
@@ -63,11 +64,9 @@ public class BenchmarksViewModel extends ViewModel {
 
     public void onButtonToggle(List<String> itemsCollection, String nameOfFragment) {
         if (!calculationStartLiveData.getValue()) {
-            startProcess(itemsCollection, nameOfFragment);
-            calculationStartLiveData.setValue(true);
+            onStartProcess(itemsCollection, nameOfFragment);
         } else {
             onStopProcess();
-            calculationStartLiveData.setValue(false);
         }
     }
 
