@@ -3,11 +3,9 @@ package com.example.benchmarks.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.ActivityMainBinding;
-import com.example.benchmarks.ui.benchmark.BenchmarksAdapter;
 import com.example.benchmarks.ui.benchmark.BenchmarksDataClass;
 import com.google.android.material.tabs.TabLayout;
 
