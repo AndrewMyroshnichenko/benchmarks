@@ -9,12 +9,15 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
+import com.example.benchmarks.databinding.FragmentInputBinding;
+import com.example.benchmarks.databinding.FragmentMainBinding;
 import com.example.benchmarks.ui.input.InputFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -27,9 +30,8 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
-    private Button buttonStartStop;
-    private TextInputEditText editText;
     private BenchmarksViewModel viewModel;
+    private FragmentMainBinding bind;
     public static final String KEY_OF_COLLECTION_FRAGMENT = "CollectionsFragment";
 
     @Override
@@ -42,20 +44,19 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        bind = FragmentMainBinding.bind(view);
 
         List<String> list = new ArrayList<>();
         list.addAll(Arrays.asList(view.getResources().getStringArray(R.array.list_of_collections)));
 
-        editText = view.findViewById(R.id.ed_collections_fragment);
-        editText.setOnClickListener(this);
-        buttonStartStop = view.findViewById(R.id.bt_collections);
-        buttonStartStop.setOnClickListener(this);
+        bind.edCollectionsFragment.setOnClickListener(this);
+        bind.btCollections.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         //adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfCollections, BenchmarksDataClass.namesOfCollections));
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
-        viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> buttonStartStop.setText(aBoolean ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start)));
+        viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> bind.btCollections.setText(aBoolean ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start)));
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -83,6 +84,6 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
         viewModel.setSizeCollectionLiveData(result.getLong(InputFragment.LONG_COLLECTION_SIZE_KEY));
         String size = result.getString(InputFragment.STRING_COLLECTION_SIZE_KEY);
-        editText.setText(size);
+        bind.edCollectionsFragment.setText(size);
     }
 }

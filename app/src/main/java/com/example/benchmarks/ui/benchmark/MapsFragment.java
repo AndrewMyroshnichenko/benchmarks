@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
+import com.example.benchmarks.databinding.FragmentMainBinding;
 import com.example.benchmarks.ui.input.InputFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -23,9 +24,8 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
 
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
-    private Button buttonStartStop;
-    private TextInputEditText editText;
     private BenchmarksViewModel viewModel;
+    private FragmentMainBinding bind;
     private final String KEY_OF_MAPS_FRAGMENT = "MapsFragment";
 
     @Override
@@ -38,16 +38,15 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        editText = view.findViewById(R.id.ed_collections_fragment);
-        editText.setOnClickListener(this);
-        buttonStartStop = view.findViewById(R.id.bt_collections);
-        buttonStartStop.setOnClickListener(this);
+        bind = FragmentMainBinding.bind(view);
+        bind.edCollectionsFragment.setOnClickListener(this);
+        bind.btCollections.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
         //adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfMaps, BenchmarksDataClass.namesOfMaps));
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
-        viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> buttonStartStop.setText(aBoolean ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start)));
+        viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> bind.btCollections.setText(aBoolean ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start)));
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
@@ -73,6 +72,6 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
         viewModel.setSizeCollectionLiveData(result.getLong(InputFragment.LONG_COLLECTION_SIZE_KEY));
         String size = result.getString(InputFragment.STRING_COLLECTION_SIZE_KEY);
-        editText.setText(size);
+        bind.edCollectionsFragment.setText(size);
     }
 }
