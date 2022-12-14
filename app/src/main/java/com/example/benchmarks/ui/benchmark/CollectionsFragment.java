@@ -45,10 +45,6 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bind = FragmentMainBinding.bind(view);
-
-        List<String> list = new ArrayList<>();
-        list.addAll(Arrays.asList(view.getResources().getStringArray(R.array.list_of_collections)));
-
         bind.edCollectionsFragment.setOnClickListener(this);
         bind.btCollections.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_main);

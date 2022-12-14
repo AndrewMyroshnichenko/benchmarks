@@ -14,7 +14,9 @@ public class OperationsCollections implements Runnable {
     private List<Integer> list;
     private final long sizeOfCollection;
     private final BenchmarksViewModel benchmarksViewModel;
-    String nameOfItem;
+    private String nameOfItem;
+    private static int numberOfOperation = 0;
+    private final static int MAX_COUNT_OF_OPERATIONS = 21;
 
     public OperationsCollections(BenchmarksViewModel benchmarksViewModel, String nameOfItem) {
         this.benchmarksViewModel = benchmarksViewModel;
@@ -62,6 +64,14 @@ public class OperationsCollections implements Runnable {
     private void fillCollection(List<Integer> listOfCollection) {
         for (int i = 0; i < sizeOfCollection; i++) {
             listOfCollection.add((int) (Math.random() * 100));
+        }
+    }
+
+    private synchronized void additionalNumberOfOperation(){
+        if(numberOfOperation < MAX_COUNT_OF_OPERATIONS) {
+            numberOfOperation++;
+        } else {
+            numberOfOperation = 0;
         }
     }
 

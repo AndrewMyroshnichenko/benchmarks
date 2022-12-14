@@ -53,6 +53,7 @@ public class BenchmarksViewModel extends ViewModel {
             executor.execute(nameOfFragment.equals(CollectionsFragment.KEY_OF_COLLECTION_FRAGMENT) ?
                     new OperationsCollections(this, itemsCollection.get(i)) : new OperationMaps(this, itemsCollection.get(i)));
         }
+        executor.shutdown();
     }
 
     private void onStopProcess() {
@@ -63,7 +64,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onButtonToggle(List<String> itemsCollection, String nameOfFragment) {
-        if (executor == null) {
+        if (executor == null || executor.isTerminated()) {
             onStartProcess(itemsCollection, nameOfFragment);
         } else {
             onStopProcess();
