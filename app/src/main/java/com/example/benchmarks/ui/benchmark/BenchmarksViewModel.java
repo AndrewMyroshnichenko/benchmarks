@@ -66,9 +66,9 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onButtonToggle(List<String> itemsCollection, String nameOfFragment) {
-        if (executor == null || executor.isTerminated()) {
+        if (executor == null) {
             onStartProcess(itemsCollection, nameOfFragment);
-        } else {
+        } else if (executor.isShutdown() || executor.isTerminated()) {
             onStopProcess();
         }
     }
