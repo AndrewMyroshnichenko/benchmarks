@@ -1,4 +1,4 @@
-package com.example.benchmarks.ui.benchmark;
+package com.example.benchmarks.models;
 
 import android.content.Context;
 

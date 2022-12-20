@@ -4,35 +4,34 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.databinding.FragmentInputBinding;
 import com.example.benchmarks.databinding.FragmentMainBinding;
+import com.example.benchmarks.models.BenchmarksDataClass;
 import com.example.benchmarks.ui.input.InputFragment;
-import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class CollectionsFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
 
+    public static final String KEY_OF_COLLECTION_FRAGMENT = "CollectionsFragment";
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
     private BenchmarksViewModel viewModel;
     private FragmentMainBinding bind;
-    public static final String KEY_OF_COLLECTION_FRAGMENT = "CollectionsFragment";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
+    }
 
     @Override
     public View onCreateView(
@@ -47,33 +46,25 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         bind = FragmentMainBinding.bind(view);
         bind.edCollectionsFragment.setOnClickListener(this);
         bind.btCollections.setOnClickListener(this);
-        RecyclerView recyclerView = view.findViewById(R.id.rv_main);
+        final RecyclerView recyclerView = view.findViewById(R.id.rv_main);
         recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         recyclerView.setAdapter(adapter);
-        //adapter.submitList(viewModel.fillRecyclerView(BenchmarksDataClass.operationsOfCollections, BenchmarksDataClass.namesOfCollections));
+
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
         viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> bind.btCollections.setText(aBoolean ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start)));
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
-    }
-
-    @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ed_collections_fragment:
                 inputFragment.show(getChildFragmentManager(), null);
                 break;
             case R.id.bt_collections:
                 viewModel.onButtonToggle(BenchmarksDataClass.listOfCollections, KEY_OF_COLLECTION_FRAGMENT);
                 break;
-
         }
-
     }
 
     @Override

@@ -9,7 +9,6 @@
     <string name="bt_start">START</string>
     <string name="bt_stop">STOP</string>
 
-
     <string name="tv_error_text">Error.You need enter elements count.</string>
     <string name="tv_message_input_fragment">Please enter collection size and number of elements to compare</string>
 

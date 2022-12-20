@@ -16,27 +16,27 @@ import com.example.benchmarks.models.BenchmarkItem;
 
 public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdapter.BenchmarksViewHolder> {
 
+    private static final DiffUtil.ItemCallback<BenchmarkItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<BenchmarkItem>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
+            return oldItem.nameOfItem.equals(newItem.nameOfItem);
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
+            return (oldItem.equals(newItem));
+        }
+    };
+
     public BenchmarksAdapter() {
         super(DIFF_CALLBACK);
     }
 
-    private static final DiffUtil.ItemCallback<BenchmarkItem> DIFF_CALLBACK =
-            new DiffUtil.ItemCallback<BenchmarkItem>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
-                    return oldItem.nameOfItem.equals(newItem.nameOfItem);
-                }
-
-                @Override
-                public boolean areContentsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
-                    return (oldItem.equals(newItem));
-                }
-            };
-
     @NonNull
     @Override
     public BenchmarksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new BenchmarksViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_process, parent, false));
+        return new BenchmarksViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_process, parent, false));
     }
 
     @Override

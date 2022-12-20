@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,17 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.FragmentMainBinding;
+import com.example.benchmarks.models.BenchmarksDataClass;
 import com.example.benchmarks.ui.input.InputFragment;
-import com.google.android.material.textfield.TextInputEditText;
 
 
 public class MapsFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
 
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
+    private final String KEY_OF_MAPS_FRAGMENT = "MapsFragment";
     private BenchmarksViewModel viewModel;
     private FragmentMainBinding bind;
-    private final String KEY_OF_MAPS_FRAGMENT = "MapsFragment";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
+    }
 
     @Override
     public View onCreateView(
@@ -51,14 +56,8 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
-    }
-
-    @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.ed_collections_fragment:
                 inputFragment.show(getChildFragmentManager(), null);
                 break;

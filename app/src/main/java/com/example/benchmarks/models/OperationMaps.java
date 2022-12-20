@@ -1,4 +1,6 @@
-package com.example.benchmarks.ui.benchmark;
+package com.example.benchmarks.models;
+
+import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,10 +8,10 @@ import java.util.TreeMap;
 
 public class OperationMaps implements Runnable {
 
-    private Map<Integer, Integer> map;
     private final long sizeOfMap;
     private final BenchmarksViewModel benchmarksViewModel;
     private final String nameOfItem;
+    private Map<Integer, Integer> map;
 
     public OperationMaps(BenchmarksViewModel benchmarksViewModel, String nameOfItem) {
         this.benchmarksViewModel = benchmarksViewModel;

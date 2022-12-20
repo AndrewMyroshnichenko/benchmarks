@@ -23,12 +23,12 @@ import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
 
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 
-
-    private EditText editText;
-    private PopupWindow errorView;
     public final static String STRING_COLLECTION_SIZE_KEY = "KEY_COLLECTION";
     public final static String INPUT_REQUEST_KEY = "STING_KEY_INPUT_FRAGMENT";
     public static final String LONG_COLLECTION_SIZE_KEY = "LONG_KEY_COLLECTION";
+
+    private EditText editText;
+    private PopupWindow errorView;
 
 
     @NonNull
@@ -62,8 +62,8 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
 
     @Override
     public void onClick(View view) {
-        String collectionSize = editText.getText().toString();
-        Pair<Boolean, Long> result = BenchmarksViewModel.isNumberCorrect(collectionSize);
+        final String collectionSize = editText.getText().toString();
+        final Pair<Boolean, Long> result = BenchmarksViewModel.isNumberCorrect(collectionSize);
         if (result.first) {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
             sendCollectionSize(collectionSize, result.second);
@@ -84,7 +84,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
     }
 
     private void sendCollectionSize(String textSize, Long size) {
-        Bundle result = new Bundle();
+        final Bundle result = new Bundle();
         result.putString(STRING_COLLECTION_SIZE_KEY, textSize);
         result.putLong(LONG_COLLECTION_SIZE_KEY, size);
         getParentFragmentManager().setFragmentResult(INPUT_REQUEST_KEY, result);

@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.models.BenchmarkItem;
+import com.example.benchmarks.models.OperationMaps;
+import com.example.benchmarks.models.OperationsCollections;
 
 import java.util.ArrayList;
 import java.util.HashMap;
