@@ -3,13 +3,16 @@ package com.example.benchmarks.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.ActivityMainBinding;
 import com.example.benchmarks.models.BenchmarksDataClass;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
@@ -20,9 +23,12 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
+
+        final List<String> namesOfTabs = Arrays.asList(getResources().getStringArray(R.array.name_tabs));
         BenchmarksDataClass.fillLists(this);
-        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), Arrays.asList(getResources().getStringArray(R.array.name_tabs))));
-        bind.mainTabLayout.setupWithViewPager(bind.mainViewPager);
+        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), getLifecycle(), namesOfTabs));
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(bind.mainTabLayout, bind.mainViewPager, (tab, position) -> tab.setText(namesOfTabs.get(position)));
+        tabLayoutMediator.attach();
         bind.mainTabLayout.addOnTabSelectedListener(this);
     }
 
