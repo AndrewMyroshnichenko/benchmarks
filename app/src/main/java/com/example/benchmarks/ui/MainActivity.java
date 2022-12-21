@@ -1,6 +1,8 @@
 package com.example.benchmarks.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.TypedValue;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onTabSelected(TabLayout.Tab tab) {
         final int id = bind.mainTabLayout.getSelectedTabPosition() == 0 ?
                 R.drawable.tab_item_left_background : R.drawable.tab_item_right_background;
-        bind.mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(id));
+        bind.mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(id, getTheme()));
     }
 
     @Override
