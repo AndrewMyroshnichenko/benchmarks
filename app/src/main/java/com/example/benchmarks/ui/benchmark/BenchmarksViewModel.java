@@ -89,4 +89,12 @@ public class BenchmarksViewModel extends ViewModel {
         return calculationStartLiveData;
     }
 
+    private class OperationsRunnable implements Runnable {
+
+        @Override
+        public void run() {
+
+        }
+    }
+
 }
