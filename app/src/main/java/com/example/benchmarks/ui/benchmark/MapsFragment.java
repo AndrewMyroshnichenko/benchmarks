@@ -57,13 +57,10 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ed_collections_fragment:
-                inputFragment.show(getChildFragmentManager(), null);
-                break;
-            case R.id.bt_collections:
-                viewModel.onButtonToggle(BenchmarksDataClass.listOfMaps, KEY_OF_MAPS_FRAGMENT);
-                break;
+        if(view.equals(bind.edCollectionsFragment)){
+            inputFragment.show(getChildFragmentManager(), null);
+        } else if (view.equals(bind.btCollections)) {
+            viewModel.onButtonToggle(BenchmarksDataClass.listOfMaps, KEY_OF_MAPS_FRAGMENT);
         }
     }
 

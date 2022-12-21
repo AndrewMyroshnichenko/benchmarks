@@ -40,6 +40,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -57,13 +58,10 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ed_collections_fragment:
-                inputFragment.show(getChildFragmentManager(), null);
-                break;
-            case R.id.bt_collections:
-                viewModel.onButtonToggle(BenchmarksDataClass.listOfCollections, KEY_OF_COLLECTION_FRAGMENT);
-                break;
+        if(view.equals(bind.edCollectionsFragment)){
+            inputFragment.show(getChildFragmentManager(), null);
+        } else if (view.equals(bind.btCollections)) {
+            viewModel.onButtonToggle(BenchmarksDataClass.listOfCollections, KEY_OF_COLLECTION_FRAGMENT);
         }
     }
 
