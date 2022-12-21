@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.databinding.FragmentMainBinding;
+import com.example.benchmarks.databinding.FragmentBenchmarkBinding;
 import com.example.benchmarks.models.BenchmarksDataClass;
 import com.example.benchmarks.ui.input.InputFragment;
 
@@ -25,7 +25,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
     private BenchmarksViewModel viewModel;
-    private FragmentMainBinding bind;
+    private FragmentBenchmarkBinding bind;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,14 +37,14 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
     ) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        return inflater.inflate(R.layout.fragment_benchmark, container, false);
     }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bind = FragmentMainBinding.bind(view);
+        bind = FragmentBenchmarkBinding.bind(view);
         bind.edCollectionsFragment.setOnClickListener(this);
         bind.btCollections.setOnClickListener(this);
         final RecyclerView recyclerView = view.findViewById(R.id.rv_main);
