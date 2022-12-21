@@ -34,7 +34,7 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    private List<BenchmarkItem> fillRecyclerView(List<String> itemsCollection) {
+    private List<BenchmarkItem> updateListOfBenchmarkItems(List<String> itemsCollection) {
         final List<BenchmarkItem> list = new ArrayList<>();
         for (String listName : itemsCollection) {
             long duration = (durationOperation.get(listName) != null) ? durationOperation.get(listName) : 0;
@@ -45,7 +45,7 @@ public class BenchmarksViewModel extends ViewModel {
 
     public void updateDurationOperation(Long duration, String nameOfItem, List<String> itemsCollection) {
         durationOperation.put(nameOfItem, duration);
-        itemsLiveData.postValue(fillRecyclerView(itemsCollection));
+        itemsLiveData.postValue(updateListOfBenchmarkItems(itemsCollection));
     }
 
     public void onStartProcess(List<String> itemsCollection, String nameOfFragment) {
