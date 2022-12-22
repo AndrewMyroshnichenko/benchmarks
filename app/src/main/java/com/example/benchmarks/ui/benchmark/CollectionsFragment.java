@@ -58,7 +58,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if(view.equals(bind.edCollectionsFragment)){
+        if (view.equals(bind.edCollectionsFragment)) {
             inputFragment.show(getChildFragmentManager(), null);
         } else if (view.equals(bind.btCollections)) {
             viewModel.onButtonToggle(BenchmarksDataClass.listOfCollections, KEY_OF_COLLECTION_FRAGMENT);
