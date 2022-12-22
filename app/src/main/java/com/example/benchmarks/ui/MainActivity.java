@@ -19,6 +19,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     private ActivityMainBinding bind;
+    private TabLayoutMediator tabLayoutMediator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         final List<String> namesOfTabs = Arrays.asList(getResources().getStringArray(R.array.name_tabs));
         BenchmarksDataClass.fillLists(this);
         bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), getLifecycle(), namesOfTabs));
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(bind.mainTabLayout, bind.mainViewPager, (tab, position) -> tab.setText(namesOfTabs.get(position)));
+        tabLayoutMediator = new TabLayoutMediator(bind.mainTabLayout, bind.mainViewPager, (tab, position) -> tab.setText(namesOfTabs.get(position)));
         tabLayoutMediator.attach();
         bind.mainTabLayout.addOnTabSelectedListener(this);
     }
@@ -49,5 +50,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        tabLayoutMediator.detach();
     }
 }
