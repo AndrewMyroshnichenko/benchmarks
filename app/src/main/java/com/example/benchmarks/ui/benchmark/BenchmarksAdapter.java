@@ -41,7 +41,6 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
 
     @Override
     public void onBindViewHolder(@NonNull BenchmarksViewHolder holder, int position) {
-        String [] s = holder.itemView.getResources().getStringArray(R.array.list_of_collections);
         holder.bind(getItem(position));
     }
 
