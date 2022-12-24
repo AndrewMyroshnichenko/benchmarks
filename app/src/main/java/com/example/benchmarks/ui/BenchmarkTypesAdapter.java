@@ -7,7 +7,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.benchmarks.ui.benchmark.BenchmarkFragment;
-import com.example.benchmarks.ui.benchmark.MapsFragment;
 
 import java.util.List;
 

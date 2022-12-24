@@ -1,59 +1,56 @@
 package com.example.benchmarks.models;
 
-import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
+import com.example.benchmarks.R;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class OperationMaps implements Runnable {
+public class OperationMaps {
 
-    private final long sizeOfMap;
-    private final BenchmarksViewModel benchmarksViewModel;
-    private final String nameOfItem;
-    private Map<Integer, Integer> map;
-
-    public OperationMaps(BenchmarksViewModel benchmarksViewModel, String nameOfItem) {
-        this.benchmarksViewModel = benchmarksViewModel;
-        this.nameOfItem = nameOfItem;
-        sizeOfMap = benchmarksViewModel.getTestSizeLiveData().getValue();
-    }
-
-    public void createMaps(String nameOfItem) {
-        if (nameOfItem.contains("TreeMap")) {
-            map = new TreeMap<>();
-            fillMap(map);
-        } else {
-            map = new HashMap<>();
-            fillMap(map);
+    private Map<Integer, Integer> createMap(int sizeOfCollection, int indexOfCollection) {
+        Map<Integer, Integer> map = null;
+        int id = BenchmarksDataClass.fillIdOfCollectionsMap().get(indexOfCollection);
+        switch (id) {
+            case R.string.tree_map:
+                map = new TreeMap<>();
+                fillMap(map, sizeOfCollection);
+                break;
+            case R.string.hash_map:
+                 map = new HashMap<>();
+                 fillMap(map, sizeOfCollection);
+                 break;
         }
+        return map;
     }
 
-    public void markDurationOfOperation(String nameOfItem) {
-
+    public long markDurationOfOperation(int sizeOfCollection, int indexOfOperation, int indexOfCollection) {
+        Map<Integer, Integer> map = createMap(sizeOfCollection, indexOfCollection);
+        int id = BenchmarksDataClass.fillIdOfOperationsMap().get(indexOfOperation);
         long startTime = System.currentTimeMillis();
 
-        if (nameOfItem.contains("Adding new in")) {
-            map.put(map.size(), (int) (Math.random() * 100));
-        } else if (nameOfItem.contains("Search by key in")) {
-            map.get(map.size() / 2);
-        } else {
-            map.remove(map.size() / 2);
+        switch (id) {
+            case R.string.adding_new_in:
+                map.put(map.size(), 1);
+                break;
+            case R.string.search_by_key_in:
+                map.get(map.size() / 2);
+                break;
+            case R.string.removing_in:
+                map.remove(map.size() / 2);
+                break;
         }
-
         long endTime = System.currentTimeMillis();
-
+        return endTime - startTime;
     }
 
-    private void fillMap(Map<Integer, Integer> mapList) {
+    private void fillMap(Map<Integer, Integer> mapList, int sizeOfMap) {
         for (int i = 0; i < sizeOfMap; i++) {
-            mapList.put(i, (int) (Math.random() * 100));
+            mapList.put(i, (int) sizeOfMap);
         }
-    }
-
-    @Override
-    public void run() {
-        createMaps(nameOfItem);
-        markDurationOfOperation(nameOfItem);
     }
 }

@@ -63,7 +63,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
     @Override
     public void onClick(View view) {
         final String collectionSize = editText.getText().toString();
-        final Pair<Boolean, Long> result = BenchmarksViewModel.isNumberCorrect(collectionSize);
+        final Pair<Boolean, Integer> result = BenchmarksViewModel.isNumberCorrect(collectionSize);
         if (result.first) {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
             sendCollectionSize(collectionSize, result.second);
@@ -83,10 +83,10 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         errorView.showAsDropDown(editText, 80, 0);
     }
 
-    private void sendCollectionSize(String textSize, Long size) {
+    private void sendCollectionSize(String textSize, Integer size) {
         final Bundle result = new Bundle();
         result.putString(STRING_COLLECTION_SIZE_KEY, textSize);
-        result.putLong(LONG_COLLECTION_SIZE_KEY, size);
+        result.putInt(LONG_COLLECTION_SIZE_KEY, size);
         getParentFragmentManager().setFragmentResult(INPUT_REQUEST_KEY, result);
     }
 }

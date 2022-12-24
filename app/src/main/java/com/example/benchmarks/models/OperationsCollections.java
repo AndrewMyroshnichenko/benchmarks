@@ -4,56 +4,43 @@ import com.example.benchmarks.R;
 import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OperationsCollections {
 
-    public final static List<Integer> idOfCollections = fillIdOfCollectionsList();
-    public final static List<Integer> idOfOperations = fillIdOfOperationsList();
-    private final long sizeOfCollection;
-    private final BenchmarksViewModel benchmarksViewModel;
-    private List<Integer> list;
-
-    public OperationsCollections(BenchmarksViewModel benchmarksViewModel) {
-        this.benchmarksViewModel = benchmarksViewModel;
-        sizeOfCollection = benchmarksViewModel.getTestSizeLiveData().getValue();
-    }
-
-    private void createCollection(int indexOfCollection) {
-        int id = idOfCollections.get(indexOfCollection);
+    private List<Integer> createCollection(int sizeOfCollection, int indexOfCollection) {
+        List<Integer> list = null;
+        int id = BenchmarksDataClass.fillIdOfCollectionsList().get(indexOfCollection);
         switch (id) {
             case R.string.array_list:
-                list = new ArrayList<Integer>();
-                fillCollection(list);
-                break;
+                return list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
             case R.string.linked_list:
-                list = new LinkedList<Integer>();
-                fillCollection(list);
-                break;
+                return list = new LinkedList<>(Collections.nCopies(sizeOfCollection, 0));
             case R.string.copy_on_write_array_list:
-                list = new CopyOnWriteArrayList<Integer>();
-                fillCollection(list);
-                break;
+                return  list = new CopyOnWriteArrayList<>(Collections.nCopies(sizeOfCollection, 0));
         }
+        return list;
     }
 
-    public long markDurationOfOperation(int indexOfOperation, int indexOfCollection) {
-        createCollection(indexOfCollection);
-        int id = idOfOperations.get(indexOfOperation);
+    public long markDurationOfOperation(int sizeOfCollection, int indexOfOperation, int indexOfCollection) {
+        List<Integer> list = createCollection(sizeOfCollection, indexOfCollection);
+        int id = BenchmarksDataClass.fillIdOfOperationsList().get(indexOfOperation);
         final int valueForSearching = 200;
         long startTime = System.currentTimeMillis();
 
         switch (id) {
             case R.string.adding_in_the_beginning:
-                list.add(0, (int) (Math.random() * 100));
+                list.add(0, 1);
                 break;
             case R.string.adding_in_the_middle:
                 list.add(list.size() / 2, valueForSearching);
                 break;
             case R.string.adding_in_the_end:
-                list.add((int) (Math.random() * 100));
+                list.add(1);
                 break;
             case R.string.search_by_value:
                 list.indexOf(valueForSearching);
@@ -70,31 +57,5 @@ public class OperationsCollections {
         }
         long endTime = System.currentTimeMillis();
         return endTime - startTime;
-    }
-
-    private void fillCollection(List<Integer> listOfCollection) {
-        for (int i = 0; i < sizeOfCollection; i++) {
-            listOfCollection.add((int) (Math.random() * 100));
-        }
-    }
-
-    private static List<Integer> fillIdOfCollectionsList(){
-        List<Integer> list = new ArrayList<>();
-        list.add(R.string.array_list);
-        list.add(R.string.linked_list);
-        list.add(R.string.copy_on_write_array_list);
-        return list;
-    }
-
-    private static List<Integer> fillIdOfOperationsList(){
-        List<Integer> list = new ArrayList<>();
-        list.add(R.string.adding_in_the_beginning);
-        list.add(R.string.adding_in_the_middle);
-        list.add(R.string.adding_in_the_end);
-        list.add(R.string.search_by_value);
-        list.add(R.string.removing_in_the_beginning);
-        list.add(R.string.removing_in_the_middle);
-        list.add(R.string.removing_in_the_end);
-        return list;
     }
 }
