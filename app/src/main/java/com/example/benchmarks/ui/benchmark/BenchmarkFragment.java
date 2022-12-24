@@ -25,10 +25,11 @@ import java.util.List;
 public class BenchmarkFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
 
     public static final String POSITION_KEY = "POSITION";
-    private static final Bundle bundle = new Bundle();
+
     private final List<Integer> idOfFragments = fillIdOfFragmentsList();
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
+    private static int positionOfFragment = 0;
     private BenchmarksViewModel viewModel;
     private FragmentBenchmarkBinding bind;
 
@@ -36,6 +37,9 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
+        if (getArguments() != null) {
+            positionOfFragment = getArguments().getInt(POSITION_KEY);
+        }
     }
 
     @Override
@@ -66,7 +70,7 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         if (view.equals(bind.edCollectionsFragment)) {
             inputFragment.show(getChildFragmentManager(), null);
         } else if (view.equals(bind.btCollections)) {
-            viewModel.onButtonToggle(idOfFragments.get(bundle.getInt(POSITION_KEY)));
+            viewModel.onButtonToggle(idOfFragments.get(positionOfFragment));
         }
     }
 
@@ -79,6 +83,7 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
 
     public static BenchmarkFragment createFragment(int position){
         final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
+        final Bundle bundle = new Bundle();
         bundle.putInt(POSITION_KEY, position);
         return benchmarkFragment;
     }
