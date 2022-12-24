@@ -97,5 +97,8 @@
     <string name="search_by_key_in">Search by key in</string>
     <string name="removing_in">Removing in</string>
 
+    <string name="collections">Collections</string>
+    <string name="maps">Maps</string>
+
 
 </resources>

@@ -6,15 +6,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.benchmarks.R;
 import com.example.benchmarks.models.BenchmarkItem;
 import com.example.benchmarks.models.BenchmarksDataClass;
 import com.example.benchmarks.models.OperationMaps;
 import com.example.benchmarks.models.OperationsCollections;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import android.os.Handler;
@@ -37,15 +36,30 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    public void onStartProcess() {
+    public void onStartProcess(int idOfFragment) {
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
 
-        for (int i = 0; i < OperationsCollections.idOfCollections.size(); i++) {
-            for (int j = 0; j < OperationsCollections.idOfOperations.size(); j++) {
+        int collectionSize = 0;
+        int operationSize = 0;
+
+        switch (idOfFragment){
+            case R.string.collections:
+                collectionSize = OperationsCollections.idOfCollections.size();
+                operationSize = OperationsCollections.idOfOperations.size();
+                break;
+            case R.string.maps:
+                collectionSize = 2;
+                operationSize = 3;
+                break;
+        }
+
+        for (int i = 0; i < collectionSize; i++) {
+            for (int j = 0; j < operationSize; j++) {
                 executor.submit(new OperationsRunnable(this, j, i));
             }
         }
+
         executor.shutdown();
     }
 
@@ -56,9 +70,9 @@ public class BenchmarksViewModel extends ViewModel {
         System.gc();
     }
 
-    public void onButtonToggle() {
+    public void onButtonToggle(int idOfFragment) {
         if (executor == null) {
-            onStartProcess();
+            onStartProcess(idOfFragment);
         } else if (executor.isShutdown() || executor.isTerminated()) {
             onStopProcess();
         }

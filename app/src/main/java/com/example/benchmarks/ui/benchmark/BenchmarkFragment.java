@@ -15,13 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.FragmentBenchmarkBinding;
-import com.example.benchmarks.models.BenchmarksDataClass;
+import com.example.benchmarks.ui.MainActivity;
 import com.example.benchmarks.ui.input.InputFragment;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class CollectionsFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
 
-    public static final String KEY_OF_COLLECTION_FRAGMENT = "CollectionsFragment";
+public class BenchmarkFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
+
+    public static final String POSITION_KEY = "POSITION";
+    private static final Bundle bundle = new Bundle();
+    private final List<Integer> idOfFragments = fillIdOfFragmentsList();
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
     private BenchmarksViewModel viewModel;
@@ -61,7 +66,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         if (view.equals(bind.edCollectionsFragment)) {
             inputFragment.show(getChildFragmentManager(), null);
         } else if (view.equals(bind.btCollections)) {
-            viewModel.onButtonToggle();
+            viewModel.onButtonToggle(idOfFragments.get(bundle.getInt(POSITION_KEY)));
         }
     }
 
@@ -70,5 +75,18 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         viewModel.setSizeCollectionLiveData(result.getLong(InputFragment.LONG_COLLECTION_SIZE_KEY));
         String size = result.getString(InputFragment.STRING_COLLECTION_SIZE_KEY);
         bind.edCollectionsFragment.setText(size);
+    }
+
+    public static BenchmarkFragment createFragment(int position){
+        final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
+        bundle.putInt(POSITION_KEY, position);
+        return benchmarkFragment;
+    }
+
+    private List<Integer> fillIdOfFragmentsList(){
+        List<Integer> list = new ArrayList<>();
+        list.add(R.string.collections);
+        list.add(R.string.maps);
+        return list;
     }
 }
