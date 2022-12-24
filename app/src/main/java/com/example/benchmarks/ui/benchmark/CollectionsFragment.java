@@ -61,7 +61,7 @@ public class CollectionsFragment extends Fragment implements View.OnClickListene
         if (view.equals(bind.edCollectionsFragment)) {
             inputFragment.show(getChildFragmentManager(), null);
         } else if (view.equals(bind.btCollections)) {
-            viewModel.onButtonToggle(BenchmarksDataClass.listOfCollections, KEY_OF_COLLECTION_FRAGMENT);
+            viewModel.onButtonToggle();
         }
     }
 

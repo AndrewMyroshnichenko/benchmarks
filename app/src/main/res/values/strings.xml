@@ -78,4 +78,24 @@
         <item>HashMap Removing in</item>
     </string-array>
 
+    <string name="array_list">ArrayList</string>
+    <string name="linked_list">LinkedList</string>
+    <string name="copy_on_write_array_list">CopyOnWriteArrayList</string>
+
+    <string name="adding_in_the_beginning">Adding in the beginning</string>
+    <string name="adding_in_the_middle">Adding in the middle</string>
+    <string name="adding_in_the_end">Adding in the end</string>
+    <string name="search_by_value">Search by value</string>
+    <string name="removing_in_the_beginning">Removing in the beginning</string>
+    <string name="removing_in_the_middle">Removing in the middle</string>
+    <string name="removing_in_the_end">Removing in the end</string>
+
+    <string name="tree_map">TreeMap</string>
+    <string name="hash_map">HashMap</string>
+
+    <string name="adding_new_in">Adding new in</string>
+    <string name="search_by_key_in">Search by key in</string>
+    <string name="removing_in">Removing in</string>
+
+
 </resources>

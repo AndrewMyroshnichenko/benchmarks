@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.models.BenchmarkItem;
+import com.example.benchmarks.models.BenchmarksDataClass;
 import com.example.benchmarks.models.OperationMaps;
 import com.example.benchmarks.models.OperationsCollections;
 
@@ -16,13 +17,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import android.os.Handler;
 
 public class BenchmarksViewModel extends ViewModel {
 
     private final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
     private final MutableLiveData<Long> testSizeLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
-    private final Map<String, Long> durationOperation = new HashMap<>();
+    private final List <BenchmarkItem> items = new ArrayList<>();
+    private final Handler handler = new Handler();
     private ExecutorService executor;
 
     public static Pair<Boolean, Long> isNumberCorrect(String number) {
@@ -34,26 +37,14 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    private List<BenchmarkItem> createBenchmarksList(List<String> itemsCollection) {
-        final List<BenchmarkItem> list = new ArrayList<>();
-        for (String listName : itemsCollection) {
-            long duration = (durationOperation.get(listName) != null) ? durationOperation.get(listName) : 0;
-            list.add(new BenchmarkItem(listName, false, duration));
-        }
-        return list;
-    }
-
-    public void updateDurationOperation(Long duration, String nameOfItem, List<String> itemsCollection) {
-        durationOperation.put(nameOfItem, duration);
-        itemsLiveData.postValue(createBenchmarksList(itemsCollection));
-    }
-
-    public void onStartProcess(List<String> itemsCollection, String nameOfFragment) {
+    public void onStartProcess() {
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
-        for (int i = 0; i < itemsCollection.size(); i++) {
-            executor.execute(nameOfFragment.equals(CollectionsFragment.KEY_OF_COLLECTION_FRAGMENT) ?
-                    new OperationsCollections(this, itemsCollection.get(i)) : new OperationMaps(this, itemsCollection.get(i)));
+
+        for (int i = 0; i < OperationsCollections.idOfCollections.size(); i++) {
+            for (int j = 0; j < OperationsCollections.idOfOperations.size(); j++) {
+                executor.submit(new OperationsRunnable(this, j, i));
+            }
         }
         executor.shutdown();
     }
@@ -65,9 +56,9 @@ public class BenchmarksViewModel extends ViewModel {
         System.gc();
     }
 
-    public void onButtonToggle(List<String> itemsCollection, String nameOfFragment) {
+    public void onButtonToggle() {
         if (executor == null) {
-            onStartProcess(itemsCollection, nameOfFragment);
+            onStartProcess();
         } else if (executor.isShutdown() || executor.isTerminated()) {
             onStopProcess();
         }
@@ -91,9 +82,26 @@ public class BenchmarksViewModel extends ViewModel {
 
     private class OperationsRunnable implements Runnable {
 
+        private final BenchmarksViewModel benchmarksViewModel;
+        private final int indexOfOperation;
+        private final int indexOfCollection;
+
+        public OperationsRunnable(BenchmarksViewModel benchmarksViewModel, int indexOfOperation, int indexOfCollection){
+            this.benchmarksViewModel = benchmarksViewModel;
+            this.indexOfOperation = indexOfOperation;
+            this.indexOfCollection = indexOfCollection;
+        }
+
         @Override
         public void run() {
+            long duration = new OperationsCollections(benchmarksViewModel).markDurationOfOperation(indexOfOperation, indexOfCollection);
 
+            BenchmarkItem copy = new BenchmarkItem(BenchmarksDataClass.listOfCollectionsNames.get(indexOfCollection),
+                    BenchmarksDataClass.listOfCollectionsOperations.get(indexOfOperation),
+                    false, duration);
+            items.add(copy);
+
+            handler.post(() -> itemsLiveData.postValue(items));
         }
     }
 

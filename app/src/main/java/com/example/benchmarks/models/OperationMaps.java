@@ -42,7 +42,7 @@ public class OperationMaps implements Runnable {
         }
 
         long endTime = System.currentTimeMillis();
-        benchmarksViewModel.updateDurationOperation(endTime - startTime, nameOfItem, BenchmarksDataClass.listOfMaps);
+
     }
 
     private void fillMap(Map<Integer, Integer> mapList) {

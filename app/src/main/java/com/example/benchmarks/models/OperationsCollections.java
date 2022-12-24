@@ -1,5 +1,6 @@
 package com.example.benchmarks.models;
 
+import com.example.benchmarks.R;
 import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
 
 import java.util.ArrayList;
@@ -7,60 +8,68 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-/* This class is not finished
-I am only thinking how to realize logic of creating Threads and mark duration of operations
- */
+public class OperationsCollections {
 
-public class OperationsCollections implements Runnable {
-
-    private final static int MAX_COUNT_OF_OPERATIONS = 21;
-    private static int numberOfOperation = 0;
+    public final static List<Integer> idOfCollections = fillIdOfCollectionsList();
+    public final static List<Integer> idOfOperations = fillIdOfOperationsList();
     private final long sizeOfCollection;
     private final BenchmarksViewModel benchmarksViewModel;
     private List<Integer> list;
-    private String nameOfItem;
 
-    public OperationsCollections(BenchmarksViewModel benchmarksViewModel, String nameOfItem) {
+    public OperationsCollections(BenchmarksViewModel benchmarksViewModel) {
         this.benchmarksViewModel = benchmarksViewModel;
-        this.nameOfItem = nameOfItem;
         sizeOfCollection = benchmarksViewModel.getTestSizeLiveData().getValue();
     }
 
-    public void createCollection(String nameOfItem) {
-        if (nameOfItem.contains("ArrayList")) {
-            list = new ArrayList<Integer>();
-            fillCollection(list);
-        } else if (nameOfItem.contains("LinkedList")) {
-            list = new LinkedList<Integer>();
-            fillCollection(list);
-        } else {
-            list = new CopyOnWriteArrayList<Integer>();
-            fillCollection(list);
+    private void createCollection(int indexOfCollection) {
+        int id = idOfCollections.get(indexOfCollection);
+        switch (id) {
+            case R.string.array_list:
+                list = new ArrayList<Integer>();
+                fillCollection(list);
+                break;
+            case R.string.linked_list:
+                list = new LinkedList<Integer>();
+                fillCollection(list);
+                break;
+            case R.string.copy_on_write_array_list:
+                list = new CopyOnWriteArrayList<Integer>();
+                fillCollection(list);
+                break;
         }
     }
 
-    public void markDurationOfOperation(String nameOfItem) {
-
+    public long markDurationOfOperation(int indexOfOperation, int indexOfCollection) {
+        createCollection(indexOfCollection);
+        int id = idOfOperations.get(indexOfOperation);
         final int valueForSearching = 200;
         long startTime = System.currentTimeMillis();
 
-        if (nameOfItem.contains("Adding in the beginning")) {
-            list.add(0, (int) (Math.random() * 100));
-        } else if (nameOfItem.contains("Adding in the middle")) {
-            list.add(list.size() / 2, valueForSearching);
-        } else if (nameOfItem.contains("Adding in the end")) {
-            list.add((int) (Math.random() * 100));
-        } else if (nameOfItem.contains("Search by value")) {
-            list.indexOf(valueForSearching);
-        } else if (nameOfItem.contains("Removing in the beginning")) {
-            list.remove(0);
-        } else if (nameOfItem.contains("Removing in the middle")) {
-            list.remove(list.size() / 2);
-        } else {
-            list.remove(list.size() - 1);
+        switch (id) {
+            case R.string.adding_in_the_beginning:
+                list.add(0, (int) (Math.random() * 100));
+                break;
+            case R.string.adding_in_the_middle:
+                list.add(list.size() / 2, valueForSearching);
+                break;
+            case R.string.adding_in_the_end:
+                list.add((int) (Math.random() * 100));
+                break;
+            case R.string.search_by_value:
+                list.indexOf(valueForSearching);
+                break;
+            case R.string.removing_in_the_beginning:
+                list.remove(0);
+                break;
+            case R.string.removing_in_the_middle:
+                list.remove(list.size() / 2);
+                break;
+            case R.string.removing_in_the_end:
+                list.remove(list.size() - 1);
+                break;
         }
         long endTime = System.currentTimeMillis();
-        benchmarksViewModel.updateDurationOperation(endTime - startTime, nameOfItem, BenchmarksDataClass.listOfCollections);
+        return endTime - startTime;
     }
 
     private void fillCollection(List<Integer> listOfCollection) {
@@ -69,17 +78,23 @@ public class OperationsCollections implements Runnable {
         }
     }
 
-    private synchronized void additionalNumberOfOperation() {
-        if (numberOfOperation < MAX_COUNT_OF_OPERATIONS) {
-            numberOfOperation++;
-        } else {
-            numberOfOperation = 0;
-        }
+    private static List<Integer> fillIdOfCollectionsList(){
+        List<Integer> list = new ArrayList<>();
+        list.add(R.string.array_list);
+        list.add(R.string.linked_list);
+        list.add(R.string.copy_on_write_array_list);
+        return list;
     }
 
-    @Override
-    public void run() {
-        createCollection(nameOfItem);
-        markDurationOfOperation(nameOfItem);
+    private static List<Integer> fillIdOfOperationsList(){
+        List<Integer> list = new ArrayList<>();
+        list.add(R.string.adding_in_the_beginning);
+        list.add(R.string.adding_in_the_middle);
+        list.add(R.string.adding_in_the_end);
+        list.add(R.string.search_by_value);
+        list.add(R.string.removing_in_the_beginning);
+        list.add(R.string.removing_in_the_middle);
+        list.add(R.string.removing_in_the_end);
+        return list;
     }
 }

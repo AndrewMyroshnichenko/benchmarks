@@ -60,7 +60,7 @@ public class MapsFragment extends Fragment implements View.OnClickListener, Frag
         if (view.equals(bind.edCollectionsFragment)) {
             inputFragment.show(getChildFragmentManager(), null);
         } else if (view.equals(bind.btCollections)) {
-            viewModel.onButtonToggle(BenchmarksDataClass.listOfMaps, KEY_OF_MAPS_FRAGMENT);
+            viewModel.onButtonToggle();
         }
     }
 
