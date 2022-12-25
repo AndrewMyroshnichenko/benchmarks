@@ -1,10 +1,8 @@
 package com.example.benchmarks.models;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,11 +15,14 @@ public class OperationsCollections {
         int id = BenchmarksDataClass.fillIdOfCollectionsList().get(indexOfCollection);
         switch (id) {
             case R.string.array_list:
-                return list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
             case R.string.linked_list:
-                return list = new LinkedList<>(Collections.nCopies(sizeOfCollection, 0));
+                list = new LinkedList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
             case R.string.copy_on_write_array_list:
-                return  list = new CopyOnWriteArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                list = new CopyOnWriteArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
         }
         return list;
     }

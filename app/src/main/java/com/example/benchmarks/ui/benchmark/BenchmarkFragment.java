@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.FragmentBenchmarkBinding;
-import com.example.benchmarks.ui.MainActivity;
 import com.example.benchmarks.ui.input.InputFragment;
 
 import java.util.ArrayList;
@@ -31,6 +30,13 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
     private static int positionOfFragment = 0;
     private BenchmarksViewModel viewModel;
     private FragmentBenchmarkBinding bind;
+
+    public static BenchmarkFragment createFragment(int position) {
+        final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
+        final Bundle bundle = new Bundle();
+        bundle.putInt(POSITION_KEY, position);
+        return benchmarkFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,13 +84,6 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         viewModel.setSizeCollectionLiveData(result.getInt(InputFragment.LONG_COLLECTION_SIZE_KEY));
         String size = result.getString(InputFragment.STRING_COLLECTION_SIZE_KEY);
         bind.edCollectionsFragment.setText(size);
-    }
-
-    public static BenchmarkFragment createFragment(int position){
-        final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
-        final Bundle bundle = new Bundle();
-        bundle.putInt(POSITION_KEY, position);
-        return benchmarkFragment;
     }
 
     private List<Integer> fillIdOfFragmentsList(){
