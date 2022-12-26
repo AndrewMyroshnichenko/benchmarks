@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.FragmentBenchmarkBinding;
-import com.example.benchmarks.ui.MainActivity;
 import com.example.benchmarks.ui.input.InputFragment;
 
 import java.util.ArrayList;
@@ -69,7 +68,7 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         if (view.equals(bind.edCollectionsFragment)) {
             inputFragment.show(getChildFragmentManager(), null);
         } else if (view.equals(bind.btCollections)) {
-            viewModel.onButtonToggle(idOfFragments.get(positionOfFragment));
+            viewModel.onButtonToggle();
         }
     }
 
@@ -80,14 +79,14 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         bind.edCollectionsFragment.setText(size);
     }
 
-    public static BenchmarkFragment createFragment(int position){
+    public static BenchmarkFragment createFragment(int position) {
         final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
         final Bundle bundle = new Bundle();
         bundle.putInt(POSITION_KEY, position);
         return benchmarkFragment;
     }
 
-    private List<Integer> fillIdOfFragmentsList(){
+    private List<Integer> fillIdOfFragmentsList() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.collections);
         list.add(R.string.maps);

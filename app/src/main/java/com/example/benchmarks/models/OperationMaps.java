@@ -19,9 +19,9 @@ public class OperationMaps {
                 fillMap(map, sizeOfCollection);
                 break;
             case R.string.hash_map:
-                 map = new HashMap<>();
-                 fillMap(map, sizeOfCollection);
-                 break;
+                map = new HashMap<>();
+                fillMap(map, sizeOfCollection);
+                break;
             default:
                 throw new RuntimeException("This is ID of maps doesn't exist");
         }
@@ -56,14 +56,14 @@ public class OperationMaps {
         }
     }
 
-    public static List<Integer> fillIdOfCollectionsMap(){
+    public static List<Integer> fillIdOfCollectionsMap() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.tree_map);
         list.add(R.string.hash_map);
         return list;
     }
 
-    public static List<Integer> fillIdOfOperationsMap(){
+    public static List<Integer> fillIdOfOperationsMap() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.adding_new_in);
         list.add(R.string.search_by_key_in);

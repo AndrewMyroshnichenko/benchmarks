@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import android.os.Handler;
 
 public class BenchmarksViewModel extends ViewModel {
@@ -22,15 +23,13 @@ public class BenchmarksViewModel extends ViewModel {
     private final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> testSizeLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
-    private final List <BenchmarkItem> items = new ArrayList<>();
+    private final List<BenchmarkItem> items = new ArrayList<>();
     private final Handler handler = new Handler();
     private final int idOfFragment;
     private ExecutorService executor;
 
-
-
     public BenchmarksViewModel(int positionOfFragment) {
-        idOfFragment =  fillIdOfFragmentsList().get(positionOfFragment);
+        idOfFragment = fillIdOfFragmentsList().get(positionOfFragment);
     }
 
     public static Pair<Boolean, Integer> isNumberCorrect(String number) {
@@ -49,7 +48,7 @@ public class BenchmarksViewModel extends ViewModel {
         int collectionsCount = 0;
         int operationCount = 0;
 
-        switch (idOfFragment){
+        switch (idOfFragment) {
             case R.string.collections:
                 collectionsCount = 3;
                 operationCount = 7;
@@ -84,7 +83,7 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    private List<Integer> fillIdOfFragmentsList(){
+    private List<Integer> fillIdOfFragmentsList() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.collections);
         list.add(R.string.maps);
@@ -110,7 +109,7 @@ public class BenchmarksViewModel extends ViewModel {
         private final int indexOfCollection;
 
 
-        public OperationsRunnable(int idOfFragment, int indexOfOperation, int indexOfCollection){
+        public OperationsRunnable(int idOfFragment, int indexOfOperation, int indexOfCollection) {
             this.idOfFragment = idOfFragment;
             this.indexOfOperation = indexOfOperation;
             this.indexOfCollection = indexOfCollection;
@@ -125,12 +124,12 @@ public class BenchmarksViewModel extends ViewModel {
                     .markDurationOfOperation(testSizeLiveData.getValue() != null ? testSizeLiveData.getValue() : 0, indexOfOperation, indexOfCollection);
 
             List<Integer> listOfCollectionsNames = (idOfFragment == R.string.collections)
-            ? OperationsCollections.fillIdOfCollectionsList() : OperationMaps.fillIdOfCollectionsMap();
+                    ? OperationsCollections.fillIdOfCollectionsList() : OperationMaps.fillIdOfCollectionsMap();
             List<Integer> listOfCollectionsOperations = (idOfFragment == R.string.collections)
-            ? OperationsCollections.fillIdOfOperationsList() : OperationMaps.fillIdOfOperationsMap();
+                    ? OperationsCollections.fillIdOfOperationsList() : OperationMaps.fillIdOfOperationsMap();
 
             BenchmarkItem copy = new BenchmarkItem(listOfCollectionsNames.get(indexOfCollection),
-                    listOfCollectionsOperations.get(indexOfOperation),false, duration);
+                    listOfCollectionsOperations.get(indexOfOperation), false, duration);
             items.add(copy);
 
             handler.post(() -> itemsLiveData.postValue(items));

@@ -1,10 +1,9 @@
 package com.example.benchmarks.models;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
 
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,21 +13,26 @@ public class OperationsCollections {
 
     private List<Integer> createCollection(int sizeOfCollection, int indexOfCollection) {
         List<Integer> list = null;
-        int id = BenchmarksDataClass.fillIdOfCollectionsList().get(indexOfCollection);
+        int id = fillIdOfCollectionsList().get(indexOfCollection);
         switch (id) {
             case R.string.array_list:
-                return list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
             case R.string.linked_list:
-                return list = new LinkedList<>(Collections.nCopies(sizeOfCollection, 0));
+                list = new LinkedList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
             case R.string.copy_on_write_array_list:
-                return  list = new CopyOnWriteArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                list = new CopyOnWriteArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
+            default:
+                throw new RuntimeException("This is ID of collection doesn't exist");
         }
         return list;
     }
 
     public long markDurationOfOperation(int sizeOfCollection, int indexOfOperation, int indexOfCollection) {
         List<Integer> list = createCollection(sizeOfCollection, indexOfCollection);
-        int id = BenchmarksDataClass.fillIdOfOperationsList().get(indexOfOperation);
+        int id = fillIdOfOperationsList().get(indexOfOperation);
         final int valueForSearching = 200;
         long startTime = System.currentTimeMillis();
 
@@ -54,8 +58,30 @@ public class OperationsCollections {
             case R.string.removing_in_the_end:
                 list.remove(list.size() - 1);
                 break;
+            default:
+                throw new RuntimeException("This is ID of operation doesn't exist");
         }
         long endTime = System.currentTimeMillis();
         return endTime - startTime;
+    }
+
+    public static List<Integer> fillIdOfCollectionsList() {
+        List<Integer> list = new ArrayList<>();
+        list.add(R.string.array_list);
+        list.add(R.string.linked_list);
+        list.add(R.string.copy_on_write_array_list);
+        return list;
+    }
+
+    public static List<Integer> fillIdOfOperationsList() {
+        List<Integer> list = new ArrayList<>();
+        list.add(R.string.adding_in_the_beginning);
+        list.add(R.string.adding_in_the_middle);
+        list.add(R.string.adding_in_the_end);
+        list.add(R.string.search_by_value);
+        list.add(R.string.removing_in_the_beginning);
+        list.add(R.string.removing_in_the_middle);
+        list.add(R.string.removing_in_the_end);
+        return list;
     }
 }

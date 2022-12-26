@@ -30,7 +30,6 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
     private EditText editText;
     private PopupWindow errorView;
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
