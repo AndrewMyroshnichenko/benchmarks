@@ -24,7 +24,6 @@ import java.util.List;
 public class BenchmarkFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
 
     private static final String POSITION_KEY = "POSITION";
-    private final List<Integer> idOfFragments = fillIdOfFragmentsList();
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
     private static int positionOfFragment = 0;
