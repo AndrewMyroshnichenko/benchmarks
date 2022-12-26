@@ -29,8 +29,4 @@ public class BenchmarkTypesAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return nameOfTabs.size();
     }
-
-
-
-
 }

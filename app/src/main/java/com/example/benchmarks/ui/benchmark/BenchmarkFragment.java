@@ -25,17 +25,19 @@ import java.util.List;
 public class BenchmarkFragment extends Fragment implements View.OnClickListener, FragmentResultListener {
 
     private static final String POSITION_KEY = "POSITION";
+    private final List<Integer> idOfFragments = fillIdOfFragmentsList();
     private final BenchmarksAdapter adapter = new BenchmarksAdapter();
     private final InputFragment inputFragment = new InputFragment();
+    private static int positionOfFragment = 0;
     private BenchmarksViewModel viewModel;
     private FragmentBenchmarkBinding bind;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(BenchmarksViewModel.class);
         if (getArguments() != null) {
-            BenchMarkViewModelFactory factory = new BenchMarkViewModelFactory(getArguments().getInt(POSITION_KEY));
-            viewModel = new ViewModelProvider(this, factory).get(BenchmarksViewModel.class);
+            positionOfFragment = getArguments().getInt(POSITION_KEY);
         }
     }
 
@@ -53,20 +55,21 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         bind = FragmentBenchmarkBinding.bind(view);
         bind.edCollectionsFragment.setOnClickListener(this);
         bind.btCollections.setOnClickListener(this);
-        bind.rvMain.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        bind.rvMain.setAdapter(adapter);
+        final RecyclerView recyclerView = view.findViewById(R.id.rv_main);
+        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
+        recyclerView.setAdapter(adapter);
 
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
-        viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> bind.btCollections.setText(aBoolean ? R.string.bt_stop : R.string.bt_start));
+        viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> bind.btCollections.setText(aBoolean ? getResources().getString(R.string.bt_stop) : getResources().getString(R.string.bt_start)));
         getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
     }
 
     @Override
     public void onClick(View view) {
-        if (view == bind.edCollectionsFragment) {
+        if (view.equals(bind.edCollectionsFragment)) {
             inputFragment.show(getChildFragmentManager(), null);
-        } else if (view == bind.btCollections) {
-            viewModel.onButtonToggle();
+        } else if (view.equals(bind.btCollections)) {
+            viewModel.onButtonToggle(idOfFragments.get(positionOfFragment));
         }
     }
 
@@ -81,7 +84,13 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
         final Bundle bundle = new Bundle();
         bundle.putInt(POSITION_KEY, position);
-        benchmarkFragment.setArguments(bundle);
         return benchmarkFragment;
+    }
+
+    private List<Integer> fillIdOfFragmentsList(){
+        List<Integer> list = new ArrayList<>();
+        list.add(R.string.collections);
+        list.add(R.string.maps);
+        return list;
     }
 }
