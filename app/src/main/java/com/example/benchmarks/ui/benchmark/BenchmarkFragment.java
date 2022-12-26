@@ -48,9 +48,8 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         bind = FragmentBenchmarkBinding.bind(view);
         bind.edCollectionsFragment.setOnClickListener(this);
         bind.btCollections.setOnClickListener(this);
-        final RecyclerView recyclerView = view.findViewById(R.id.rv_main);
-        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
-        recyclerView.setAdapter(adapter);
+        bind.rvMain.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
+        bind.rvMain.setAdapter(adapter);
 
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
         viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> bind.btCollections.setText(aBoolean ? R.string.bt_stop : R.string.bt_start));
@@ -77,6 +76,7 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
         final Bundle bundle = new Bundle();
         bundle.putInt(POSITION_KEY, position);
+        benchmarkFragment.setArguments(bundle);
         return benchmarkFragment;
     }
 }
