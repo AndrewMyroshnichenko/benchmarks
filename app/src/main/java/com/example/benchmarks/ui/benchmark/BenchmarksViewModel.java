@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.models.BenchmarksDataClass;
 import com.example.benchmarks.models.OperationMaps;
 import com.example.benchmarks.models.OperationsCollections;
 
@@ -24,8 +23,15 @@ public class BenchmarksViewModel extends ViewModel {
     private final MutableLiveData<Integer> testSizeLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
     private final List <BenchmarkItem> items = new ArrayList<>();
+    private final Handler handler = new Handler();
+    private final int idOfFragment;
     private ExecutorService executor;
-    private Handler handler;
+
+
+
+    public BenchmarksViewModel(int positionOfFragment) {
+        idOfFragment =  fillIdOfFragmentsList().get(positionOfFragment);
+    }
 
     public static Pair<Boolean, Integer> isNumberCorrect(String number) {
         try {
@@ -36,10 +42,9 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    public void onStartProcess(int idOfFragment) {
+    public void onStartProcess() {
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
-        handler = new Handler();
 
         int collectionsCount = 0;
         int operationCount = 0;
@@ -66,18 +71,24 @@ public class BenchmarksViewModel extends ViewModel {
 
     private void onStopProcess() {
         calculationStartLiveData.setValue(false);
-        items.clear();
         executor.shutdownNow();
         executor = null;
         System.gc();
     }
 
-    public void onButtonToggle(int idOfFragment) {
+    public void onButtonToggle() {
         if (executor == null) {
-            onStartProcess(idOfFragment);
-        } else if (executor.isShutdown() || executor.isTerminated()) {
+            onStartProcess();
+        } else {
             onStopProcess();
         }
+    }
+
+    private List<Integer> fillIdOfFragmentsList(){
+        List<Integer> list = new ArrayList<>();
+        list.add(R.string.collections);
+        list.add(R.string.maps);
+        return list;
     }
 
     public LiveData<List<BenchmarkItem>> getItemsLiveData() {
@@ -114,9 +125,9 @@ public class BenchmarksViewModel extends ViewModel {
                     .markDurationOfOperation(testSizeLiveData.getValue() != null ? testSizeLiveData.getValue() : 0, indexOfOperation, indexOfCollection);
 
             List<Integer> listOfCollectionsNames = (idOfFragment == R.string.collections)
-            ? BenchmarksDataClass.fillIdOfCollectionsList() : BenchmarksDataClass.fillIdOfCollectionsMap();
+            ? OperationsCollections.fillIdOfCollectionsList() : OperationMaps.fillIdOfCollectionsMap();
             List<Integer> listOfCollectionsOperations = (idOfFragment == R.string.collections)
-            ? BenchmarksDataClass.fillIdOfOperationsList() : BenchmarksDataClass.fillIdOfOperationsMap();
+            ? OperationsCollections.fillIdOfOperationsList() : OperationMaps.fillIdOfOperationsMap();
 
             BenchmarkItem copy = new BenchmarkItem(listOfCollectionsNames.get(indexOfCollection),
                     listOfCollectionsOperations.get(indexOfOperation),false, duration);

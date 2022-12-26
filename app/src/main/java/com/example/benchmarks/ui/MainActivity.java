@@ -1,15 +1,11 @@
 package com.example.benchmarks.ui;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.TypedValue;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.ActivityMainBinding;
-import com.example.benchmarks.models.BenchmarksDataClass;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
