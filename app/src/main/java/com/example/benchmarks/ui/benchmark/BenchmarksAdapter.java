@@ -57,7 +57,8 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
 
         public void bind(BenchmarkItem item) {
             textView.setText(itemView.getResources().getString(item.nameOfOperation) + " " + itemView.getResources().getString(item.nameOfCollection) + " " + item.durationOfOperation);
-            progressBar.setVisibility(item.isVisibleLoading ? View.VISIBLE : View.INVISIBLE);
+            progressBar.animate().alpha(0f).setDuration(1500);
+
         }
     }
 }
