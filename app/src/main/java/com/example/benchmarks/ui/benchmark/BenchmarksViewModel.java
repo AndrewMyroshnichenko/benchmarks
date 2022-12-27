@@ -79,7 +79,7 @@ public class BenchmarksViewModel extends ViewModel {
                             ? OperationsCollections.namesOfOperations : OperationMaps.namesOfOperations;
 
                     BenchmarkItem copy = new BenchmarkItem(listOfCollectionsNames.get(finalI),
-                            listOfCollectionsOperations.get(finalJ), false, duration);
+                            listOfCollectionsOperations.get(finalJ), duration);
 
                     items.add(copy);
 

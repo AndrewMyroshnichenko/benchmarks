@@ -6,13 +6,11 @@ public class BenchmarkItem {
 
     public final int nameOfCollection;
     public final int nameOfOperation;
-    public final boolean isVisibleLoading;
     public final long durationOfOperation;
 
-    public BenchmarkItem(int nameOfCollection, int nameOfOperation, boolean isVisibleLoading, long durationOfOperation) {
+    public BenchmarkItem(int nameOfCollection, int nameOfOperation, long durationOfOperation) {
         this.nameOfCollection = nameOfCollection;
         this.nameOfOperation = nameOfOperation;
-        this.isVisibleLoading = isVisibleLoading;
         this.durationOfOperation = durationOfOperation;
     }
 
@@ -21,11 +19,11 @@ public class BenchmarkItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BenchmarkItem that = (BenchmarkItem) o;
-        return nameOfCollection == that.nameOfCollection && nameOfOperation == that.nameOfOperation && isVisibleLoading == that.isVisibleLoading && durationOfOperation == that.durationOfOperation;
+        return nameOfCollection == that.nameOfCollection && nameOfOperation == that.nameOfOperation && durationOfOperation == that.durationOfOperation;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameOfCollection, nameOfOperation, isVisibleLoading, durationOfOperation);
+        return Objects.hash(nameOfCollection, nameOfOperation, durationOfOperation);
     }
 }
