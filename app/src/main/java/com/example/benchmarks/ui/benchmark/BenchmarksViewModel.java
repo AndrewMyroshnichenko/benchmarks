@@ -13,6 +13,7 @@ import com.example.benchmarks.models.OperationsCollections;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,7 +24,6 @@ public class BenchmarksViewModel extends ViewModel {
     private final MutableLiveData<List<BenchmarkItem>> itemsLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> testSizeLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
-    private final List<BenchmarkItem> items = new ArrayList<>();
     private final Handler handler = new Handler();
     private final int idOfFragment;
     private ExecutorService executor;
@@ -42,7 +42,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onStartProcess() {
-        items.clear();
+        final List<BenchmarkItem> items = new CopyOnWriteArrayList<>();
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
 
@@ -62,7 +62,30 @@ public class BenchmarksViewModel extends ViewModel {
 
         for (int i = 0; i < collectionsCount; i++) {
             for (int j = 0; j < operationCount; j++) {
-                executor.submit(new OperationsRunnable(idOfFragment, j, i));
+
+                int finalI = i;
+                int finalJ = j;
+
+                executor.submit(() -> {
+                    long duration = (idOfFragment == R.string.collections)
+                            ? new OperationsCollections()
+                            .markDurationOfOperation(testSizeLiveData.getValue() != null ? testSizeLiveData.getValue() : 0, finalJ, finalI)
+                            : new OperationMaps()
+                            .markDurationOfOperation(testSizeLiveData.getValue() != null ? testSizeLiveData.getValue() : 0, finalJ, finalI);
+
+                    List<Integer> listOfCollectionsNames = (idOfFragment == R.string.collections)
+                            ? OperationsCollections.namesOfCollections : OperationMaps.namesOfMaps;
+                    List<Integer> listOfCollectionsOperations = (idOfFragment == R.string.collections)
+                            ? OperationsCollections.namesOfOperations : OperationMaps.namesOfOperations;
+
+                    BenchmarkItem copy = new BenchmarkItem(listOfCollectionsNames.get(finalI),
+                            listOfCollectionsOperations.get(finalJ), false, duration);
+
+                    items.add(copy);
+
+                    handler.post(() -> itemsLiveData.postValue(items));
+
+                });
             }
         }
 
@@ -101,40 +124,6 @@ public class BenchmarksViewModel extends ViewModel {
 
     public LiveData<Boolean> getCalculationStartLiveData() {
         return calculationStartLiveData;
-    }
-
-    private class OperationsRunnable implements Runnable {
-
-        private final int idOfFragment;
-        private final int indexOfOperation;
-        private final int indexOfCollection;
-
-
-        public OperationsRunnable(int idOfFragment, int indexOfOperation, int indexOfCollection) {
-            this.idOfFragment = idOfFragment;
-            this.indexOfOperation = indexOfOperation;
-            this.indexOfCollection = indexOfCollection;
-        }
-
-        @Override
-        public void run() {
-            long duration = (idOfFragment == R.string.collections)
-                    ? new OperationsCollections()
-                    .markDurationOfOperation(testSizeLiveData.getValue() != null ? testSizeLiveData.getValue() : 0, indexOfOperation, indexOfCollection)
-                    : new OperationMaps()
-                    .markDurationOfOperation(testSizeLiveData.getValue() != null ? testSizeLiveData.getValue() : 0, indexOfOperation, indexOfCollection);
-
-            List<Integer> listOfCollectionsNames = (idOfFragment == R.string.collections)
-                    ? OperationsCollections.namesOfCollections : OperationMaps.namesOfMaps;
-            List<Integer> listOfCollectionsOperations = (idOfFragment == R.string.collections)
-                    ? OperationsCollections.namesOfOperations : OperationMaps.namesOfOperations;
-
-            BenchmarkItem copy = new BenchmarkItem(listOfCollectionsNames.get(indexOfCollection),
-                    listOfCollectionsOperations.get(indexOfOperation), false, duration);
-            items.add(copy);
-
-            handler.post(() -> itemsLiveData.postValue(items));
-        }
     }
 
 }
