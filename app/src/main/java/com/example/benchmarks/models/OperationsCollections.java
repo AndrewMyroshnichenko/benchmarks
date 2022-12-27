@@ -11,9 +11,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OperationsCollections {
 
+    public final static List<Integer> namesOfCollections = getCollectionsNames();
+    public final static List<Integer> namesOfOperations = getOperationNames();
+
+
     private List<Integer> createCollection(int sizeOfCollection, int indexOfCollection) {
         List<Integer> list = null;
-        int id = fillIdOfCollectionsList().get(indexOfCollection);
+        int id = namesOfCollections.get(indexOfCollection);
         switch (id) {
             case R.string.array_list:
                 list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
@@ -32,9 +36,9 @@ public class OperationsCollections {
 
     public long markDurationOfOperation(int sizeOfCollection, int indexOfOperation, int indexOfCollection) {
         List<Integer> list = createCollection(sizeOfCollection, indexOfCollection);
-        int id = fillIdOfOperationsList().get(indexOfOperation);
+        int id = namesOfOperations.get(indexOfOperation);
         final int valueForSearching = 200;
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
 
         switch (id) {
             case R.string.adding_in_the_beginning:
@@ -61,11 +65,11 @@ public class OperationsCollections {
             default:
                 throw new RuntimeException("This is ID of operation doesn't exist");
         }
-        long endTime = System.currentTimeMillis();
+        long endTime = System.nanoTime();
         return endTime - startTime;
     }
 
-    public static List<Integer> fillIdOfCollectionsList() {
+    private static List<Integer> getCollectionsNames() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.array_list);
         list.add(R.string.linked_list);
@@ -73,7 +77,7 @@ public class OperationsCollections {
         return list;
     }
 
-    public static List<Integer> fillIdOfOperationsList() {
+    private static List<Integer> getOperationNames() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.adding_in_the_beginning);
         list.add(R.string.adding_in_the_middle);

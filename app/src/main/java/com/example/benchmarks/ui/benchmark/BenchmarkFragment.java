@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.FragmentBenchmarkBinding;
@@ -78,5 +77,11 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         bundle.putInt(POSITION_KEY, position);
         benchmarkFragment.setArguments(bundle);
         return benchmarkFragment;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        bind = null;
     }
 }

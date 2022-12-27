@@ -10,9 +10,12 @@ import java.util.TreeMap;
 
 public class OperationMaps {
 
+    public final static List<Integer> namesOfMaps = getMapsNames();
+    public final static List<Integer> namesOfOperations = getOperationNames();
+
     private Map<Integer, Integer> createMap(int sizeOfCollection, int indexOfCollection) {
         Map<Integer, Integer> map = null;
-        int id = fillIdOfCollectionsMap().get(indexOfCollection);
+        int id = namesOfMaps.get(indexOfCollection);
         switch (id) {
             case R.string.tree_map:
                 map = new TreeMap<>();
@@ -30,8 +33,8 @@ public class OperationMaps {
 
     public long markDurationOfOperation(int sizeOfCollection, int indexOfOperation, int indexOfCollection) {
         Map<Integer, Integer> map = createMap(sizeOfCollection, indexOfCollection);
-        int id = fillIdOfOperationsMap().get(indexOfOperation);
-        long startTime = System.currentTimeMillis();
+        int id = namesOfOperations.get(indexOfOperation);
+        long startTime = System.nanoTime();
 
         switch (id) {
             case R.string.adding_new_in:
@@ -46,7 +49,7 @@ public class OperationMaps {
             default:
                 throw new RuntimeException("This is ID of operation doesn't exist");
         }
-        long endTime = System.currentTimeMillis();
+        long endTime = System.nanoTime();
         return endTime - startTime;
     }
 
@@ -56,14 +59,14 @@ public class OperationMaps {
         }
     }
 
-    public static List<Integer> fillIdOfCollectionsMap() {
+    private static List<Integer> getMapsNames() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.tree_map);
         list.add(R.string.hash_map);
         return list;
     }
 
-    public static List<Integer> fillIdOfOperationsMap() {
+    private static List<Integer> getOperationNames() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.adding_new_in);
         list.add(R.string.search_by_key_in);

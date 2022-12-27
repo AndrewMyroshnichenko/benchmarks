@@ -42,6 +42,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onStartProcess() {
+        items.clear();
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
 
@@ -124,9 +125,9 @@ public class BenchmarksViewModel extends ViewModel {
                     .markDurationOfOperation(testSizeLiveData.getValue() != null ? testSizeLiveData.getValue() : 0, indexOfOperation, indexOfCollection);
 
             List<Integer> listOfCollectionsNames = (idOfFragment == R.string.collections)
-                    ? OperationsCollections.fillIdOfCollectionsList() : OperationMaps.fillIdOfCollectionsMap();
+                    ? OperationsCollections.namesOfCollections : OperationMaps.namesOfMaps;
             List<Integer> listOfCollectionsOperations = (idOfFragment == R.string.collections)
-                    ? OperationsCollections.fillIdOfOperationsList() : OperationMaps.fillIdOfOperationsMap();
+                    ? OperationsCollections.namesOfOperations : OperationMaps.namesOfOperations;
 
             BenchmarkItem copy = new BenchmarkItem(listOfCollectionsNames.get(indexOfCollection),
                     listOfCollectionsOperations.get(indexOfOperation), false, duration);

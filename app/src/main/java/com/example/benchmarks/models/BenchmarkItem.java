@@ -21,7 +21,7 @@ public class BenchmarkItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BenchmarkItem that = (BenchmarkItem) o;
-        return isVisibleLoading == that.isVisibleLoading && durationOfOperation == that.durationOfOperation && Objects.equals(nameOfCollection, that.nameOfCollection) && Objects.equals(nameOfOperation, that.nameOfOperation);
+        return nameOfCollection == that.nameOfCollection && nameOfOperation == that.nameOfOperation && isVisibleLoading == that.isVisibleLoading && durationOfOperation == that.durationOfOperation;
     }
 
     @Override
