@@ -88,4 +88,10 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         result.putInt(LONG_COLLECTION_SIZE_KEY, size);
         getParentFragmentManager().setFragmentResult(INPUT_REQUEST_KEY, result);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        errorView = null;
+    }
 }
