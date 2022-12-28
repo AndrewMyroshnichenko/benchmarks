@@ -30,6 +30,7 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         if (getArguments() != null) {
             BenchMarkViewModelFactory factory = new BenchMarkViewModelFactory(getArguments().getInt(POSITION_KEY));
             viewModel = new ViewModelProvider(this, factory).get(BenchmarksViewModel.class);
+            viewModel.onCreate();
         }
     }
 

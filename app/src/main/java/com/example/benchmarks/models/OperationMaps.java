@@ -10,33 +10,11 @@ import java.util.TreeMap;
 
 public class OperationMaps {
 
-    public final static List<Integer> namesOfMaps = getMapsNames();
-    public final static List<Integer> namesOfOperations = getOperationNames();
-
-    private Map<Integer, Integer> createMap(int sizeOfCollection, int indexOfCollection) {
-        Map<Integer, Integer> map = null;
-        int id = namesOfMaps.get(indexOfCollection);
-        switch (id) {
-            case R.string.tree_map:
-                map = new TreeMap<>();
-                fillMap(map, sizeOfCollection);
-                break;
-            case R.string.hash_map:
-                map = new HashMap<>();
-                fillMap(map, sizeOfCollection);
-                break;
-            default:
-                throw new RuntimeException("This is ID of maps doesn't exist");
-        }
-        return map;
-    }
-
-    public long markDurationOfOperation(int sizeOfCollection, int indexOfOperation, int indexOfCollection) {
-        Map<Integer, Integer> map = createMap(sizeOfCollection, indexOfCollection);
-        int id = namesOfOperations.get(indexOfOperation);
+    public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
+        Map<Integer, Integer> map = createMap(sizeOfCollection, item.nameOfCollection);
         long startTime = System.nanoTime();
 
-        switch (id) {
+        switch (item.nameOfOperation) {
             case R.string.adding_new_in:
                 map.put(map.size(), 1);
                 break;
@@ -51,6 +29,33 @@ public class OperationMaps {
         }
         long endTime = System.nanoTime();
         return endTime - startTime;
+    }
+
+    public static List<BenchmarkItem> getItemsOfMaps() {
+        final List<BenchmarkItem> list = new ArrayList<>();
+        for (int collection : getMapsNames()) {
+            for (int operation : getOperationNames()) {
+                list.add(new BenchmarkItem(collection, operation, 0));
+            }
+        }
+        return list;
+    }
+
+    private Map<Integer, Integer> createMap(int sizeOfCollection, int nameOfMap) {
+        Map<Integer, Integer> map = null;
+        switch (nameOfMap) {
+            case R.string.tree_map:
+                map = new TreeMap<>();
+                fillMap(map, sizeOfCollection);
+                break;
+            case R.string.hash_map:
+                map = new HashMap<>();
+                fillMap(map, sizeOfCollection);
+                break;
+            default:
+                throw new RuntimeException("This is ID of maps doesn't exist");
+        }
+        return map;
     }
 
     private void fillMap(Map<Integer, Integer> mapList, int sizeOfMap) {

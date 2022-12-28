@@ -11,36 +11,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OperationsCollections {
 
-    public final static List<Integer> namesOfCollections = getCollectionsNames();
-    public final static List<Integer> namesOfOperations = getOperationNames();
-
-
-    private List<Integer> createCollection(int sizeOfCollection, int indexOfCollection) {
-        List<Integer> list = null;
-        int id = namesOfCollections.get(indexOfCollection);
-        switch (id) {
-            case R.string.array_list:
-                list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
-                break;
-            case R.string.linked_list:
-                list = new LinkedList<>(Collections.nCopies(sizeOfCollection, 0));
-                break;
-            case R.string.copy_on_write_array_list:
-                list = new CopyOnWriteArrayList<>(Collections.nCopies(sizeOfCollection, 0));
-                break;
-            default:
-                throw new RuntimeException("This is ID of collection doesn't exist");
-        }
-        return list;
-    }
-
-    public long markDurationOfOperation(int sizeOfCollection, int indexOfOperation, int indexOfCollection) {
-        List<Integer> list = createCollection(sizeOfCollection, indexOfCollection);
-        int id = namesOfOperations.get(indexOfOperation);
+    public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
+        List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
         final int valueForSearching = 200;
         long startTime = System.nanoTime();
 
-        switch (id) {
+        switch (item.nameOfOperation) {
             case R.string.adding_in_the_beginning:
                 list.add(0, 1);
                 break;
@@ -67,6 +43,34 @@ public class OperationsCollections {
         }
         long endTime = System.nanoTime();
         return endTime - startTime;
+    }
+
+    public static List<BenchmarkItem> getItemsOfCollections() {
+        final List<BenchmarkItem> list = new ArrayList<>();
+        for (int collection : getCollectionsNames()) {
+            for (int operation : getOperationNames()) {
+                list.add(new BenchmarkItem(collection, operation, 0));
+            }
+        }
+        return list;
+    }
+
+    private List<Integer> createCollection(int sizeOfCollection, int nameOfCollection) {
+        List<Integer> list = null;
+        switch (nameOfCollection) {
+            case R.string.array_list:
+                list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
+            case R.string.linked_list:
+                list = new LinkedList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
+            case R.string.copy_on_write_array_list:
+                list = new CopyOnWriteArrayList<>(Collections.nCopies(sizeOfCollection, 0));
+                break;
+            default:
+                throw new RuntimeException("This is ID of collection doesn't exist");
+        }
+        return list;
     }
 
     private static List<Integer> getCollectionsNames() {
