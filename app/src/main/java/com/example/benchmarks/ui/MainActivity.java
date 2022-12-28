@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         super.onCreate(savedInstanceState);
         bind = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
-
         final List<String> namesOfTabs = Arrays.asList(getResources().getStringArray(R.array.name_tabs));
         bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), getLifecycle(), namesOfTabs));
         tabLayoutMediator = new TabLayoutMediator(bind.mainTabLayout, bind.mainViewPager, (tab, position) -> tab.setText(namesOfTabs.get(position)));
