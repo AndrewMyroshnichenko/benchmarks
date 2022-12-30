@@ -75,12 +75,8 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
             dismiss();
         } else {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));
-            showPopupError();
+            errorView.showAsDropDown(editText, 80, 0);
         }
-    }
-
-    private void showPopupError() {
-        errorView.showAsDropDown(editText, 80, 0);
     }
 
     private void sendCollectionSize(String textSize, Integer size) {
