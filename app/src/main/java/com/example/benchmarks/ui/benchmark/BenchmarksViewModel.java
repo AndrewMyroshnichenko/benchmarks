@@ -50,10 +50,14 @@ public class BenchmarksViewModel extends ViewModel {
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
 
+        if(testSizeLiveData.getValue() == null){
+            testSizeLiveData.setValue(0);
+        }
+
         for (int i = 0; i < items.size(); i++) {
             int finalI = i;
             executor.submit(() -> {
-                long duration = benchmark.markDurationOfOperation((testSizeLiveData.getValue()) != null ? testSizeLiveData.getValue() : 0, items.get(finalI));
+                long duration = benchmark.markDurationOfOperation(testSizeLiveData.getValue(), items.get(finalI));
                 BenchmarkItem copy = new BenchmarkItem(items.get(finalI).nameOfCollection, items.get(finalI).nameOfOperation, duration);
                 items.set(finalI, copy);
                 handler.post(() -> itemsLiveData.postValue(items));
