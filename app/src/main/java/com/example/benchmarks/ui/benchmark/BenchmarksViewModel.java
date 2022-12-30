@@ -7,13 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.R;
+import com.example.benchmarks.models.Benchmark;
 import com.example.benchmarks.models.BenchmarkItem;
 import com.example.benchmarks.models.OperationMaps;
 import com.example.benchmarks.models.OperationsCollections;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -25,16 +25,15 @@ public class BenchmarksViewModel extends ViewModel {
     private final MutableLiveData<Integer> testSizeLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
     private final Handler handler = new Handler();
-    private final int idOfFragment;
+    private final Benchmark benchmark;
     private ExecutorService executor;
 
-    public BenchmarksViewModel(int positionOfFragment) {
-        idOfFragment = fillIdOfFragmentsList().get(positionOfFragment);
+    public BenchmarksViewModel(Benchmark benchmark) {
+        this.benchmark = benchmark;
     }
 
     public void onCreate(){
-        itemsLiveData.setValue((idOfFragment == R.string.collections)
-                ? OperationsCollections.getItemsOfCollections() : OperationMaps.getItemsOfMaps());
+        itemsLiveData.setValue(benchmark.createBenchmarkList());
     }
 
     public static Pair<Boolean, Integer> isNumberCorrect(String number) {
@@ -47,17 +46,14 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onStartProcess() {
-        final List<BenchmarkItem> items = (idOfFragment == R.string.collections)
-                ? OperationsCollections.getItemsOfCollections() : OperationMaps.getItemsOfMaps();
+        final List<BenchmarkItem> items = benchmark.createBenchmarkList();
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
 
         for (int i = 0; i < items.size(); i++) {
             int finalI = i;
             executor.submit(() -> {
-                long duration = (idOfFragment == R.string.collections)
-                        ? new OperationsCollections().markDurationOfOperation((testSizeLiveData.getValue()) != null ? testSizeLiveData.getValue() : 0, items.get(finalI))
-                        : new OperationMaps().markDurationOfOperation((testSizeLiveData.getValue() != null) ? testSizeLiveData.getValue() : 0, items.get(finalI));
+                long duration = benchmark.markDurationOfOperation((testSizeLiveData.getValue()) != null ? testSizeLiveData.getValue() : 0, items.get(finalI));
                 BenchmarkItem copy = new BenchmarkItem(items.get(finalI).nameOfCollection, items.get(finalI).nameOfOperation, duration);
                 items.set(finalI, copy);
                 handler.post(() -> itemsLiveData.postValue(items));

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class OperationMaps {
+public class OperationMaps implements Benchmark{
 
     public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
         Map<Integer, Integer> map = createMap(sizeOfCollection, item.nameOfCollection);
@@ -31,7 +31,7 @@ public class OperationMaps {
         return endTime - startTime;
     }
 
-    public static List<BenchmarkItem> getItemsOfMaps() {
+    public List<BenchmarkItem> createBenchmarkList() {
         final List<BenchmarkItem> list = new ArrayList<>();
         for (int collection : getMapsNames()) {
             for (int operation : getOperationNames()) {
@@ -64,14 +64,14 @@ public class OperationMaps {
         }
     }
 
-    private static List<Integer> getMapsNames() {
+    private List<Integer> getMapsNames() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.tree_map);
         list.add(R.string.hash_map);
         return list;
     }
 
-    private static List<Integer> getOperationNames() {
+    private List<Integer> getOperationNames() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.adding_new_in);
         list.add(R.string.search_by_key_in);

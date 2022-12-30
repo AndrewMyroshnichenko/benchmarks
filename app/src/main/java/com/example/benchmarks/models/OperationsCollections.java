@@ -9,11 +9,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class OperationsCollections {
+public class OperationsCollections implements Benchmark {
 
     public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
         List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
         final int valueForSearching = 200;
+        if (item.nameOfOperation == R.string.search_by_value) {
+            list.add(valueForSearching);
+        }
         long startTime = System.nanoTime();
 
         switch (item.nameOfOperation) {
@@ -45,7 +48,7 @@ public class OperationsCollections {
         return endTime - startTime;
     }
 
-    public static List<BenchmarkItem> getItemsOfCollections() {
+    public List<BenchmarkItem> createBenchmarkList() {
         final List<BenchmarkItem> list = new ArrayList<>();
         for (int collection : getCollectionsNames()) {
             for (int operation : getOperationNames()) {
@@ -73,7 +76,7 @@ public class OperationsCollections {
         return list;
     }
 
-    private static List<Integer> getCollectionsNames() {
+    private List<Integer> getCollectionsNames() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.array_list);
         list.add(R.string.linked_list);
@@ -81,7 +84,7 @@ public class OperationsCollections {
         return list;
     }
 
-    private static List<Integer> getOperationNames() {
+    private List<Integer> getOperationNames() {
         List<Integer> list = new ArrayList<>();
         list.add(R.string.adding_in_the_beginning);
         list.add(R.string.adding_in_the_middle);
