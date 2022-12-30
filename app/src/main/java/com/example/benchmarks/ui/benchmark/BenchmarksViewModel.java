@@ -13,6 +13,8 @@ import com.example.benchmarks.models.OperationMaps;
 import com.example.benchmarks.models.OperationsCollections;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,7 +48,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onStartProcess() {
-        final List<BenchmarkItem> items = benchmark.createBenchmarkList();
+        final List<BenchmarkItem> items = Collections.synchronizedList(benchmark.createBenchmarkList());
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
 
