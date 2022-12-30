@@ -10,12 +10,12 @@
 
     <TextView
         android:id="@+id/tv_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="10sp"
-        android:lines="7"
+        app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
