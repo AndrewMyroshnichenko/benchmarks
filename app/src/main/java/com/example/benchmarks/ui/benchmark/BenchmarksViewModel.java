@@ -49,7 +49,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onStartProcess() {
-        final List<BenchmarkItem> items = Collections.synchronizedList(benchmark.createBenchmarkList());
+        final List<BenchmarkItem> items = benchmark.createBenchmarkList();
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
 
