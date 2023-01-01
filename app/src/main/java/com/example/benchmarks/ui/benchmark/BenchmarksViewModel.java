@@ -2,6 +2,7 @@ package com.example.benchmarks.ui.benchmark;
 
 import android.util.Pair;
 
+import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -58,15 +59,20 @@ public class BenchmarksViewModel extends ViewModel {
 
         for (int i = 0; i < items.size(); i++) {
             int finalI = i;
+
             executor.submit(() -> {
                 long duration = benchmark.markDurationOfOperation(testSizeLiveData.getValue(), items.get(finalI));
                 BenchmarkItem copy = new BenchmarkItem(items.get(finalI).nameOfCollection, items.get(finalI).nameOfOperation, duration);
-                items.set(finalI, copy);
-                handler.post(() -> itemsLiveData.postValue(items));
+                handler.post(() -> {
+                    items.set(finalI, copy);
+                    itemsLiveData.setValue(items);
+                });
             });
         }
+
         executor.shutdown();
     }
+
 
     private void onStopProcess() {
         calculationStartLiveData.setValue(false);
