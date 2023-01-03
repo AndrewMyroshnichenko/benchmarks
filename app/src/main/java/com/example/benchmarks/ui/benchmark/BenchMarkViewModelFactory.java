@@ -28,7 +28,7 @@ public class BenchMarkViewModelFactory implements ViewModelProvider.Factory {
             case POSITION_MAP:
                 return (T) new BenchmarksViewModel(new OperationMaps());
             default:
-                throw new RuntimeException("Wrong option in factory!");
+                throw new RuntimeException("Wrong option in the factory!");
         }
 
     }

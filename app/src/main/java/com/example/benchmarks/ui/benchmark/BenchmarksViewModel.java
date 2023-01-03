@@ -89,13 +89,6 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    private List<Integer> fillIdOfFragmentsList() {
-        List<Integer> list = new ArrayList<>();
-        list.add(R.string.collections);
-        list.add(R.string.maps);
-        return list;
-    }
-
     public LiveData<List<BenchmarkItem>> getItemsLiveData() {
         return itemsLiveData;
     }
