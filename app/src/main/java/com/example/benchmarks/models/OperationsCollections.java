@@ -50,8 +50,8 @@ public class OperationsCollections implements Benchmark {
 
     public List<BenchmarkItem> createBenchmarkList() {
         final List<BenchmarkItem> list = new ArrayList<>();
-        for (int collection : getCollectionsNames()) {
-            for (int operation : getOperationNames()) {
+        for (int  operation: getOperationNames()) {
+            for (int collection : getCollectionsNames()) {
                 list.add(new BenchmarkItem(collection, operation, 0));
             }
         }

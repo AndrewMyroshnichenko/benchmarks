@@ -33,8 +33,8 @@ public class OperationMaps implements Benchmark{
 
     public List<BenchmarkItem> createBenchmarkList() {
         final List<BenchmarkItem> list = new ArrayList<>();
-        for (int collection : getMapsNames()) {
-            for (int operation : getOperationNames()) {
+        for (int operation : getOperationNames()) {
+            for (int collection : getMapsNames()) {
                 list.add(new BenchmarkItem(collection, operation, 0));
             }
         }
