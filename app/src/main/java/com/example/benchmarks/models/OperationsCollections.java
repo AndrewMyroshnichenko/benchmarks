@@ -15,7 +15,7 @@ public class OperationsCollections implements Benchmark {
         final List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
         final int valueForSearching = 200;
         if (item.nameOfOperation == R.string.search_by_value) {
-            list.add(new Random().nextInt(sizeOfCollection), valueForSearching);
+            list.set(new Random().nextInt(sizeOfCollection), valueForSearching);
         }
         long startTime = System.nanoTime();
 

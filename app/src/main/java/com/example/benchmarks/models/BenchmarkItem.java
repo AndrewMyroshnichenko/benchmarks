@@ -14,6 +14,10 @@ public class BenchmarkItem {
         this.durationOfOperation = durationOfOperation;
     }
 
+    public BenchmarkItem updateBenchmarkItem(long duration){
+        return new BenchmarkItem(nameOfCollection, nameOfOperation, duration);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

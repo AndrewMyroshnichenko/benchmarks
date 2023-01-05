@@ -3,6 +3,7 @@ package com.example.benchmarks.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.databinding.ActivityMainBinding;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     public void onTabSelected(TabLayout.Tab tab) {
         final int id = bind.mainTabLayout.getSelectedTabPosition() == 0 ?
                 R.drawable.tab_item_left_background : R.drawable.tab_item_right_background;
-        bind.mainTabLayout.setSelectedTabIndicator(getResources().getDrawable(id, getTheme()));
+        bind.mainTabLayout.setSelectedTabIndicator(ResourcesCompat.getDrawable(getResources(), id, getTheme()));
     }
 
     @Override
