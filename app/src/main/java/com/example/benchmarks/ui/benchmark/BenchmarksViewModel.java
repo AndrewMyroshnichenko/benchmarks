@@ -85,6 +85,10 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
+    public int getCountOfSpans(){
+        return benchmark.getSpansCount();
+    }
+
     public LiveData<List<BenchmarkItem>> getItemsLiveData() {
         return itemsLiveData;
     }

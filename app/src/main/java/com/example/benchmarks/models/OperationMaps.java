@@ -41,6 +41,10 @@ public class OperationMaps implements Benchmark{
         return list;
     }
 
+    public int getSpansCount(){
+        return getMapsNames().size();
+    }
+
     private Map<Integer, Integer> createMap(int sizeOfCollection, int nameOfMap) {
         Map<Integer, Integer> map;
         switch (nameOfMap) {

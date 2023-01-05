@@ -58,6 +58,10 @@ public class OperationsCollections implements Benchmark {
         return list;
     }
 
+    public int getSpansCount(){
+        return getCollectionsNames().size();
+    }
+
     private List<Integer> createCollection(int sizeOfCollection, int nameOfCollection) {
         List<Integer> list = null;
         switch (nameOfCollection) {

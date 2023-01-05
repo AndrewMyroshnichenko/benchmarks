@@ -57,7 +57,7 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         bind = FragmentBenchmarkBinding.bind(view);
         bind.edCollectionsFragment.setOnClickListener(this);
         bind.btCollections.setOnClickListener(this);
-        bind.rvMain.setLayoutManager(new GridLayoutManager(this.getContext(), (getArguments().getInt(POSITION_KEY) == 0) ? 3 : 2));
+        bind.rvMain.setLayoutManager(new GridLayoutManager(this.getContext(), viewModel.getCountOfSpans()));
         bind.rvMain.setAdapter(adapter);
 
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
