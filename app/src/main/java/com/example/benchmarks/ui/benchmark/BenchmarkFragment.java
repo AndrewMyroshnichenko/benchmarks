@@ -24,6 +24,15 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
     private BenchmarksViewModel viewModel;
     private FragmentBenchmarkBinding bind;
 
+    public static BenchmarkFragment createFragment(int position) {
+        final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
+        final Bundle bundle = new Bundle();
+        bundle.putInt(POSITION_KEY, position);
+        benchmarkFragment.setArguments(bundle);
+        return benchmarkFragment;
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,14 +79,6 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         viewModel.setSizeCollectionLiveData(result.getInt(InputFragment.LONG_COLLECTION_SIZE_KEY));
         String size = result.getString(InputFragment.STRING_COLLECTION_SIZE_KEY);
         bind.edCollectionsFragment.setText(size);
-    }
-
-    public static BenchmarkFragment createFragment(int position) {
-        final BenchmarkFragment benchmarkFragment = new BenchmarkFragment();
-        final Bundle bundle = new Bundle();
-        bundle.putInt(POSITION_KEY, position);
-        benchmarkFragment.setArguments(bundle);
-        return benchmarkFragment;
     }
 
     @Override

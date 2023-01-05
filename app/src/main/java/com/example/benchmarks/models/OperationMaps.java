@@ -11,7 +11,7 @@ import java.util.TreeMap;
 public class OperationMaps implements Benchmark{
 
     public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
-        Map<Integer, Integer> map = createMap(sizeOfCollection, item.nameOfCollection);
+        final Map<Integer, Integer> map = createMap(sizeOfCollection, item.nameOfCollection);
         long startTime = System.nanoTime();
 
         switch (item.nameOfOperation) {
@@ -42,7 +42,7 @@ public class OperationMaps implements Benchmark{
     }
 
     private Map<Integer, Integer> createMap(int sizeOfCollection, int nameOfMap) {
-        Map<Integer, Integer> map = null;
+        Map<Integer, Integer> map;
         switch (nameOfMap) {
             case R.string.tree_map:
                 map = new TreeMap<>();
@@ -60,7 +60,7 @@ public class OperationMaps implements Benchmark{
 
     private void fillMap(Map<Integer, Integer> mapList, int sizeOfMap) {
         for (int i = 0; i < sizeOfMap; i++) {
-            mapList.put(i, (int) sizeOfMap);
+            mapList.put(i, sizeOfMap);
         }
     }
 

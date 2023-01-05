@@ -3,7 +3,6 @@ package com.example.benchmarks.models;
 import com.example.benchmarks.R;
 
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,10 +12,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class OperationsCollections implements Benchmark {
 
     public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
-        List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
+        final List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
         final int valueForSearching = 200;
         if (item.nameOfOperation == R.string.search_by_value) {
-            list.add(new Random().nextInt(sizeOfCollection),valueForSearching);
+            list.add(new Random().nextInt(sizeOfCollection), valueForSearching);
         }
         long startTime = System.nanoTime();
 

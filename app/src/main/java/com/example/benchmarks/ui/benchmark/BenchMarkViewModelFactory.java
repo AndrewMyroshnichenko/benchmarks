@@ -30,6 +30,5 @@ public class BenchMarkViewModelFactory implements ViewModelProvider.Factory {
             default:
                 throw new RuntimeException("Wrong option in the factory!");
         }
-
     }
 }
