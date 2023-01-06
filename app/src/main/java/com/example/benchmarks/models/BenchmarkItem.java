@@ -30,4 +30,10 @@ public class BenchmarkItem {
     public int hashCode() {
         return Objects.hash(nameOfCollection, nameOfOperation, durationOfOperation);
     }
+
+
+
+
+
+
 }
