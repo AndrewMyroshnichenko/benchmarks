@@ -1,26 +1,18 @@
 package com.example.benchmarks.ui.benchmark;
 
+import android.os.Handler;
 import android.util.Pair;
 
-import androidx.annotation.MainThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.benchmarks.R;
 import com.example.benchmarks.models.Benchmark;
 import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.models.OperationMaps;
-import com.example.benchmarks.models.OperationsCollections;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import android.os.Handler;
 
 public class BenchmarksViewModel extends ViewModel {
 
@@ -52,7 +44,7 @@ public class BenchmarksViewModel extends ViewModel {
         final List<BenchmarkItem> items = benchmark.createBenchmarkList();
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
-        final int testSize = testSizeLiveData.getValue() != null ? testSizeLiveData.getValue() : 0;
+        final int testSize = testSizeLiveData.getValue() == null ? 0 : testSizeLiveData.getValue();
 
         for (int i = 0; i < items.size(); i++) {
             int finalI = i;
