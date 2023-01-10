@@ -99,6 +99,7 @@
 
     <string name="collections">Collections</string>
     <string name="maps">Maps</string>
+    <string name="nanos">nano-s</string>
 
 
 </resources>

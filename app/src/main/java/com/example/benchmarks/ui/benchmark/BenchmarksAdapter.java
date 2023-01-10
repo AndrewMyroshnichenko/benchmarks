@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,7 +60,7 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
             textView.setText(itemView.getResources().getString(item.nameOfOperation)
                     + " " + itemView.getResources().getString(item.nameOfCollection)
                     + " " + item.durationOfOperation
-                    + " " + "nano-s");
+                    + " " + itemView.getResources().getString(R.string.nanos));
             progressBar.animate().alpha(0f).setDuration(1500);
         }
     }
