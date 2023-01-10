@@ -6,16 +6,16 @@ public class BenchmarkItem {
 
     public final int nameOfCollection;
     public final int nameOfOperation;
-    public final String durationOfOperation;
+    public final Long durationOfOperation;
 
-    public BenchmarkItem(int nameOfCollection, int nameOfOperation, String durationOfOperation) {
+    public BenchmarkItem(int nameOfCollection, int nameOfOperation, Long durationOfOperation) {
         this.nameOfCollection = nameOfCollection;
         this.nameOfOperation = nameOfOperation;
         this.durationOfOperation = durationOfOperation;
     }
 
     public BenchmarkItem updateBenchmarkItem(long duration){
-        return new BenchmarkItem(nameOfCollection, nameOfOperation, String.valueOf(duration) + " nano/s");
+        return new BenchmarkItem(nameOfCollection, nameOfOperation, duration);
     }
 
     @Override

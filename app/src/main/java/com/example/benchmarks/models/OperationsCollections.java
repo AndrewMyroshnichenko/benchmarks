@@ -11,8 +11,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OperationsCollections implements Benchmark {
 
-    private final static String NON_MARKED_DURATION = "N/A nano/s";
-
     public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
         final List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
         final int valueForSearching = 200;
@@ -54,7 +52,7 @@ public class OperationsCollections implements Benchmark {
         final List<BenchmarkItem> list = new ArrayList<>();
         for (int  operation: getOperationNames()) {
             for (int collection : getCollectionsNames()) {
-                list.add(new BenchmarkItem(collection, operation, NON_MARKED_DURATION));
+                list.add(new BenchmarkItem(collection, operation, null));
             }
         }
         return list;
