@@ -48,11 +48,12 @@ public class OperationsCollections implements Benchmark {
         return endTime - startTime;
     }
 
-    public List<BenchmarkItem> createBenchmarkList() {
+    @Override
+    public List<BenchmarkItem> createBenchmarkList(boolean isProgressBarRunning) {
         final List<BenchmarkItem> list = new ArrayList<>();
         for (int  operation: getOperationNames()) {
             for (int collection : getCollectionsNames()) {
-                list.add(new BenchmarkItem(collection, operation, null));
+                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning));
             }
         }
         return list;

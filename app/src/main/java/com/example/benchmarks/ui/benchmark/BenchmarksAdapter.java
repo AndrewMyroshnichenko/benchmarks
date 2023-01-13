@@ -1,5 +1,6 @@
 package com.example.benchmarks.ui.benchmark;
 
+import android.animation.Animator;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,17 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
                     res.getString(item.nameOfOperation),
                     item.durationOfOperation));
 
-            progressBar.animate().alpha(0f).setDuration(1500);
+            if(item.isProgressBarRunning) {
+                progressBar.setVisibility(View.VISIBLE);
+                progressBar.animate().alpha(1f).setDuration(1500);
+                textView.setAlpha(0.5f);
+            } else {
+                progressBar.animate().alpha(0f).setDuration(1500);
+
+                textView.setAlpha(1f);
+            }
+
+
         }
     }
 }

@@ -28,7 +28,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onCreate(){
-        itemsLiveData.setValue(benchmark.createBenchmarkList());
+        itemsLiveData.setValue(benchmark.createBenchmarkList(false));
     }
 
     public static Pair<Boolean, Integer> isNumberCorrect(String number) {
@@ -41,7 +41,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onStartProcess() {
-        final List<BenchmarkItem> items = benchmark.createBenchmarkList();
+        final List<BenchmarkItem> items = benchmark.createBenchmarkList(true);
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
         final int testSize = testSizeLiveData.getValue() == null ? 0 : testSizeLiveData.getValue();

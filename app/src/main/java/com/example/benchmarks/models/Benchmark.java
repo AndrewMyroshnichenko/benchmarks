@@ -6,7 +6,7 @@ public interface Benchmark {
 
     int getSpansCount();
 
-    List<BenchmarkItem> createBenchmarkList();
+    List<BenchmarkItem> createBenchmarkList(boolean isProgressBarRunning);
 
     long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item);
 
