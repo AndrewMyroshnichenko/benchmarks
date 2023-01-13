@@ -1,5 +1,6 @@
 package com.example.benchmarks.ui.benchmark;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,10 +58,14 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
         }
 
         public void bind(BenchmarkItem item) {
-            textView.setText(itemView.getResources().getString(item.nameOfOperation)
-                    + " " + itemView.getResources().getString(item.nameOfCollection)
-                    + " " + item.durationOfOperation
-                    + " " + itemView.getResources().getString(R.string.nanos));
+
+            Resources res = itemView.getResources();
+
+            textView.setText(res.getString(R.string.whole_item_phrase,
+                    res.getString(item.nameOfCollection),
+                    res.getString(item.nameOfOperation),
+                    item.durationOfOperation));
+
             progressBar.animate().alpha(0f).setDuration(1500);
         }
     }
