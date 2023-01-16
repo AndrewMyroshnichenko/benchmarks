@@ -39,6 +39,7 @@
     <string name="collections">Collections</string>
     <string name="maps">Maps</string>
 
-    <string name="whole_item_phrase">%1$s %2$s %3$d nano-s</string>
+    <string name="whole_item_phrase">%1$s %2$s %3$s nano-s</string>
+    <string name="n_a">N/A</string>
 
 </resources>

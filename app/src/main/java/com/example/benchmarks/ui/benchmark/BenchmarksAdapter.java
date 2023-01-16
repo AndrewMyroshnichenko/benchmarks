@@ -65,7 +65,7 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
             textView.setText(res.getString(R.string.whole_item_phrase,
                     res.getString(item.nameOfCollection),
                     res.getString(item.nameOfOperation),
-                    item.durationOfOperation));
+                    (item.durationOfOperation == null) ? res.getString(R.string.n_a) : item.durationOfOperation));
 
             if(item.isProgressBarRunning) {
                 progressBar.animate().alpha(1f).setDuration(1500);
