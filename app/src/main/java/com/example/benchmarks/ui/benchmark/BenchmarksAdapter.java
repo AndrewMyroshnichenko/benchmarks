@@ -68,13 +68,10 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
                     item.durationOfOperation));
 
             if(item.isProgressBarRunning) {
-                progressBar.setVisibility(View.VISIBLE);
                 progressBar.animate().alpha(1f).setDuration(1500);
-                textView.setAlpha(0.5f);
+                textView.animate().alpha(0.5f);
             } else {
-                progressBar.animate().alpha(0f).setDuration(1500);
-
-                textView.setAlpha(1f);
+                progressBar.animate().alpha(0f).setDuration(0);
             }
 
 
