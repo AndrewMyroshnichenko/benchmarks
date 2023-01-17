@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Benchmarks</string>
+    <string name="toolbar_second_fragment_name">Collection &amp; Maps</string>
+
+    <string name="et_dialog_fragment_hint">Collection size</string>
+    <string name="et_fragment_hint">Elements amount:</string>
+    <string name="et_fragment_text">Enter a number</string>
+    <string name="bt_start">START</string>
+    <string name="bt_stop">STOP</string>
+
+    <string name="tv_error_text">Error.You need enter elements count.</string>
+    <string name="tv_message_input_fragment">Please enter collection size and number of elements to compare</string>
+    <string name="bt_dialog_calculate">Calculate</string>
+
+    <string-array name="name_tabs">
+        <item>Collections</item>
+        <item>Maps</item>
+    </string-array>
+
+    <string name="array_list">ArrayList</string>
+    <string name="linked_list">LinkedList</string>
+    <string name="copy_on_write_array_list">CopyOnWriteArrayList</string>
+
+    <string name="adding_in_the_beginning">Adding in the beginning</string>
+    <string name="adding_in_the_middle">Adding in the middle</string>
+    <string name="adding_in_the_end">Adding in the end</string>
+    <string name="search_by_value">Search by value</string>
+    <string name="removing_in_the_beginning">Removing in the beginning</string>
+    <string name="removing_in_the_middle">Removing in the middle</string>
+    <string name="removing_in_the_end">Removing in the end</string>
+
+    <string name="tree_map">TreeMap</string>
+    <string name="hash_map">HashMap</string>
+
+    <string name="adding_new_in">Adding new in</string>
+    <string name="search_by_key_in">Search by key in</string>
+    <string name="removing_in">Removing in</string>
+
+    <string name="collections">Collections</string>
+    <string name="maps">Maps</string>
+
+    <string name="whole_item_phrase">%1$s %2$s %3$s nano-s</string>
+    <string name="n_a">N/A</string>
+
+</resources>
