@@ -46,28 +46,22 @@ public class BenchmarksViewModel extends ViewModel {
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
         final int testSize = testSizeLiveData.getValue() == null ? 0 : testSizeLiveData.getValue();
-        final int itemsSize = itemsLiveData.getValue() == null ? 0 :  itemsLiveData.getValue().size();
-        final AtomicInteger counterOfTasks = new AtomicInteger();
+        final int itemsSize = items.size() - 1;
+        final AtomicInteger counterOfTasks = new AtomicInteger(itemsSize);
 
-        for (int i = 0; i < items.size(); i++) {
+        for (int i = 0; i <= itemsSize; i++) {
             int finalI = i;
-
             executor.submit(() -> {
                 long duration = benchmark.markDurationOfOperation(testSize, items.get(finalI));
                 handler.post(() -> {
-
                     items.set(finalI, items.get(finalI).updateBenchmarkItem(duration));
                     itemsLiveData.setValue(items);
-                    counterOfTasks.getAndIncrement();
-
-                    if(counterOfTasks.get() == itemsSize){
-                        onStopProcess();
-                    }
-
                 });
+                if (counterOfTasks.decrementAndGet() == 0) {
+                    handler.post(this::onStopProcess);
+                }
             });
         }
-
         executor.shutdown();
     }
 
