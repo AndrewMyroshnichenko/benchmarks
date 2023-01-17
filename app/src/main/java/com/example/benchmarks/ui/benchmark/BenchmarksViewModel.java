@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.benchmarks.models.Benchmark;
 import com.example.benchmarks.models.BenchmarkItem;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,8 +55,8 @@ public class BenchmarksViewModel extends ViewModel {
             executor.submit(() -> {
                 long duration = benchmark.markDurationOfOperation(testSize, items.get(finalI));
                 handler.post(() -> {
-                    items.set(finalI, items.get(finalI).updateBenchmarkItem(duration));
-                    itemsLiveData.setValue(items);
+                    BenchmarkItem copy = items.get(finalI).updateBenchmarkItem(duration);
+                    recreateItemsList(copy, finalI);
                 });
                 if (counterOfTasks.decrementAndGet() == 0) {
                     handler.post(this::onStopProcess);
@@ -78,6 +79,15 @@ public class BenchmarksViewModel extends ViewModel {
             onStartProcess();
         } else {
             onStopProcess();
+        }
+    }
+
+    private void recreateItemsList(BenchmarkItem benchmarkItem, int index){
+        List<BenchmarkItem> list = itemsLiveData.getValue();
+        if (list != null){
+            List<BenchmarkItem> newList = new ArrayList<>(list);
+            newList.set(index, benchmarkItem);
+            itemsLiveData.setValue(newList);
         }
     }
 
