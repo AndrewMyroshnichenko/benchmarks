@@ -1,6 +1,5 @@
 package com.example.benchmarks.ui.benchmark;
 
-import android.animation.Animator;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,22 +57,18 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
         }
 
         public void bind(BenchmarkItem item) {
-
-            Resources res = itemView.getResources();
-
+            final Resources res = itemView.getResources();
             textView.setText(res.getString(R.string.whole_item_phrase,
                     res.getString(item.nameOfCollection),
                     res.getString(item.nameOfOperation),
                     (item.durationOfOperation == null) ? res.getString(R.string.n_a) : item.durationOfOperation));
 
-            if(item.isProgressBarRunning) {
-                progressBar.animate().alpha(1f).setDuration(1500);
-                textView.animate().alpha(0.5f);
-            } else {
-                progressBar.animate().alpha(0f).setDuration(0);
+            final float targetAlpha = item.isProgressBarRunning ? 1F : 0F;
+            final float targetTextAlpha = item.isProgressBarRunning ? 0.5F : 1F;
+            if (targetAlpha != progressBar.getAlpha()) {
+                progressBar.animate().alpha(targetAlpha);
+                textView.animate().alpha(targetTextAlpha);
             }
-
-
         }
     }
 }
