@@ -42,7 +42,15 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    public void onStartProcess() {
+    public void onButtonToggle() {
+        if (executor == null) {
+            onStartProcess();
+        } else {
+            onStopProcess();
+        }
+    }
+
+    private void onStartProcess() {
         final List<BenchmarkItem> items = benchmark.createBenchmarkList(true);
         calculationStartLiveData.setValue(true);
         executor = Executors.newCachedThreadPool();
@@ -66,20 +74,11 @@ public class BenchmarksViewModel extends ViewModel {
         executor.shutdown();
     }
 
-
     private void onStopProcess() {
         calculationStartLiveData.setValue(false);
         executor.shutdownNow();
         executor = null;
         System.gc();
-    }
-
-    public void onButtonToggle() {
-        if (executor == null) {
-            onStartProcess();
-        } else {
-            onStopProcess();
-        }
     }
 
     private void recreateItemsList(BenchmarkItem benchmarkItem, int index){
