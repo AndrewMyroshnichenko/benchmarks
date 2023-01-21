@@ -11,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OperationsCollections implements Benchmark {
 
+    @Override
     public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
         final List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
         final int valueForSearching = 200;
@@ -59,6 +60,7 @@ public class OperationsCollections implements Benchmark {
         return list;
     }
 
+    @Override
     public int getSpansCount(){
         return getCollectionsNames().size();
     }

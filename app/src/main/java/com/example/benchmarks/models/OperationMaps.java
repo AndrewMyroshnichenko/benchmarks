@@ -10,6 +10,7 @@ import java.util.TreeMap;
 
 public class OperationMaps implements Benchmark{
 
+    @Override
     public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
         final Map<Integer, Integer> map = createMap(sizeOfCollection, item.nameOfCollection);
         long startTime = System.nanoTime();
@@ -42,6 +43,7 @@ public class OperationMaps implements Benchmark{
         return list;
     }
 
+    @Override
     public int getSpansCount(){
         return getMapsNames().size();
     }
