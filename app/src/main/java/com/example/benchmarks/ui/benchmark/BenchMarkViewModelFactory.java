@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.benchmarks.models.Benchmark;
 import com.example.benchmarks.models.OperationMaps;
 import com.example.benchmarks.models.OperationsCollections;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 public class BenchMarkViewModelFactory implements ViewModelProvider.Factory {
 
@@ -13,6 +17,14 @@ public class BenchMarkViewModelFactory implements ViewModelProvider.Factory {
     private static final int POSITION_MAP = 1;
 
     private final int fragmentPosition;
+
+    @Inject
+    @Named("collections")
+    Benchmark benchmarkCollections;
+
+    @Inject
+    @Named("maps")
+    Benchmark benchmarkMaps;
 
     public BenchMarkViewModelFactory(int fragmentPosition) {
         this.fragmentPosition = fragmentPosition;

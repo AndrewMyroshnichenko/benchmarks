@@ -8,7 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 public class OperationMaps implements Benchmark{
+
+    @Inject
+    public OperationMaps() {
+    }
 
     @Override
     public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
