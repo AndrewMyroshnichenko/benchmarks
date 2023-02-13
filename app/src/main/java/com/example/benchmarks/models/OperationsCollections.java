@@ -58,9 +58,10 @@ public class OperationsCollections implements Benchmark {
     @Override
     public List<BenchmarkItem> createBenchmarkList(boolean isProgressBarRunning) {
         final List<BenchmarkItem> list = new ArrayList<>();
+        int index = 0;
         for (int  operation: getOperationNames()) {
             for (int collection : getCollectionsNames()) {
-                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning));
+                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning, index++));
             }
         }
         return list;

@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
     private ActivityMainBinding bind;
     private TabLayoutMediator tabLayoutMediator;
@@ -27,17 +27,34 @@ public class MainActivity extends AppCompatActivity{
         bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), getLifecycle(), namesOfTabs));
         tabLayoutMediator = new TabLayoutMediator(bind.mainTabLayout, bind.mainViewPager, (tab, position) -> {
             tab.setText(namesOfTabs.get(position));
-            final int id = position == 0
-                    ? R.drawable.tab_item_left_background
-                    : R.drawable.tab_item_right_background;
-            bind.mainTabLayout.setSelectedTabIndicator(ResourcesCompat.getDrawable(getResources(), id, getTheme()));
         });
         tabLayoutMediator.attach();
+        bind.mainTabLayout.addOnTabSelectedListener(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         tabLayoutMediator.detach();
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+            final int id = bind.mainTabLayout.getSelectedTabPosition() == 0
+                    ? R.drawable.tab_item_left_background
+                    : R.drawable.tab_item_right_background;
+            bind.mainTabLayout.setSelectedTabIndicator(ResourcesCompat.getDrawable(getResources(), id, getTheme()));
+
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }
