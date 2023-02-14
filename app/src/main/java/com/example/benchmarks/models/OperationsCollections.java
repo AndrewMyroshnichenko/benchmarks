@@ -18,7 +18,7 @@ public class OperationsCollections implements Benchmark {
     }
 
     @Override
-    public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
+    public long measureTime(int sizeOfCollection, BenchmarkItem item) {
         final List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
         final int valueForSearching = 200;
         if (item.nameOfOperation == R.string.search_by_value) {

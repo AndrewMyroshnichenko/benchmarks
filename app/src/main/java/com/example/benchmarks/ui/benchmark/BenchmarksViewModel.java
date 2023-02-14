@@ -1,6 +1,5 @@
 package com.example.benchmarks.ui.benchmark;
 
-import android.os.Handler;
 import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
@@ -24,7 +23,7 @@ public class BenchmarksViewModel extends ViewModel {
     private final MutableLiveData<Integer> testSizeLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> calculationStartLiveData = new MutableLiveData<>(false);
     private final Benchmark benchmark;
-    private Disposable disposable;
+    private Disposable disposable = Disposable.disposed();
 
     public BenchmarksViewModel(Benchmark benchmark) {
         this.benchmark = benchmark;
@@ -44,7 +43,7 @@ public class BenchmarksViewModel extends ViewModel {
     }
 
     public void onButtonToggle() {
-        if (disposable == null || disposable.isDisposed()) {
+        if (disposable.isDisposed()) {
             onStartProcess();
         } else {
             onStopProcess();
@@ -57,8 +56,11 @@ public class BenchmarksViewModel extends ViewModel {
         final int testSize = testSizeLiveData.getValue() == null ? 0 : testSizeLiveData.getValue();
 
         disposable = Flowable.fromIterable(items)
+                .map(benchmarkItem -> {
+                    final long time = benchmark.measureTime(testSize, benchmarkItem);
+                    return new Pair<>(items.indexOf(benchmarkItem), benchmarkItem.updateBenchmarkItem(time));
+                })
                 .subscribeOn(Schedulers.computation())
-                .map(benchmarkItem -> benchmarkItem.updateBenchmarkItem(benchmark.markDurationOfOperation(testSize, benchmarkItem)))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(this::onStopProcess)
                 .subscribe(this::recreateItemsList);
@@ -67,16 +69,16 @@ public class BenchmarksViewModel extends ViewModel {
 
     private void onStopProcess() {
         calculationStartLiveData.setValue(false);
-        if(disposable != null && !disposable.isDisposed()){
+        if (!disposable.isDisposed()) {
             disposable.dispose();
         }
     }
 
-    private void recreateItemsList(BenchmarkItem benchmarkItem){
+    private void recreateItemsList(Pair<Integer, BenchmarkItem> benchmarkResult) {
         List<BenchmarkItem> list = itemsLiveData.getValue();
-        if (list != null){
+        if (list != null) {
             List<BenchmarkItem> newList = new ArrayList<>(list);
-            newList.set(benchmarkItem.indexOfItem, benchmarkItem);
+            newList.set(benchmarkResult.first, benchmarkResult.second);
             itemsLiveData.setValue(newList);
         }
     }
@@ -96,5 +98,4 @@ public class BenchmarksViewModel extends ViewModel {
     public LiveData<Boolean> getCalculationStartLiveData() {
         return calculationStartLiveData;
     }
-
 }

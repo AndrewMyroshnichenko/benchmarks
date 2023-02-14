@@ -17,7 +17,7 @@ public class OperationMaps implements Benchmark{
     }
 
     @Override
-    public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
+    public long measureTime(int sizeOfCollection, BenchmarkItem item) {
         final Map<Integer, Integer> map = createMap(sizeOfCollection, item.nameOfCollection);
         long startTime = System.nanoTime();
 
