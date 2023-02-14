@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.benchmarks.models.OperationMaps;
-import com.example.benchmarks.models.OperationsCollections;
+import com.example.benchmarks.BenchmarksApplication;
+import com.example.benchmarks.models.Benchmark;
+
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 public class BenchMarkViewModelFactory implements ViewModelProvider.Factory {
 
@@ -14,7 +18,17 @@ public class BenchMarkViewModelFactory implements ViewModelProvider.Factory {
 
     private final int fragmentPosition;
 
+    @Inject
+    @Named("collections")
+    Benchmark benchmarkCollections;
+
+    @Inject
+    @Named("maps")
+    Benchmark benchmarkMaps;
+
     public BenchMarkViewModelFactory(int fragmentPosition) {
+        super();
+        BenchmarksApplication.getAppComponent().inject(this);
         this.fragmentPosition = fragmentPosition;
     }
 
@@ -24,9 +38,9 @@ public class BenchMarkViewModelFactory implements ViewModelProvider.Factory {
 
         switch (fragmentPosition){
             case POSITION_LIST:
-                return (T) new BenchmarksViewModel(new OperationsCollections());
+                return (T) new BenchmarksViewModel(benchmarkCollections);
             case POSITION_MAP:
-                return (T) new BenchmarksViewModel(new OperationMaps());
+                return (T) new BenchmarksViewModel(benchmarkMaps);
             default:
                 throw new RuntimeException("Wrong option in the factory!");
         }

@@ -25,7 +25,10 @@ public class BenchmarkItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BenchmarkItem that = (BenchmarkItem) o;
-        return nameOfCollection == that.nameOfCollection && nameOfOperation == that.nameOfOperation && isProgressBarRunning == that.isProgressBarRunning && Objects.equals(durationOfOperation, that.durationOfOperation);
+        return nameOfCollection == that.nameOfCollection
+                && nameOfOperation == that.nameOfOperation
+                && isProgressBarRunning == that.isProgressBarRunning
+                && Objects.equals(durationOfOperation, that.durationOfOperation);
     }
 
     @Override

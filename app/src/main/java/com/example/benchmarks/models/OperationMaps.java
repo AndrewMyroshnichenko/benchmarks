@@ -8,9 +8,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 public class OperationMaps implements Benchmark{
 
-    public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
+    @Inject
+    public OperationMaps() {
+    }
+
+    @Override
+    public long measureTime(int sizeOfCollection, BenchmarkItem item) {
         final Map<Integer, Integer> map = createMap(sizeOfCollection, item.nameOfCollection);
         long startTime = System.nanoTime();
 
@@ -34,14 +41,16 @@ public class OperationMaps implements Benchmark{
     @Override
     public List<BenchmarkItem> createBenchmarkList(boolean isProgressBarRunning) {
         final List<BenchmarkItem> list = new ArrayList<>();
+        int index = 0;
         for (int operation : getOperationNames()) {
             for (int collection : getMapsNames()) {
-                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning));
+                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning, index++));
             }
         }
         return list;
     }
 
+    @Override
     public int getSpansCount(){
         return getMapsNames().size();
     }

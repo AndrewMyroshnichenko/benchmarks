@@ -9,9 +9,16 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.inject.Inject;
+
 public class OperationsCollections implements Benchmark {
 
-    public long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item) {
+    @Inject
+    public OperationsCollections() {
+    }
+
+    @Override
+    public long measureTime(int sizeOfCollection, BenchmarkItem item) {
         final List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
         final int valueForSearching = 200;
         if (item.nameOfOperation == R.string.search_by_value) {
@@ -51,14 +58,16 @@ public class OperationsCollections implements Benchmark {
     @Override
     public List<BenchmarkItem> createBenchmarkList(boolean isProgressBarRunning) {
         final List<BenchmarkItem> list = new ArrayList<>();
+        int index = 0;
         for (int  operation: getOperationNames()) {
             for (int collection : getCollectionsNames()) {
-                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning));
+                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning, index++));
             }
         }
         return list;
     }
 
+    @Override
     public int getSpansCount(){
         return getCollectionsNames().size();
     }

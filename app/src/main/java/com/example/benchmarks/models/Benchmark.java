@@ -8,6 +8,6 @@ public interface Benchmark {
 
     List<BenchmarkItem> createBenchmarkList(boolean isProgressBarRunning);
 
-    long markDurationOfOperation(int sizeOfCollection, BenchmarkItem item);
+    long measureTime(int sizeOfCollection, BenchmarkItem item);
 
 }
