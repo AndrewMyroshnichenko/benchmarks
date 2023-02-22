@@ -17,7 +17,7 @@ public class ListOperationsModule {
     @Provides
     @Named("maps")
     public Benchmark provideOperationMaps(){
-        return new OperationMaps();
+        return new OperationsMaps();
     }
 
 }

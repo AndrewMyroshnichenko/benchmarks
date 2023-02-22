@@ -10,10 +10,10 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
-public class OperationMaps implements Benchmark{
+public class OperationsMaps implements Benchmark{
 
     @Inject
-    public OperationMaps() {
+    public OperationsMaps() {
     }
 
     @Override
@@ -44,7 +44,7 @@ public class OperationMaps implements Benchmark{
         int index = 0;
         for (int operation : getOperationNames()) {
             for (int collection : getMapsNames()) {
-                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning, index++));
+                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning));
             }
         }
         return list;

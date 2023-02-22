@@ -61,7 +61,7 @@ public class OperationsCollections implements Benchmark {
         int index = 0;
         for (int  operation: getOperationNames()) {
             for (int collection : getCollectionsNames()) {
-                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning, index++));
+                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning));
             }
         }
         return list;
