@@ -33,6 +33,12 @@ public class OperationsCollectionsUnitTest {
     }
 
     @Test
+    public void testMeasureTimeThrowsException(){
+        BenchmarkItem wrongItem = new BenchmarkItem(1, 1, 0L, false);
+        assertThrows(RuntimeException.class, () -> benchmark.measureTime(10, wrongItem));
+    }
+
+    @Test
     public void testGetSpansCount(){
         assertEquals(3, benchmark.getSpansCount());
     }
