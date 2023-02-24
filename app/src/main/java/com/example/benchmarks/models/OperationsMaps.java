@@ -41,7 +41,6 @@ public class OperationsMaps implements Benchmark{
     @Override
     public List<BenchmarkItem> createBenchmarkList(boolean isProgressBarRunning) {
         final List<BenchmarkItem> list = new ArrayList<>();
-        int index = 0;
         for (int operation : getOperationNames()) {
             for (int collection : getMapsNames()) {
                 list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning));
