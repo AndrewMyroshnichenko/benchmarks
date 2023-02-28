@@ -98,4 +98,9 @@ public class BenchmarksViewModel extends ViewModel {
     public LiveData<Boolean> getCalculationStartLiveData() {
         return calculationStartLiveData;
     }
+
+    public LiveData<Integer> getTestSizeLiveData(){
+        return testSizeLiveData;
+    }
+
 }
