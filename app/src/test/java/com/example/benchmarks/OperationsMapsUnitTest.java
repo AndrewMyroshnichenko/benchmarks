@@ -13,21 +13,24 @@ import java.util.List;
 
 public class OperationsMapsUnitTest {
 
-    Benchmark benchmark = new OperationsMaps();
-    List<BenchmarkItem> testList = benchmark.createBenchmarkList(false);
+    private final Benchmark benchmark = new OperationsMaps();
+
 
     @Test
     public void testCreatingBenchmarkListReturnsNotNull() {
+        final List<BenchmarkItem> testList = benchmark.createBenchmarkList(false);
         assertNotNull(testList);
     }
 
     @Test
     public void testCreatingBenchmarkListIsNotEmpty(){
+        final List<BenchmarkItem> testList = benchmark.createBenchmarkList(false);
         assertTrue(testList.size() > 0);
     }
 
     @Test
     public void testMeasureTimeMoreThan0(){
+        final List<BenchmarkItem> testList = benchmark.createBenchmarkList(false);
         for (BenchmarkItem item : testList) {
             assertTrue(benchmark.measureTime(5000, item) > 0);
         }
