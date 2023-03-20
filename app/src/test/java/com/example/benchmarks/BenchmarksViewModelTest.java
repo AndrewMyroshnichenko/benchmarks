@@ -51,7 +51,7 @@ public class BenchmarksViewModelTest {
 
     }
 
-    private void setWhenAndObserveForever(List list) {
+    private void setWhenAndObserveForever(List<BenchmarkItem> list) {
         when(mockBenchmark.createBenchmarkList(false)).thenReturn(list);
         when(mockBenchmark.createBenchmarkList(true)).thenReturn(list);
         when(mockBenchmark.getSpansCount()).thenReturn(SPANS_COUNT);
