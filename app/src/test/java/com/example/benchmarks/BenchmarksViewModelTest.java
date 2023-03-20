@@ -37,16 +37,12 @@ public class BenchmarksViewModelTest {
     private Observer<Boolean> mockCalculationStartLiveData;
     private Benchmark mockBenchmark;
 
-    private final List<BenchmarkItem> listOfItems = new ArrayList<>();
-    private BenchmarkItem item;
 
     @Rule
     public final InstantTaskExecutorRule executorRule = new InstantTaskExecutorRule();
 
     @Before
     public void set() {
-        item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
-        listOfItems.add(item);
 
         mockBenchmark = mock(Benchmark.class);
         mockItemsLiveData = mock(Observer.class);
@@ -55,9 +51,9 @@ public class BenchmarksViewModelTest {
 
     }
 
-    private void setWhenAndObserveForever() {
-        when(mockBenchmark.createBenchmarkList(false)).thenReturn(listOfItems);
-        when(mockBenchmark.createBenchmarkList(true)).thenReturn(listOfItems);
+    private void setWhenAndObserveForever(List list) {
+        when(mockBenchmark.createBenchmarkList(false)).thenReturn(list);
+        when(mockBenchmark.createBenchmarkList(true)).thenReturn(list);
         when(mockBenchmark.getSpansCount()).thenReturn(SPANS_COUNT);
 
         viewModel.getItemsLiveData().observeForever(mockItemsLiveData);
@@ -72,7 +68,12 @@ public class BenchmarksViewModelTest {
 
     @Test
     public void testOnCreate() {
-        setWhenAndObserveForever();
+
+        final List<BenchmarkItem> listOfItems = new ArrayList<>();
+        BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
+        listOfItems.add(item);
+
+        setWhenAndObserveForever(listOfItems);
 
         viewModel.onCreate();
         verify(mockBenchmark).createBenchmarkList(false);
@@ -85,7 +86,11 @@ public class BenchmarksViewModelTest {
 
     @Test
     public void testOnButtonToggle() {
-        setWhenAndObserveForever();
+        final List<BenchmarkItem> listOfItems = new ArrayList<>();
+        BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
+        listOfItems.add(item);
+
+        setWhenAndObserveForever(listOfItems);
 
         viewModel.setSizeCollectionLiveData(COLLECTION_SIZE);
         viewModel.onButtonToggle();
@@ -101,7 +106,11 @@ public class BenchmarksViewModelTest {
 
     @Test
     public void testGetCountOfSpans() {
-        setWhenAndObserveForever();
+        final List<BenchmarkItem> listOfItems = new ArrayList<>();
+        BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
+        listOfItems.add(item);
+
+        setWhenAndObserveForever(listOfItems);
 
         assertEquals(viewModel.getCountOfSpans(), SPANS_COUNT);
         verify(mockBenchmark).getSpansCount();
