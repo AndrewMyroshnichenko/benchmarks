@@ -136,6 +136,38 @@ public class BenchmarksViewModelTest {
         assertEquals(new Pair<>(false, 0).second, BenchmarksViewModel.isNumberCorrect("Hello").second);
     }
 
+    @Test
+    public void testOnStopProcess(){
+        final List<BenchmarkItem> listOfItems = new ArrayList<>();
+        BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
+        listOfItems.add(item);
+        setWhenAndObserveForever(listOfItems);
+
+        viewModel.setSizeCollectionLiveData(COLLECTION_SIZE);
+        viewModel.onCreate();
+
+        viewModel.onButtonToggle();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        viewModel.onButtonToggle();
+
+        verify(mockCalculationStartLiveData, times(2)).onChanged(true);
+        verify(mockCalculationStartLiveData, times(3)).onChanged(false);
+        verify(mockBenchmark).createBenchmarkList(false);
+        verify(mockBenchmark, times(2)).createBenchmarkList(true);
+        verify(mockItemsLiveData, times(3)).onChanged(anyList());
+        verify(mockBenchmark, times(2)).measureTime(COLLECTION_SIZE, item);
+
+
+        assertFalse(viewModel.getCalculationStartLiveData().getValue());
+
+        commonVerifyNoMoreInteractions();
+
+    }
+
     @After
     public void clear(){
         viewModel.getItemsLiveData().removeObserver(mockItemsLiveData);
