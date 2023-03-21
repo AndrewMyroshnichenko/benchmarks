@@ -1,4 +1,4 @@
-package com.example.benchmarks;
+package com.example.benchmarks.models;
 
 import static org.junit.Assert.*;
 

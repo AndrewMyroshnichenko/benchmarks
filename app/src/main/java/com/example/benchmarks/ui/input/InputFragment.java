@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
+import com.example.benchmarks.utils.Pair;
 
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 

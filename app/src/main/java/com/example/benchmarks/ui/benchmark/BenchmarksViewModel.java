@@ -1,13 +1,12 @@
 package com.example.benchmarks.ui.benchmark;
 
-import android.util.Pair;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.models.Benchmark;
 import com.example.benchmarks.models.BenchmarkItem;
+import com.example.benchmarks.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

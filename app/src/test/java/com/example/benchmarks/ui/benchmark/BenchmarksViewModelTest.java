@@ -1,6 +1,7 @@
-package com.example.benchmarks;
+package com.example.benchmarks.ui.benchmark;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -8,14 +9,14 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import android.util.*;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 
+import com.example.benchmarks.MainThreadRule;
+import com.example.benchmarks.R;
 import com.example.benchmarks.models.Benchmark;
 import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
+import com.example.benchmarks.utils.Pair;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +38,6 @@ public class BenchmarksViewModelTest {
     private Observer<List<BenchmarkItem>> mockItemsLiveData;
     private Observer<Boolean> mockCalculationStartLiveData;
     private Benchmark mockBenchmark;
-
 
     @Rule
     public final InstantTaskExecutorRule executorRule = new InstantTaskExecutorRule();
@@ -90,7 +90,6 @@ public class BenchmarksViewModelTest {
         final List<BenchmarkItem> listOfItems = new ArrayList<>();
         BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
         listOfItems.add(item);
-
         setWhenAndObserveForever(listOfItems);
 
         viewModel.setSizeCollectionLiveData(COLLECTION_SIZE);
@@ -101,7 +100,9 @@ public class BenchmarksViewModelTest {
         verify(mockBenchmark).createBenchmarkList(true);
         verify(mockBenchmark).measureTime(COLLECTION_SIZE, item);
 
+        assertNotSame(listOfItems, viewModel.getItemsLiveData().getValue());
         assertFalse(viewModel.getCalculationStartLiveData().getValue());
+        assertFalse(viewModel.getItemsLiveData().getValue().get(0).isProgressBarRunning);
         commonVerifyNoMoreInteractions();
     }
 
@@ -122,12 +123,12 @@ public class BenchmarksViewModelTest {
 
     @Test
     public void testIsNumberCorrect(){
-        //Тут я тестировал IsNumberCorrect(), но в итоге при вызове этого метоа всегда были null в Pair, в итоге я решил напрямую создать Pair
-        Pair<Boolean, Integer> pair = new Pair<>(true, 10);
-        Integer a = pair.second;
-        Boolean b = pair.first;
-
-        assertEquals(true, b);
+        assertTrue(BenchmarksViewModel.isNumberCorrect("10").first);
+        assertFalse(BenchmarksViewModel.isNumberCorrect("-10").first);
+        assertFalse(BenchmarksViewModel.isNumberCorrect("Hello").first);
+        assertEquals(new Pair<>(true, 10).second, BenchmarksViewModel.isNumberCorrect("10").second);
+        assertEquals(new Pair<>(false, -10).second, BenchmarksViewModel.isNumberCorrect("-10").second);
+        assertEquals(new Pair<>(false, 0).second, BenchmarksViewModel.isNumberCorrect("Hello").second);
     }
 
     @After
