@@ -1,11 +1,14 @@
 package com.example.benchmarks.ui.benchmark;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
@@ -16,7 +19,6 @@ import com.example.benchmarks.MainThreadRule;
 import com.example.benchmarks.R;
 import com.example.benchmarks.models.Benchmark;
 import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.models.OperationsCollections;
 import com.example.benchmarks.utils.Pair;
 
 import org.junit.After;
@@ -45,7 +47,6 @@ public class BenchmarksViewModelTest {
 
     @Before
     public void set() {
-
         mockBenchmark = mock(Benchmark.class);
         mockItemsLiveData = mock(Observer.class);
         mockCalculationStartLiveData = mock(Observer.class);
