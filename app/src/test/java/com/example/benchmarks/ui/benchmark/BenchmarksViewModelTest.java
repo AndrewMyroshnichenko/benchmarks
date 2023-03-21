@@ -16,6 +16,7 @@ import com.example.benchmarks.MainThreadRule;
 import com.example.benchmarks.R;
 import com.example.benchmarks.models.Benchmark;
 import com.example.benchmarks.models.BenchmarkItem;
+import com.example.benchmarks.models.OperationsCollections;
 import com.example.benchmarks.utils.Pair;
 
 import org.junit.After;
@@ -93,12 +94,15 @@ public class BenchmarksViewModelTest {
         setWhenAndObserveForever(listOfItems);
 
         viewModel.setSizeCollectionLiveData(COLLECTION_SIZE);
+        viewModel.onCreate();
         viewModel.onButtonToggle();
 
         verify(mockCalculationStartLiveData).onChanged(true);
         verify(mockCalculationStartLiveData, times(2)).onChanged(false);
         verify(mockBenchmark).createBenchmarkList(true);
+        verify(mockBenchmark).createBenchmarkList(false);
         verify(mockBenchmark).measureTime(COLLECTION_SIZE, item);
+        verify(mockItemsLiveData, times(2)).onChanged(anyList());
 
         assertNotSame(listOfItems, viewModel.getItemsLiveData().getValue());
         assertFalse(viewModel.getCalculationStartLiveData().getValue());
