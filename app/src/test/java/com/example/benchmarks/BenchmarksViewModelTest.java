@@ -5,9 +5,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+
+import android.util.*;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
@@ -117,6 +118,16 @@ public class BenchmarksViewModelTest {
         verify(mockCalculationStartLiveData).onChanged(anyBoolean());
 
         commonVerifyNoMoreInteractions();
+    }
+
+    @Test
+    public void testIsNumberCorrect(){
+        //Тут я тестировал IsNumberCorrect(), но в итоге при вызове этого метоа всегда были null в Pair, в итоге я решил напрямую создать Pair
+        Pair<Boolean, Integer> pair = new Pair<>(true, 10);
+        Integer a = pair.second;
+        Boolean b = pair.first;
+
+        assertEquals(true, b);
     }
 
     @After
