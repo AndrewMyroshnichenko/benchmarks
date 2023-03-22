@@ -28,9 +28,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
+import io.reactivex.rxjava3.plugins.RxJavaPlugins;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class BenchmarksViewModelTest {
 
@@ -44,8 +44,6 @@ public class BenchmarksViewModelTest {
     private Observer<List<BenchmarkItem>> mockItemsLiveData;
     private Observer<Boolean> mockCalculationStartLiveData;
     private Benchmark mockBenchmark;
-
-    private final BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
 
     @Rule
     public final InstantTaskExecutorRule executorRule = new InstantTaskExecutorRule();
@@ -63,13 +61,11 @@ public class BenchmarksViewModelTest {
         when(mockBenchmark.createBenchmarkList(false)).thenReturn(list);
         when(mockBenchmark.createBenchmarkList(true)).thenReturn(list);
         when(mockBenchmark.getSpansCount()).thenReturn(SPANS_COUNT);
-        when(mockBenchmark.measureTime(COLLECTION_SIZE, item))
-                .thenReturn(10L)
-                .thenAnswer(invocation -> {
+        when(mockBenchmark.measureTime(COLLECTION_SIZE, list.get(0))).thenAnswer(invocation -> {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Measure time interrupted");
             }
             return 10L;
         });
@@ -86,8 +82,8 @@ public class BenchmarksViewModelTest {
 
     @Test
     public void testOnCreate() {
-
         final List<BenchmarkItem> listOfItems = new ArrayList<>();
+        final BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
         listOfItems.add(item);
 
         setWhenAndObserveForever(listOfItems);
@@ -104,6 +100,7 @@ public class BenchmarksViewModelTest {
     @Test
     public void testOnButtonToggle() {
         final List<BenchmarkItem> listOfItems = new ArrayList<>();
+        final BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
         listOfItems.add(item);
         setWhenAndObserveForever(listOfItems);
 
@@ -127,6 +124,7 @@ public class BenchmarksViewModelTest {
     @Test
     public void testGetCountOfSpans() {
         final List<BenchmarkItem> listOfItems = new ArrayList<>();
+        final BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
         listOfItems.add(item);
 
         setWhenAndObserveForever(listOfItems);
@@ -149,8 +147,10 @@ public class BenchmarksViewModelTest {
     }
 
     @Test
-    public void testOnStopProcess(){
+    public void testOnStopProcess() {
+        RxJavaPlugins.setComputationSchedulerHandler(scheduler -> Schedulers.newThread());
         final List<BenchmarkItem> listOfItems = new ArrayList<>();
+        final BenchmarkItem item = new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false);
         listOfItems.add(item);
         setWhenAndObserveForever(listOfItems);
 
@@ -158,20 +158,23 @@ public class BenchmarksViewModelTest {
         viewModel.onCreate();
 
         viewModel.onButtonToggle();
+        try {
+            Thread.sleep(100);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         viewModel.onButtonToggle();
 
-        verify(mockCalculationStartLiveData, times(2)).onChanged(true);
-        verify(mockCalculationStartLiveData, times(3)).onChanged(false);
+        verify(mockCalculationStartLiveData, times(1)).onChanged(true);
+        verify(mockCalculationStartLiveData, times(2)).onChanged(false);
         verify(mockBenchmark).createBenchmarkList(false);
-        verify(mockBenchmark, times(2)).createBenchmarkList(true);
-        verify(mockItemsLiveData, times(3)).onChanged(anyList());
-        verify(mockBenchmark, times(2)).measureTime(COLLECTION_SIZE, item);
-
+        verify(mockBenchmark, times(1)).createBenchmarkList(true);
+        verify(mockItemsLiveData, times(1)).onChanged(anyList());
+        verify(mockBenchmark, times(1)).measureTime(COLLECTION_SIZE, item);
 
         assertFalse(viewModel.getCalculationStartLiveData().getValue());
 
         commonVerifyNoMoreInteractions();
-
     }
 
     @After

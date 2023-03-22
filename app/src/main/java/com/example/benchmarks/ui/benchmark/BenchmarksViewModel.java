@@ -63,7 +63,6 @@ public class BenchmarksViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(this::onStopProcess)
                 .subscribe(this::recreateItemsList);
-
     }
 
     private void onStopProcess() {
