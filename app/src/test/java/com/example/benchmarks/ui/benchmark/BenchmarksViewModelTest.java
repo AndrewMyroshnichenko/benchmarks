@@ -28,6 +28,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class BenchmarksViewModelTest {
 
@@ -58,6 +61,16 @@ public class BenchmarksViewModelTest {
         when(mockBenchmark.createBenchmarkList(false)).thenReturn(list);
         when(mockBenchmark.createBenchmarkList(true)).thenReturn(list);
         when(mockBenchmark.getSpansCount()).thenReturn(SPANS_COUNT);
+        when(mockBenchmark.measureTime(COLLECTION_SIZE, new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false)))
+                .thenReturn(10L)
+                .thenAnswer(invocation -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return 10L;
+        });
 
         viewModel.getItemsLiveData().observeForever(mockItemsLiveData);
         viewModel.getCalculationStartLiveData().observeForever(mockCalculationStartLiveData);
@@ -147,11 +160,6 @@ public class BenchmarksViewModelTest {
         viewModel.onCreate();
 
         viewModel.onButtonToggle();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         viewModel.onButtonToggle();
 
         verify(mockCalculationStartLiveData, times(2)).onChanged(true);
