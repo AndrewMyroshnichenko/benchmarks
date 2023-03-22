@@ -61,7 +61,8 @@ public class BenchmarksViewModelTest {
         when(mockBenchmark.createBenchmarkList(false)).thenReturn(list);
         when(mockBenchmark.createBenchmarkList(true)).thenReturn(list);
         when(mockBenchmark.getSpansCount()).thenReturn(SPANS_COUNT);
-        when(mockBenchmark.measureTime(COLLECTION_SIZE, new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false)))
+        when(mockBenchmark.measureTime(COLLECTION_SIZE,
+                new BenchmarkItem(R.string.array_list, R.string.adding_in_the_beginning, 0L, false)))
                 .thenReturn(10L)
                 .thenAnswer(invocation -> {
             try {
