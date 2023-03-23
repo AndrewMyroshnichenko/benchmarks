@@ -2,10 +2,6 @@ package com.example.benchmarks.models;
 
 import static org.junit.Assert.*;
 
-import com.example.benchmarks.models.Benchmark;
-import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.models.OperationsMaps;
-
 import org.junit.Test;
 
 import java.util.List;
