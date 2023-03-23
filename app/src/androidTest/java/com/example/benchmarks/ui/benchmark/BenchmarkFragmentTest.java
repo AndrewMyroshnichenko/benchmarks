@@ -1,18 +1,18 @@
 package com.example.benchmarks.ui.benchmark;
 
-import static androidx.test.espresso.Espresso.*;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
+import static androidx.test.espresso.Espresso.onView;
 
 import static org.hamcrest.Matchers.containsString;
-
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -56,8 +56,14 @@ public class BenchmarkFragmentTest {
 
 
     @Test
-    public void testRecyclerView(){
+    public void testDisplayedRecyclerView(){
+        onView(withId(R.id.rv_main)).check(matches(isDisplayed()));
+        onView(withId(R.id.rv_main)).check(matches(hasMinimumChildCount(1)));
 
+        onView(withId(R.id.mainViewPager))
+                .perform(swipeLeft())
+                .check(matches(hasMinimumChildCount(1)));
     }
+
 
 }
