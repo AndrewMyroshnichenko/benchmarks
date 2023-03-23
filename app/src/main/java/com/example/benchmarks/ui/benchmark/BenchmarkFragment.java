@@ -70,7 +70,12 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
         if (view == bind.edCollectionsFragment) {
             inputFragment.show(getChildFragmentManager(), null);
         } else if (view == bind.btCollections) {
-            viewModel.onButtonToggle();
+            if (bind.edCollectionsFragment.getText().toString().equals(view.getResources().getString(R.string.et_fragment_text))){
+                bind.btCollections.setText(R.string.et_fragment_text);
+            } else {
+                viewModel.onButtonToggle();
+            }
+
         }
     }
 
