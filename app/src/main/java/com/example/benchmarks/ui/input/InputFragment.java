@@ -42,10 +42,11 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         Button button = dialog.findViewById(R.id.bt_dialog_fragment);
         button.setOnClickListener(this);
         setCancelable(false);
+
         errorView = new PopupWindow(
                 getLayoutInflater().inflate(R.layout.error_message, null),
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
-                true
+                false
         );
         return dialog;
     }
