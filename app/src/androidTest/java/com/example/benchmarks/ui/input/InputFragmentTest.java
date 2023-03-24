@@ -16,6 +16,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withResourceName;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.not;
 
 import android.view.View;
@@ -52,10 +54,16 @@ public class InputFragmentTest {
 
     @Test
     public void testInputZero(){
-
         onView(withId(R.id.ed_collections_fragment)).perform(click());
         onView(withId(R.id.ed_dialog_fragment)).perform(typeText("0"));
         onView(withId(R.id.bt_dialog_fragment)).perform(click());
+        onView(withId(R.id.ed_dialog_fragment)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testInputNothing(){
+        onView(withId(R.id.ed_collections_fragment)).perform(click());
         onView(withId(R.id.bt_dialog_fragment)).perform(click());
+        onView(withId(R.id.ed_dialog_fragment)).check(matches(isDisplayed()));
     }
 }
