@@ -13,6 +13,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.Espresso.onView;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItem;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -38,7 +39,7 @@ public class BenchmarkFragmentTest {
         onView(withId(R.id.ed_dialog_fragment)).inRoot(isDialog()).check(matches(isDisplayed()));
 
         onView(withId(R.id.ed_dialog_fragment)).perform(typeText("1000"));
-        onView(withId(R.id.bt_input)).perform(click());
+        onView(withId(R.id.bt_dialog_fragment)).perform(click());
         onView(withId(R.id.ed_collections_fragment)).check(matches(withText(containsString("1000"))));
     }
 
@@ -50,7 +51,7 @@ public class BenchmarkFragmentTest {
         onView(withId(R.id.ed_dialog_fragment)).inRoot(isDialog()).check(matches(isDisplayed()));
 
         onView(withId(R.id.ed_dialog_fragment)).perform(typeText("1000"));
-        onView(withId(R.id.bt_input)).perform(click());
+        onView(withId(R.id.bt_dialog_fragment)).perform(click());
         onView(withId(R.id.bt_collections)).check(matches(isClickable()));
     }
 

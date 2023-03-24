@@ -39,7 +39,7 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         editText = dialog.findViewById(R.id.ed_dialog_fragment);
         editText.addTextChangedListener(this);
-        Button button = dialog.findViewById(R.id.bt_input);
+        Button button = dialog.findViewById(R.id.bt_dialog_fragment);
         button.setOnClickListener(this);
         setCancelable(false);
         errorView = new PopupWindow(
