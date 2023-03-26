@@ -19,7 +19,12 @@ import static org.hamcrest.Matchers.hasItem;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.IdlingRegistry;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.matcher.BoundedMatcher;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -29,6 +34,8 @@ import com.example.benchmarks.ui.MainActivity;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,61 +82,28 @@ public class BenchmarkFragmentTest {
     }
 
     @Test
-    public void testRecyclerViewItem(){
-        onView(withRecyclerView(R.id.rv_main).atPosition(1))
-                .check(matches(isDisplayed()));
+    public void testRecyclerViewItems(){
+        onView(withId(R.id.rv_main))
+                .check(matches(atPosition(0, hasDescendant(withText("ArrayList Adding in the beginning N/A nano-s")))));
     }
 
-    private static RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {
-        return new RecyclerViewMatcher(recyclerViewId);
-    }
+    public static Matcher<View> atPosition(final int position, @NonNull final Matcher<View> itemMatcher) {
+        return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("at position " + position + ": ");
+                itemMatcher.describeTo(description);
+            }
 
-    private static class RecyclerViewMatcher {
-        private final int recyclerViewId;
-
-        public RecyclerViewMatcher(int recyclerViewId) {
-            this.recyclerViewId = recyclerViewId;
-        }
-
-        public Matcher<View> atPosition(final int position) {
-            return new TypeSafeMatcher<View>() {
-                private RecyclerView recyclerView = null;
-                private View childView = null;
-
-                @Override
-                protected boolean matchesSafely(View view) {
-                    childView = view;
-                    if (recyclerView == null) {
-                        recyclerView = findParentRecyclerView(view);
-                    }
-                    if (recyclerView != null && recyclerView.getId() == recyclerViewId) {
-                        RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(position);
-                        return viewHolder != null && viewHolder.itemView == view;
-                    }
+            @Override
+            protected boolean matchesSafely(final RecyclerView view) {
+                RecyclerView.ViewHolder viewHolder = view.findViewHolderForAdapterPosition(position);
+                if (viewHolder == null) {
                     return false;
                 }
-
-                private RecyclerView findParentRecyclerView(View view) {
-                    if (view.getParent() instanceof RecyclerView) {
-                        return (RecyclerView) view.getParent();
-                    } else if (view.getParent() instanceof View) {
-                        return findParentRecyclerView((View) view.getParent());
-                    }
-                    return null;
-                }
-
-                @Override
-                public void describeTo(Description description) {
-                    String message = "RecyclerView with id: " + recyclerViewId + " at position: " + position;
-                    if (childView != null) {
-                        message += " is located in: " + childView.getResources().getResourceName(childView.getId());
-                    }
-                    description.appendText(message);
-                }
-            };
-        }
+                return itemMatcher.matches(viewHolder.itemView);
+            }
+        };
     }
-
-
 
 }
