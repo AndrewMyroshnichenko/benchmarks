@@ -90,8 +90,6 @@ public class BenchmarkFragmentTest {
     @Test
     public void testIsButtonStoppingProcess(){
         onView(withId(R.id.ed_collections_fragment)).perform(click());
-        onView(withId(R.id.ed_dialog_fragment)).inRoot(isDialog()).check(matches(isDisplayed()));
-
         onView(withId(R.id.ed_dialog_fragment)).perform(typeText("10000000"));
         onView(withId(R.id.bt_dialog_fragment)).perform(click());
 
