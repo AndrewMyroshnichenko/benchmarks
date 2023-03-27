@@ -87,6 +87,18 @@ public class BenchmarkFragmentTest {
                 .check(matches(atPosition(0, hasDescendant(withText("ArrayList Adding in the beginning N/A nano-s")))));
     }
 
+    @Test
+    public void testIsButtonStoppingProcess(){
+        onView(withId(R.id.ed_collections_fragment)).perform(click());
+        onView(withId(R.id.ed_dialog_fragment)).inRoot(isDialog()).check(matches(isDisplayed()));
+
+        onView(withId(R.id.ed_dialog_fragment)).perform(typeText("10000000"));
+        onView(withId(R.id.bt_dialog_fragment)).perform(click());
+
+        onView(withId(R.id.bt_collections)).perform(click()).check(matches(withText("STOP")));
+        onView(withId(R.id.bt_collections)).perform(click()).check(matches(withText("START")));
+    }
+
     public static Matcher<View> atPosition(final int position, @NonNull final Matcher<View> itemMatcher) {
         return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {
             @Override
