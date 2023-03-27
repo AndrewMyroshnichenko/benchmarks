@@ -1,4 +1,4 @@
-package com.example.benchmarks.models;
+package com.example.benchmarks.models.benchmark;
 
 import javax.inject.Named;
 

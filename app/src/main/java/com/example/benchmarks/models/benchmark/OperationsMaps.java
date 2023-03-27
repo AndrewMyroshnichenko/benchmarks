@@ -1,4 +1,4 @@
-package com.example.benchmarks.models;
+package com.example.benchmarks.models.benchmark;
 
 import com.example.benchmarks.R;
 
@@ -10,7 +10,7 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
-public class OperationsMaps implements Benchmark{
+public class OperationsMaps implements Benchmark {
 
     @Inject
     public OperationsMaps() {
@@ -50,7 +50,7 @@ public class OperationsMaps implements Benchmark{
     }
 
     @Override
-    public int getSpansCount(){
+    public int getSpansCount() {
         return getMapsNames().size();
     }
 

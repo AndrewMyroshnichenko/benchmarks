@@ -1,4 +1,4 @@
-package com.example.benchmarks.models;
+package com.example.benchmarks.models.benchmark;
 
 public class TestOperationsMaps extends OperationsMaps {
     @Override

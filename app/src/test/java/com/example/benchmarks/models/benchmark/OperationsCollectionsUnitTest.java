@@ -1,10 +1,9 @@
-package com.example.benchmarks.models;
+package com.example.benchmarks.models.benchmark;
 
-import static org.junit.Assert.*;
-
-import com.example.benchmarks.models.Benchmark;
-import com.example.benchmarks.models.BenchmarkItem;
-import com.example.benchmarks.models.OperationsCollections;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -21,13 +20,13 @@ public class OperationsCollectionsUnitTest {
     }
 
     @Test
-    public void testCreatingBenchmarkListIsNotEmpty(){
+    public void testCreatingBenchmarkListIsNotEmpty() {
         final List<BenchmarkItem> testList = benchmark.createBenchmarkList(false);
         assertTrue(testList.size() > 0);
     }
 
     @Test
-    public void testMeasureTimeMoreThan0(){
+    public void testMeasureTimeMoreThan0() {
         final List<BenchmarkItem> testList = benchmark.createBenchmarkList(false);
         for (BenchmarkItem item : testList) {
             assertTrue(benchmark.measureTime(5000, item) > 0);
@@ -35,13 +34,13 @@ public class OperationsCollectionsUnitTest {
     }
 
     @Test
-    public void testMeasureTimeThrowsException(){
+    public void testMeasureTimeThrowsException() {
         BenchmarkItem wrongItem = new BenchmarkItem(1, 1, 0L, false);
         assertThrows(RuntimeException.class, () -> benchmark.measureTime(10, wrongItem));
     }
 
     @Test
-    public void testGetSpansCount(){
+    public void testGetSpansCount() {
         assertEquals(3, benchmark.getSpansCount());
     }
 }

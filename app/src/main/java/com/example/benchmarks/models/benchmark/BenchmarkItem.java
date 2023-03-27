@@ -1,4 +1,4 @@
-package com.example.benchmarks.models;
+package com.example.benchmarks.models.benchmark;
 
 import java.util.Objects;
 
@@ -16,7 +16,7 @@ public class BenchmarkItem {
         this.isProgressBarRunning = isProgressBarRunning;
     }
 
-    public BenchmarkItem updateBenchmarkItem(long duration){
+    public BenchmarkItem updateBenchmarkItem(long duration) {
         return new BenchmarkItem(nameOfCollection, nameOfOperation, duration, false);
     }
 

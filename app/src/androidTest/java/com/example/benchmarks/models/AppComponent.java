@@ -8,6 +8,6 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = TestBenchmarksModule.class)
-public interface TestAppComponent {
+public interface AppComponent {
     void inject(BenchMarkViewModelFactory benchMarkViewModelFactory);
 }

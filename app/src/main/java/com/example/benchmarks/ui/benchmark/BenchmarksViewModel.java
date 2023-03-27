@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.benchmarks.models.Benchmark;
-import com.example.benchmarks.models.BenchmarkItem;
+import com.example.benchmarks.models.benchmark.Benchmark;
+import com.example.benchmarks.models.benchmark.BenchmarkItem;
 import com.example.benchmarks.utils.Pair;
 
 import java.util.ArrayList;
@@ -28,10 +28,6 @@ public class BenchmarksViewModel extends ViewModel {
         this.benchmark = benchmark;
     }
 
-    public void onCreate(){
-        itemsLiveData.setValue(benchmark.createBenchmarkList(false));
-    }
-
     public static Pair<Boolean, Integer> isNumberCorrect(String number) {
         try {
             int temp = Integer.parseInt(number);
@@ -39,6 +35,10 @@ public class BenchmarksViewModel extends ViewModel {
         } catch (NumberFormatException exception) {
             return new Pair<>(false, 0);
         }
+    }
+
+    public void onCreate() {
+        itemsLiveData.setValue(benchmark.createBenchmarkList(false));
     }
 
     public void onButtonToggle() {
@@ -81,7 +81,7 @@ public class BenchmarksViewModel extends ViewModel {
         }
     }
 
-    public int getCountOfSpans(){
+    public int getCountOfSpans() {
         return benchmark.getSpansCount();
     }
 

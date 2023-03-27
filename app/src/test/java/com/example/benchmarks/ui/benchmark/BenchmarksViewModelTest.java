@@ -17,8 +17,8 @@ import androidx.lifecycle.Observer;
 
 import com.example.benchmarks.MainThreadRule;
 import com.example.benchmarks.R;
-import com.example.benchmarks.models.Benchmark;
-import com.example.benchmarks.models.BenchmarkItem;
+import com.example.benchmarks.models.benchmark.Benchmark;
+import com.example.benchmarks.models.benchmark.BenchmarkItem;
 import com.example.benchmarks.utils.Pair;
 
 import org.junit.After;
@@ -34,19 +34,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class BenchmarksViewModelTest {
 
-    @Rule
-    public MainThreadRule mainThreadRule = new MainThreadRule();
-
     private final static int SPANS_COUNT = 3;
     private final static int COLLECTION_SIZE = 10;
-
+    @Rule
+    public final InstantTaskExecutorRule executorRule = new InstantTaskExecutorRule();
+    @Rule
+    public MainThreadRule mainThreadRule = new MainThreadRule();
     private BenchmarksViewModel viewModel;
     private Observer<List<BenchmarkItem>> mockItemsLiveData;
     private Observer<Boolean> mockCalculationStartLiveData;
     private Benchmark mockBenchmark;
-
-    @Rule
-    public final InstantTaskExecutorRule executorRule = new InstantTaskExecutorRule();
 
     @Before
     public void set() {
@@ -74,7 +71,7 @@ public class BenchmarksViewModelTest {
         viewModel.getCalculationStartLiveData().observeForever(mockCalculationStartLiveData);
     }
 
-    private void commonVerifyNoMoreInteractions(){
+    private void commonVerifyNoMoreInteractions() {
         verifyNoMoreInteractions(mockCalculationStartLiveData);
         verifyNoMoreInteractions(mockItemsLiveData);
         verifyNoMoreInteractions(mockBenchmark);
@@ -137,7 +134,7 @@ public class BenchmarksViewModelTest {
     }
 
     @Test
-    public void testIsNumberCorrect(){
+    public void testIsNumberCorrect() {
         assertTrue(BenchmarksViewModel.isNumberCorrect("10").first);
         assertFalse(BenchmarksViewModel.isNumberCorrect("-10").first);
         assertFalse(BenchmarksViewModel.isNumberCorrect("Hello").first);
@@ -178,7 +175,7 @@ public class BenchmarksViewModelTest {
     }
 
     @After
-    public void clear(){
+    public void clear() {
         viewModel.getItemsLiveData().removeObserver(mockItemsLiveData);
         viewModel.getCalculationStartLiveData().removeObserver(mockCalculationStartLiveData);
     }

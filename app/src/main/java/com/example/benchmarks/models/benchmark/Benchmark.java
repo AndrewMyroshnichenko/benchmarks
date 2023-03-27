@@ -1,4 +1,4 @@
-package com.example.benchmarks.models;
+package com.example.benchmarks.models.benchmark;
 
 import java.util.List;
 

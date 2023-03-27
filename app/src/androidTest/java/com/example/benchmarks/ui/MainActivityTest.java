@@ -22,9 +22,9 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
 
+    private final String[] nameOfTabs = ApplicationProvider.getApplicationContext().getResources().getStringArray(R.array.name_tabs);
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
-    private final String [] nameOfTabs = ApplicationProvider.getApplicationContext().getResources().getStringArray(R.array.name_tabs);
 
     @Test
     public void testSwipeTabs() {
@@ -36,7 +36,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void testClickOnTabs(){
+    public void testClickOnTabs() {
         onView(withText(nameOfTabs[1])).perform(click());
         onView(withText(nameOfTabs[1])).check(matches(isSelected()));
 

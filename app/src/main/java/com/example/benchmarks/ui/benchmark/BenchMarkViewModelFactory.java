@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.benchmarks.BenchmarksApplication;
-import com.example.benchmarks.models.Benchmark;
-
+import com.example.benchmarks.models.benchmark.Benchmark;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,7 +35,7 @@ public class BenchMarkViewModelFactory implements ViewModelProvider.Factory {
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
 
-        switch (fragmentPosition){
+        switch (fragmentPosition) {
             case POSITION_LIST:
                 return (T) new BenchmarksViewModel(benchmarkCollections);
             case POSITION_MAP:

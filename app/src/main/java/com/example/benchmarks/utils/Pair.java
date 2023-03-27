@@ -12,6 +12,10 @@ public class Pair<F, S> {
         this.second = second;
     }
 
+    public static <A, B> Pair<A, B> create(A a, B b) {
+        return new Pair<A, B>(a, b);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,9 +35,5 @@ public class Pair<F, S> {
                 "first=" + first +
                 ", second=" + second +
                 '}';
-    }
-
-    public static <A, B> Pair<A, B> create(A a, B b) {
-        return new Pair<A, B>(a, b);
     }
 }
