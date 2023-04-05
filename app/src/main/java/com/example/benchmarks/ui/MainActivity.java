@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
 
-            final int id = bind.mainTabLayout.getSelectedTabPosition() == 0
-                    ? R.drawable.tab_item_left_background
-                    : R.drawable.tab_item_right_background;
-            bind.mainTabLayout.setSelectedTabIndicator(ResourcesCompat.getDrawable(getResources(), id, getTheme()));
+        final int id = bind.mainTabLayout.getSelectedTabPosition() == 0
+                ? R.drawable.tab_item_left_background
+                : R.drawable.tab_item_right_background;
+        bind.mainTabLayout.setSelectedTabIndicator(ResourcesCompat.getDrawable(getResources(), id, getTheme()));
 
     }
 

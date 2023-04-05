@@ -15,7 +15,11 @@ public class BenchmarksApplication extends Application {
         appComponent = DaggerAppComponent.create();
     }
 
-    public static AppComponent getAppComponent(){
+    public static void setAppComponent(AppComponent component){
+        appComponent = component;
+    }
+
+    public static AppComponent getAppComponent() {
         return appComponent;
     }
 

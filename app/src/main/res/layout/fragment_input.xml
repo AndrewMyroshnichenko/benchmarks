@@ -46,7 +46,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/bt_input"
+        android:id="@+id/bt_dialog_fragment"
         style="@style/bt_collections"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = BenchmarksModule.class)
+@Component(modules = TestBenchmarksModule.class)
 public interface AppComponent {
     void inject(BenchMarkViewModelFactory benchMarkViewModelFactory);
 }

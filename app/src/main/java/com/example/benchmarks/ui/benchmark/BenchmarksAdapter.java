@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.models.BenchmarkItem;
+import com.example.benchmarks.models.benchmark.BenchmarkItem;
 
 public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdapter.BenchmarksViewHolder> {
 

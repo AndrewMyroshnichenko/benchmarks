@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.benchmarks.R;
 import com.example.benchmarks.ui.benchmark.BenchmarksViewModel;
+import com.example.benchmarks.utils.Pair;
 
 public class InputFragment extends DialogFragment implements TextWatcher, View.OnClickListener {
 
@@ -39,13 +39,14 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
         editText = dialog.findViewById(R.id.ed_dialog_fragment);
         editText.addTextChangedListener(this);
-        Button button = dialog.findViewById(R.id.bt_input);
+        Button button = dialog.findViewById(R.id.bt_dialog_fragment);
         button.setOnClickListener(this);
         setCancelable(false);
+
         errorView = new PopupWindow(
                 getLayoutInflater().inflate(R.layout.error_message, null),
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
-                true
+                false
         );
         return dialog;
     }
