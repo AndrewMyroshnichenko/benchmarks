@@ -10,7 +10,8 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class BenchmarksModule {
+public class TestBenchmarksModule extends BenchmarksModule {
+
     @Provides
     @Named("collections")
     public Benchmark provideOperationsCollections() {

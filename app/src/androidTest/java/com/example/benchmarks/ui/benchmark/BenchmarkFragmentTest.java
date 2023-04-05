@@ -26,6 +26,7 @@ import com.example.benchmarks.BenchmarksApplication;
 import com.example.benchmarks.R;
 import com.example.benchmarks.models.AppComponent;
 import com.example.benchmarks.models.DaggerAppComponent;
+import com.example.benchmarks.models.TestBenchmarksModule;
 import com.example.benchmarks.ui.MainActivity;
 
 import org.hamcrest.Description;
@@ -43,7 +44,7 @@ public class BenchmarkFragmentTest {
 
     @BeforeClass
     public void set(){
-        AppComponent appComponent = DaggerAppComponent.create();
+        AppComponent appComponent = DaggerAppComponent.builder().benchmarksModule(new TestBenchmarksModule()).build();
         BenchmarksApplication.setAppComponent(appComponent);
     }
 
