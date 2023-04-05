@@ -140,7 +140,7 @@ public class BenchmarkFragmentTest {
         for (int i = 0; i < 21; i++) {
             onView(withId(R.id.rv_main)).perform(scrollToPosition(i)).check(matches(atPosition(i, hasDescendant(withSubstring("100")))));
             try {
-                Thread.sleep(501);
+                Thread.sleep(450);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
