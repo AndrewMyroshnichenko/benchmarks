@@ -6,14 +6,17 @@ import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSubstring;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.matchesRegex;
 
 import android.view.View;
 
@@ -36,6 +39,9 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class BenchmarkFragmentTest {
@@ -130,8 +136,18 @@ public class BenchmarkFragmentTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        onView(withId(R.id.rv_main)).
-                check(matches(atPosition(0, hasDescendant(withText("ArrayList Adding in the beginning 100 nano-s")))));
+
+        for (int i = 0; i < 21; i++) {
+            onView(withId(R.id.rv_main)).perform(scrollToPosition(i)).check(matches(atPosition(i, hasDescendant(withSubstring("100")))));
+            try {
+                Thread.sleep(501);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
+
+
 
 }
