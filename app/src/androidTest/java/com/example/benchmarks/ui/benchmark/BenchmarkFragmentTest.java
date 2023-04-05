@@ -2,6 +2,7 @@ package com.example.benchmarks.ui.benchmark;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -43,7 +44,7 @@ public class BenchmarkFragmentTest {
     public final ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @BeforeClass
-    public void set(){
+    public static void set(){
         AppComponent appComponent = DaggerAppComponent.builder().benchmarksModule(new TestBenchmarksModule()).build();
         BenchmarksApplication.setAppComponent(appComponent);
     }
@@ -115,6 +116,22 @@ public class BenchmarkFragmentTest {
 
         onView(withId(R.id.bt_collections)).perform(click()).check(matches(withText("STOP")));
         onView(withId(R.id.bt_collections)).perform(click()).check(matches(withText("START")));
+    }
+
+    @Test
+    public void testCheckItemAfterMeasureTime() {
+        onView(withId(R.id.ed_collections_fragment)).perform(click());
+        onView(withId(R.id.ed_dialog_fragment)).perform(typeText("10000"));
+        onView(withId(R.id.bt_dialog_fragment)).perform(click());
+
+        onView(withId(R.id.bt_collections)).perform(click());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        onView(withId(R.id.rv_main)).
+                check(matches(atPosition(0, hasDescendant(withText("ArrayList Adding in the beginning 100 nano-s")))));
     }
 
 }
