@@ -2,7 +2,6 @@ package com.example.benchmarks.ui.benchmark;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -16,7 +15,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withSubstring;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.matchesRegex;
 
 import android.view.View;
 
@@ -31,6 +29,7 @@ import com.example.benchmarks.R;
 import com.example.benchmarks.models.AppComponent;
 import com.example.benchmarks.models.DaggerAppComponent;
 import com.example.benchmarks.models.TestBenchmarksModule;
+import com.example.benchmarks.models.benchmark.Tests;
 import com.example.benchmarks.ui.MainActivity;
 
 import org.hamcrest.Description;
@@ -39,9 +38,6 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class BenchmarkFragmentTest {
@@ -131,23 +127,14 @@ public class BenchmarkFragmentTest {
         onView(withId(R.id.bt_dialog_fragment)).perform(click());
 
         onView(withId(R.id.bt_collections)).perform(click());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         for (int i = 0; i < 21; i++) {
-            onView(withId(R.id.rv_main)).perform(scrollToPosition(i)).check(matches(atPosition(i, hasDescendant(withSubstring("100")))));
             try {
-                Thread.sleep(501);
+                Thread.sleep(Tests.DELAY);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            onView(withId(R.id.rv_main)).perform(scrollToPosition(i));
+            onView(withId(R.id.rv_main)).check(matches(atPosition(i, hasDescendant(withSubstring("" + Tests.MEASURE_TIME)))));
         }
-
     }
-
-
-
 }
