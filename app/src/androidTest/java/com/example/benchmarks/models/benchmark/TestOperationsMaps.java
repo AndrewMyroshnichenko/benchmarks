@@ -1,6 +1,7 @@
 package com.example.benchmarks.models.benchmark;
 
 public class TestOperationsMaps extends OperationsMaps {
+    private static final long MEASURE_TIME = 100L;
     @Override
     public long measureTime(int sizeOfCollection, BenchmarkItem item) {
         try {
@@ -8,6 +9,6 @@ public class TestOperationsMaps extends OperationsMaps {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return 100L;
+        return MEASURE_TIME;
     }
 }
