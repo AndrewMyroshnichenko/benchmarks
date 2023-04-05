@@ -22,11 +22,15 @@ import androidx.test.espresso.matcher.BoundedMatcher;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.benchmarks.BenchmarksApplication;
 import com.example.benchmarks.R;
+import com.example.benchmarks.models.AppComponent;
+import com.example.benchmarks.models.DaggerAppComponent;
 import com.example.benchmarks.ui.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +40,12 @@ public class BenchmarkFragmentTest {
 
     @Rule
     public final ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
+
+    @BeforeClass
+    public void set(){
+        AppComponent appComponent = DaggerAppComponent.create();
+        BenchmarksApplication.setAppComponent(appComponent);
+    }
 
     public static Matcher<View> atPosition(final int position, @NonNull final Matcher<View> itemMatcher) {
         return new BoundedMatcher<View, RecyclerView>(RecyclerView.class) {

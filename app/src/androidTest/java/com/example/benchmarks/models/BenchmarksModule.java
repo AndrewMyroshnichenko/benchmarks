@@ -1,8 +1,8 @@
 package com.example.benchmarks.models;
 
 import com.example.benchmarks.models.benchmark.Benchmark;
-import com.example.benchmarks.models.benchmark.OperationsCollections;
-import com.example.benchmarks.models.benchmark.OperationsMaps;
+import com.example.benchmarks.models.benchmark.TestOperationsCollections;
+import com.example.benchmarks.models.benchmark.TestOperationsMaps;
 
 import javax.inject.Named;
 
@@ -10,16 +10,16 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class TestBenchmarksModule {
+public class BenchmarksModule {
     @Provides
     @Named("collections")
     public Benchmark provideOperationsCollections() {
-        return new OperationsCollections();
+        return new TestOperationsCollections();
     }
 
     @Provides
     @Named("maps")
     public Benchmark provideOperationMaps() {
-        return new OperationsMaps();
+        return new TestOperationsMaps();
     }
 }
