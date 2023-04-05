@@ -75,7 +75,6 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
             } else {
                 viewModel.onButtonToggle();
             }
-
         }
     }
 
