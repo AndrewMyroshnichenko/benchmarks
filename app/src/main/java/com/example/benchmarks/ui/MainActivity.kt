@@ -1,60 +1,51 @@
-package com.example.benchmarks.ui;
+package com.example.benchmarks.ui
 
-import android.os.Bundle;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import com.example.benchmarks.R
+import com.example.benchmarks.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.android.material.tabs.TabLayoutMediator
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
+class MainActivity : AppCompatActivity(), OnTabSelectedListener {
 
-import com.example.benchmarks.R;
-import com.example.benchmarks.databinding.ActivityMainBinding;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+    private lateinit var bind : ActivityMainBinding
+    private lateinit var tabLayoutMediator : TabLayoutMediator
 
-import java.util.Arrays;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
-
-    private ActivityMainBinding bind;
-    private TabLayoutMediator tabLayoutMediator;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        bind = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(bind.getRoot());
-        final List<String> namesOfTabs = Arrays.asList(getResources().getStringArray(R.array.name_tabs));
-        bind.mainViewPager.setAdapter(new BenchmarkTypesAdapter(getSupportFragmentManager(), getLifecycle(), namesOfTabs));
-        tabLayoutMediator = new TabLayoutMediator(bind.mainTabLayout, bind.mainViewPager, (tab, position) -> {
-            tab.setText(namesOfTabs.get(position));
-        });
-        tabLayoutMediator.attach();
-        bind.mainTabLayout.addOnTabSelectedListener(this);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        bind = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bind.root)
+        val nameOfTabs : List<String> = resources.getStringArray(R.array.name_tabs).toList()
+        bind.mainViewPager.adapter = BenchmarkTypesAdapter(supportFragmentManager, lifecycle, nameOfTabs)
+        tabLayoutMediator = TabLayoutMediator(bind.mainTabLayout, bind.mainViewPager) { tab, position ->
+            tab.text = nameOfTabs[position]
+        }
+        tabLayoutMediator.attach()
+        bind.mainTabLayout.addOnTabSelectedListener(this)
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        tabLayoutMediator.detach();
+    override fun onDestroy() {
+        super.onDestroy()
+        tabLayoutMediator.detach()
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        val id = when(bind.mainTabLayout.selectedTabPosition) {
+            0 -> R.drawable.tab_item_left_background
+            else -> R.drawable.tab_item_right_background
+        }
+        bind.mainTabLayout.setSelectedTabIndicator(ResourcesCompat.getDrawable(resources, id, theme))
+    }
 
-        final int id = bind.mainTabLayout.getSelectedTabPosition() == 0
-                ? R.drawable.tab_item_left_background
-                : R.drawable.tab_item_right_background;
-        bind.mainTabLayout.setSelectedTabIndicator(ResourcesCompat.getDrawable(getResources(), id, getTheme()));
+    override fun onTabUnselected(tab: TabLayout.Tab?) {
 
     }
 
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
+    override fun onTabReselected(tab: TabLayout.Tab?) {
 
     }
 
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
 }
