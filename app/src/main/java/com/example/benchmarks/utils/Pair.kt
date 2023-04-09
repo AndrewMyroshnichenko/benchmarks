@@ -1,39 +1,29 @@
-package com.example.benchmarks.utils;
+package com.example.benchmarks.utils
 
-import java.util.Objects;
+import java.util.*
 
-public class Pair<F, S> {
-
-    public final F first;
-    public final S second;
-
-    public Pair(F first, S second) {
-        this.first = first;
-        this.second = second;
+class Pair<F, S>(val first: F, val second: S) {
+    override fun equals(o: Any?): Boolean {
+        if (this === o) return true
+        if (o == null || javaClass != o.javaClass) return false
+        val pair = o as Pair<*, *>
+        return first == pair.first && second == pair.second
     }
 
-    public static <A, B> Pair<A, B> create(A a, B b) {
-        return new Pair<A, B>(a, b);
+    override fun hashCode(): Int {
+        return Objects.hash(first, second)
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pair<?, ?> pair = (Pair<?, ?>) o;
-        return Objects.equals(first, pair.first) && Objects.equals(second, pair.second);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(first, second);
-    }
-
-    @Override
-    public String toString() {
+    override fun toString(): String {
         return "Pair{" +
                 "first=" + first +
                 ", second=" + second +
-                '}';
+                '}'
+    }
+
+    companion object {
+        fun <A, B> create(a: A, b: B): Pair<A, B> {
+            return Pair(a, b)
+        }
     }
 }

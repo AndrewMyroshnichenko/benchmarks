@@ -70,9 +70,9 @@ public class InputFragment extends DialogFragment implements TextWatcher, View.O
     public void onClick(View view) {
         final String collectionSize = editText.getText().toString();
         final Pair<Boolean, Integer> result = BenchmarksViewModel.isNumberCorrect(collectionSize);
-        if (result.first) {
+        if (result.getFirst()) {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_standart_background, null));
-            sendCollectionSize(collectionSize, result.second);
+            sendCollectionSize(collectionSize, result.getSecond());
             dismiss();
         } else {
             editText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.et_error_backgroumd, null));

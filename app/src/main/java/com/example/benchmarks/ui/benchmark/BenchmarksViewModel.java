@@ -76,7 +76,7 @@ public class BenchmarksViewModel extends ViewModel {
         List<BenchmarkItem> list = itemsLiveData.getValue();
         if (list != null) {
             List<BenchmarkItem> newList = new ArrayList<>(list);
-            newList.set(benchmarkResult.first, benchmarkResult.second);
+            newList.set(benchmarkResult.getFirst(), benchmarkResult.getSecond());
             itemsLiveData.setValue(newList);
         }
     }
