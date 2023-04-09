@@ -1,26 +1,25 @@
-package com.example.benchmarks;
+package com.example.benchmarks
 
-import android.app.Application;
+import android.app.Application
+import com.example.benchmarks.models.AppComponent
+import com.example.benchmarks.models.DaggerAppComponent
 
-import com.example.benchmarks.models.AppComponent;
-import com.example.benchmarks.models.DaggerAppComponent;
-
-public class BenchmarksApplication extends Application {
-
-    private static AppComponent appComponent;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        appComponent = DaggerAppComponent.create();
+class BenchmarksApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        appComponent = DaggerAppComponent.create()
     }
 
-    public static void setAppComponent(AppComponent component){
-        appComponent = component;
-    }
+    companion object {
+        private var appComponent: AppComponent? = null
+        @JvmStatic
+        fun setAppComponent(component: AppComponent?) {
+            appComponent = component
+        }
 
-    public static AppComponent getAppComponent() {
-        return appComponent;
+        @JvmStatic
+        fun getAppComponent(): AppComponent? {
+            return appComponent
+        }
     }
-
 }
