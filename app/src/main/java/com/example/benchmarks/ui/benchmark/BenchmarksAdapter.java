@@ -20,7 +20,7 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
     private static final DiffUtil.ItemCallback<BenchmarkItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<BenchmarkItem>() {
         @Override
         public boolean areItemsTheSame(@NonNull BenchmarkItem oldItem, @NonNull BenchmarkItem newItem) {
-            return oldItem.nameOfCollection == newItem.nameOfCollection && oldItem.nameOfOperation == newItem.nameOfOperation;
+            return oldItem.getNameOfCollection() == newItem.getNameOfCollection() && oldItem.getNameOfOperation() == newItem.getNameOfOperation();
         }
 
         @Override
@@ -59,12 +59,12 @@ public class BenchmarksAdapter extends ListAdapter<BenchmarkItem, BenchmarksAdap
         public void bind(BenchmarkItem item) {
             final Resources res = itemView.getResources();
             textView.setText(res.getString(R.string.whole_item_phrase,
-                    res.getString(item.nameOfCollection),
-                    res.getString(item.nameOfOperation),
-                    (item.durationOfOperation == null) ? res.getString(R.string.n_a) : item.durationOfOperation));
+                    res.getString(item.getNameOfCollection()),
+                    res.getString(item.getNameOfOperation()),
+                    (item.getDurationOfOperation() == null) ? res.getString(R.string.n_a) : item.getDurationOfOperation()));
 
-            final float targetAlpha = item.isProgressBarRunning ? 1F : 0F;
-            final float targetTextAlpha = item.isProgressBarRunning ? 0.5F : 1F;
+            final float targetAlpha = item.isProgressBarRunning() ? 1F : 0F;
+            final float targetTextAlpha = item.isProgressBarRunning() ? 0.5F : 1F;
             if (targetAlpha != progressBar.getAlpha()) {
                 progressBar.animate().alpha(targetAlpha);
                 textView.animate().alpha(targetTextAlpha);

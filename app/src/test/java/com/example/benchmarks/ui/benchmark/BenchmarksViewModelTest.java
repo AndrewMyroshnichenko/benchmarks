@@ -114,7 +114,7 @@ public class BenchmarksViewModelTest {
 
         assertNotSame(listOfItems, viewModel.getItemsLiveData().getValue());
         assertFalse(viewModel.getCalculationStartLiveData().getValue());
-        assertFalse(viewModel.getItemsLiveData().getValue().get(0).isProgressBarRunning);
+        assertFalse(viewModel.getItemsLiveData().getValue().get(0).isProgressBarRunning());
         commonVerifyNoMoreInteractions();
     }
 

@@ -18,10 +18,10 @@ public class OperationsMaps implements Benchmark {
 
     @Override
     public long measureTime(int sizeOfCollection, BenchmarkItem item) {
-        final Map<Integer, Integer> map = createMap(sizeOfCollection, item.nameOfCollection);
+        final Map<Integer, Integer> map = createMap(sizeOfCollection, item.getNameOfCollection());
         long startTime = System.nanoTime();
 
-        switch (item.nameOfOperation) {
+        switch (item.getNameOfOperation()) {
             case R.string.adding_new_in:
                 map.put(map.size(), 1);
                 break;

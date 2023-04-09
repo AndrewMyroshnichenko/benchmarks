@@ -19,14 +19,14 @@ public class OperationsCollections implements Benchmark {
 
     @Override
     public long measureTime(int sizeOfCollection, BenchmarkItem item) {
-        final List<Integer> list = createCollection(sizeOfCollection, item.nameOfCollection);
+        final List<Integer> list = createCollection(sizeOfCollection, item.getNameOfCollection());
         final int valueForSearching = 200;
-        if (item.nameOfOperation == R.string.search_by_value) {
+        if (item.getNameOfOperation() == R.string.search_by_value) {
             list.set(new Random().nextInt(sizeOfCollection), valueForSearching);
         }
         long startTime = System.nanoTime();
 
-        switch (item.nameOfOperation) {
+        switch (item.getNameOfOperation()) {
             case R.string.adding_in_the_beginning:
                 list.add(0, 1);
                 break;
