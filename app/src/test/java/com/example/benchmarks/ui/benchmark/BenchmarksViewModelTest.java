@@ -135,12 +135,12 @@ public class BenchmarksViewModelTest {
 
     @Test
     public void testIsNumberCorrect() {
-        assertTrue(BenchmarksViewModel.isNumberCorrect("10").first);
-        assertFalse(BenchmarksViewModel.isNumberCorrect("-10").first);
-        assertFalse(BenchmarksViewModel.isNumberCorrect("Hello").first);
-        assertEquals(new Pair<>(true, 10).second, BenchmarksViewModel.isNumberCorrect("10").second);
-        assertEquals(new Pair<>(false, -10).second, BenchmarksViewModel.isNumberCorrect("-10").second);
-        assertEquals(new Pair<>(false, 0).second, BenchmarksViewModel.isNumberCorrect("Hello").second);
+        assertTrue(BenchmarksViewModel.isNumberCorrect("10").getFirst());
+        assertFalse(BenchmarksViewModel.isNumberCorrect("-10").getFirst());
+        assertFalse(BenchmarksViewModel.isNumberCorrect("Hello").getFirst());
+        assertEquals(new Pair<>(true, 10).getSecond(), BenchmarksViewModel.isNumberCorrect("10").getSecond());
+        assertEquals(new Pair<>(false, -10).getSecond(), BenchmarksViewModel.isNumberCorrect("-10").getSecond());
+        assertEquals(new Pair<>(false, 0).getSecond(), BenchmarksViewModel.isNumberCorrect("Hello").getSecond());
     }
 
     @Test

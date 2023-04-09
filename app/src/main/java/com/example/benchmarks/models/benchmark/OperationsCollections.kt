@@ -1,111 +1,78 @@
-package com.example.benchmarks.models.benchmark;
+package com.example.benchmarks.models.benchmark
 
-import com.example.benchmarks.R;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
+import javax.inject.Inject
+import com.example.benchmarks.R
+import java.lang.RuntimeException
+import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
-import javax.inject.Inject;
+open class OperationsCollections @Inject constructor() : Benchmark {
 
-public class OperationsCollections implements Benchmark {
-
-    @Inject
-    public OperationsCollections() {
+    override fun measureTime(sizeOfCollection: Int, item: BenchmarkItem): Long {
+        val list = createCollection(sizeOfCollection, item.nameOfCollection)
+        val valueForSearching = 200
+        if (item.nameOfOperation == R.string.search_by_value) {
+            list[Random().nextInt(sizeOfCollection)] = valueForSearching
+        }
+        val startTime = System.nanoTime()
+        when (item.nameOfOperation) {
+            R.string.adding_in_the_beginning -> list.add(0, 1)
+            R.string.adding_in_the_middle -> list.add(list.size / 2, valueForSearching)
+            R.string.adding_in_the_end -> list.add(1)
+            R.string.search_by_value -> list.indexOf(valueForSearching)
+            R.string.removing_in_the_beginning -> list.removeAt(0)
+            R.string.removing_in_the_middle -> list.removeAt(list.size / 2)
+            R.string.removing_in_the_end -> list.removeAt(list.size - 1)
+            else -> throw RuntimeException("This is ID of operation doesn't exist")
+        }
+        val endTime = System.nanoTime()
+        return endTime - startTime
     }
 
-    @Override
-    public long measureTime(int sizeOfCollection, BenchmarkItem item) {
-        final List<Integer> list = createCollection(sizeOfCollection, item.getNameOfCollection());
-        final int valueForSearching = 200;
-        if (item.getNameOfOperation() == R.string.search_by_value) {
-            list.set(new Random().nextInt(sizeOfCollection), valueForSearching);
-        }
-        long startTime = System.nanoTime();
-
-        switch (item.getNameOfOperation()) {
-            case R.string.adding_in_the_beginning:
-                list.add(0, 1);
-                break;
-            case R.string.adding_in_the_middle:
-                list.add(list.size() / 2, valueForSearching);
-                break;
-            case R.string.adding_in_the_end:
-                list.add(1);
-                break;
-            case R.string.search_by_value:
-                list.indexOf(valueForSearching);
-                break;
-            case R.string.removing_in_the_beginning:
-                list.remove(0);
-                break;
-            case R.string.removing_in_the_middle:
-                list.remove(list.size() / 2);
-                break;
-            case R.string.removing_in_the_end:
-                list.remove(list.size() - 1);
-                break;
-            default:
-                throw new RuntimeException("This is ID of operation doesn't exist");
-        }
-        long endTime = System.nanoTime();
-        return endTime - startTime;
-    }
-
-    @Override
-    public List<BenchmarkItem> createBenchmarkList(boolean isProgressBarRunning) {
-        final List<BenchmarkItem> list = new ArrayList<>();
-        for (int operation : getOperationNames()) {
-            for (int collection : getCollectionsNames()) {
-                list.add(new BenchmarkItem(collection, operation, null, isProgressBarRunning));
+    override fun createBenchmarkList(isProgressBarRunning: Boolean): List<BenchmarkItem> {
+        val list: MutableList<BenchmarkItem> = ArrayList()
+        for (operation in operationNames) {
+            for (collection in collectionsNames) {
+                list.add(BenchmarkItem(collection, operation, null, isProgressBarRunning))
             }
         }
-        return list;
+        return list
     }
 
-    @Override
-    public int getSpansCount() {
-        return getCollectionsNames().size();
+    override fun getSpansCount(): Int {
+        return collectionsNames.size
     }
 
-    private List<Integer> createCollection(int sizeOfCollection, int nameOfCollection) {
-        List<Integer> list = null;
-        switch (nameOfCollection) {
-            case R.string.array_list:
-                list = new ArrayList<>(Collections.nCopies(sizeOfCollection, 0));
-                break;
-            case R.string.linked_list:
-                list = new LinkedList<>(Collections.nCopies(sizeOfCollection, 0));
-                break;
-            case R.string.copy_on_write_array_list:
-                list = new CopyOnWriteArrayList<>(Collections.nCopies(sizeOfCollection, 0));
-                break;
-            default:
-                throw new RuntimeException("This is ID of collection doesn't exist");
+    private fun createCollection(sizeOfCollection: Int, nameOfCollection: Int): MutableList<Int> {
+        var list: MutableList<Int>? = null
+        list = when (nameOfCollection) {
+            R.string.array_list -> ArrayList(Collections.nCopies(sizeOfCollection, 0))
+            R.string.linked_list -> LinkedList(Collections.nCopies(sizeOfCollection, 0))
+            R.string.copy_on_write_array_list -> CopyOnWriteArrayList(Collections.nCopies(sizeOfCollection,0))
+            else -> throw RuntimeException("This is ID of collection doesn't exist")
         }
-        return list;
+        return list
     }
 
-    private List<Integer> getCollectionsNames() {
-        List<Integer> list = new ArrayList<>();
-        list.add(R.string.array_list);
-        list.add(R.string.linked_list);
-        list.add(R.string.copy_on_write_array_list);
-        return list;
-    }
-
-    private List<Integer> getOperationNames() {
-        List<Integer> list = new ArrayList<>();
-        list.add(R.string.adding_in_the_beginning);
-        list.add(R.string.adding_in_the_middle);
-        list.add(R.string.adding_in_the_end);
-        list.add(R.string.search_by_value);
-        list.add(R.string.removing_in_the_beginning);
-        list.add(R.string.removing_in_the_middle);
-        list.add(R.string.removing_in_the_end);
-        return list;
-    }
+    private val collectionsNames: List<Int>
+        private get() {
+            val list: MutableList<Int> = ArrayList()
+            list.add(R.string.array_list)
+            list.add(R.string.linked_list)
+            list.add(R.string.copy_on_write_array_list)
+            return list
+        }
+    private val operationNames: List<Int>
+        private get() {
+            val list: MutableList<Int> = ArrayList()
+            list.add(R.string.adding_in_the_beginning)
+            list.add(R.string.adding_in_the_middle)
+            list.add(R.string.adding_in_the_end)
+            list.add(R.string.search_by_value)
+            list.add(R.string.removing_in_the_beginning)
+            list.add(R.string.removing_in_the_middle)
+            list.add(R.string.removing_in_the_end)
+            return list
+        }
 }
