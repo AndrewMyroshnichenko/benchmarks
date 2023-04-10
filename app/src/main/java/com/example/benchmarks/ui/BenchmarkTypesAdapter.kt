@@ -14,6 +14,7 @@ class BenchmarkTypesAdapter(fragmentManager: FragmentManager, lifecycle: Lifecyc
     }
 
     override fun createFragment(position: Int): Fragment {
-        return BenchmarkFragment.createFragment(position)
+        val benchmarkFragment = BenchmarkFragment()
+        return benchmarkFragment.createFragment(position)
     }
 }
