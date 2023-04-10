@@ -18,7 +18,7 @@ class BenchmarksApplication : Application() {
         }
 
         @JvmStatic
-        fun getAppComponent(): AppComponent? {
+       fun getAppComponent(): AppComponent? {
             return appComponent
         }
     }

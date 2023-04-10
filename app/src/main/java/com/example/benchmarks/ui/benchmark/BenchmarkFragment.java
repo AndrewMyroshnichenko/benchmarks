@@ -62,7 +62,7 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
 
         viewModel.getItemsLiveData().observe(getViewLifecycleOwner(), adapter::submitList);
         viewModel.getCalculationStartLiveData().observe(getViewLifecycleOwner(), aBoolean -> bind.btCollections.setText(aBoolean ? R.string.bt_stop : R.string.bt_start));
-        getChildFragmentManager().setFragmentResultListener(InputFragment.INPUT_REQUEST_KEY, this, this);
+        getChildFragmentManager().setFragmentResultListener(InputFragment.Constants.INPUT_REQUEST_KEY, this, this);
     }
 
     @Override
@@ -80,8 +80,8 @@ public class BenchmarkFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-        viewModel.setSizeCollectionLiveData(result.getInt(InputFragment.LONG_COLLECTION_SIZE_KEY));
-        String size = result.getString(InputFragment.STRING_COLLECTION_SIZE_KEY);
+        viewModel.setSizeCollectionLiveData(result.getInt(InputFragment.Constants.LONG_COLLECTION_SIZE_KEY));
+        String size = result.getString(InputFragment.Constants.STRING_COLLECTION_SIZE_KEY);
         bind.edCollectionsFragment.setText(size);
     }
 
