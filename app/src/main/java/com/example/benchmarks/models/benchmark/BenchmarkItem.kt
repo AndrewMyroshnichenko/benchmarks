@@ -9,7 +9,7 @@ data class BenchmarkItem(
     val isProgressBarRunning: Boolean
 ) {
     fun updateBenchmarkItem(duration: Long): BenchmarkItem {
-        return BenchmarkItem(nameOfCollection, nameOfOperation, duration, false)
+        return copy(durationOfOperation =  duration, isProgressBarRunning =  false)
     }
 
     override fun equals(other: Any?): Boolean {
