@@ -11,8 +11,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity(), OnTabSelectedListener {
 
-    private var bind: ActivityMainBinding? = null
-    private var tabLayoutMediator: TabLayoutMediator? = null
+    private var bind : ActivityMainBinding? = null
+    private var tabLayoutMediator : TabLayoutMediator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,16 +37,12 @@ class MainActivity : AppCompatActivity(), OnTabSelectedListener {
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        val id = when (bind?.mainTabLayout?.selectedTabPosition) {
+        val id = when(bind?.mainTabLayout?.selectedTabPosition) {
             0 -> R.drawable.tab_item_left_background
             else -> R.drawable.tab_item_right_background
         }
         bind?.mainTabLayout?.setSelectedTabIndicator(
-            ResourcesCompat.getDrawable(
-                resources,
-                id,
-                theme
-            )
+            ResourcesCompat.getDrawable(resources, id, theme)
         )
     }
 
@@ -57,5 +53,4 @@ class MainActivity : AppCompatActivity(), OnTabSelectedListener {
     override fun onTabReselected(tab: TabLayout.Tab?) {
 
     }
-
 }

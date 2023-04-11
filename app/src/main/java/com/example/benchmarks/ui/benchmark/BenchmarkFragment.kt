@@ -41,9 +41,7 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_benchmark, container, false)
     }
@@ -51,20 +49,21 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bind = FragmentBenchmarkBinding.bind(view)
+
         bind?.edCollectionsFragment?.setOnClickListener(this)
         bind?.btCollections?.setOnClickListener(this)
-        bind?.rvMain?.layoutManager = viewModel?.let { GridLayoutManager(context, it.getCountOfSpans()) }
+        bind?.rvMain?.layoutManager = viewModel?.let {
+            GridLayoutManager(context, it.getCountOfSpans())
+        }
         bind?.rvMain?.adapter = adapter
 
         viewModel?.getItemsLiveData()?.observe(viewLifecycleOwner, adapter::submitList)
-        viewModel?.getCalculationStartLiveData()?.observe(viewLifecycleOwner
-        ) { aBoolean: Boolean ->
-            bind?.btCollections?.setText(
-                if (aBoolean) R.string.bt_stop else R.string.bt_start
-            )
+        viewModel?.getCalculationStartLiveData()?.observe(viewLifecycleOwner) { aBoolean: Boolean ->
+            bind?.btCollections?.setText(if (aBoolean) R.string.bt_stop else R.string.bt_start)
         }
         childFragmentManager.setFragmentResultListener(
-            InputFragment.Constants.INPUT_REQUEST_KEY,this, this)
+            InputFragment.Constants.INPUT_REQUEST_KEY, this, this
+        )
     }
 
     override fun onClick(view: View) {
@@ -90,5 +89,4 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
         super.onDestroyView()
         bind = null
     }
-
 }

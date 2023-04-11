@@ -18,7 +18,6 @@ import com.example.benchmarks.ui.benchmark.BenchmarksViewModel
 import com.example.benchmarks.ui.input.InputFragment.Constants.INPUT_REQUEST_KEY
 import com.example.benchmarks.ui.input.InputFragment.Constants.LONG_COLLECTION_SIZE_KEY
 import com.example.benchmarks.ui.input.InputFragment.Constants.STRING_COLLECTION_SIZE_KEY
-import com.example.benchmarks.utils.Pair
 
 class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
 
@@ -29,14 +28,18 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     }
 
     private var bind: FragmentInputBinding? = null
-    private var errorView : PopupWindow? = null
-
+    private var errorView: PopupWindow? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         bind = FragmentInputBinding.inflate(layoutInflater)
+
         val dialog = Dialog(requireContext())
         dialog.setContentView(bind?.root ?: View(requireContext()))
         dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
+        dialog.setContentView(bind!!.root)
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT)
         dialog.setCancelable(false)
         bind?.edDialogFragment?.addTextChangedListener(this)
         bind?.btDialogFragment?.setOnClickListener(this)
@@ -69,7 +72,8 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
             sendCollectionSize(collectionSize, result.second)
             dismiss()
         } else {
-            bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(resources, R.drawable.et_error_backgroumd, null)
+            bind?.edDialogFragment?.background =
+                ResourcesCompat.getDrawable(resources, R.drawable.et_error_backgroumd, null)
             errorView?.showAsDropDown(bind?.edDialogFragment, 80, 0)
         }
     }
@@ -85,6 +89,4 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
         super.onDestroyView()
         errorView = null
     }
-
-
 }

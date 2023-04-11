@@ -1,11 +1,10 @@
 package com.example.benchmarks.models.benchmark
 
 
-import javax.inject.Inject
 import com.example.benchmarks.R
-import java.lang.RuntimeException
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
+import javax.inject.Inject
 
 open class OperationsCollections @Inject constructor() : Benchmark {
 
@@ -49,22 +48,28 @@ open class OperationsCollections @Inject constructor() : Benchmark {
         list = when (nameOfCollection) {
             R.string.array_list -> ArrayList(Collections.nCopies(sizeOfCollection, 0))
             R.string.linked_list -> LinkedList(Collections.nCopies(sizeOfCollection, 0))
-            R.string.copy_on_write_array_list -> CopyOnWriteArrayList(Collections.nCopies(sizeOfCollection,0))
+            R.string.copy_on_write_array_list -> CopyOnWriteArrayList(
+                Collections.nCopies(
+                    sizeOfCollection,
+                    0
+                )
+            )
             else -> throw RuntimeException("This is ID of collection doesn't exist")
         }
         return list
     }
 
     private val collectionsNames: List<Int>
-        private get() {
+        get() {
             val list: MutableList<Int> = ArrayList()
             list.add(R.string.array_list)
             list.add(R.string.linked_list)
             list.add(R.string.copy_on_write_array_list)
             return list
         }
+
     private val operationNames: List<Int>
-        private get() {
+        get() {
             val list: MutableList<Int> = ArrayList()
             list.add(R.string.adding_in_the_beginning)
             list.add(R.string.adding_in_the_middle)

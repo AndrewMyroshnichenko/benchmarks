@@ -3,10 +3,11 @@ package com.example.benchmarks.utils
 import java.util.*
 
 class Pair<F, S>(val first: F, val second: S) {
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val pair = o as Pair<*, *>
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        val pair = other as Pair<*, *>
         return first == pair.first && second == pair.second
     }
 
@@ -19,11 +20,5 @@ class Pair<F, S>(val first: F, val second: S) {
                 "first=" + first +
                 ", second=" + second +
                 '}'
-    }
-
-    companion object {
-        fun <A, B> create(a: A, b: B): Pair<A, B> {
-            return Pair(a, b)
-        }
     }
 }

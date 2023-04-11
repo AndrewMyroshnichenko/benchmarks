@@ -1,11 +1,11 @@
 package com.example.benchmarks.models.benchmark
 
-import javax.inject.Inject
 import com.example.benchmarks.R
-import java.lang.RuntimeException
 import java.util.*
+import javax.inject.Inject
 
 open class OperationsMaps @Inject constructor() : Benchmark {
+
     override fun measureTime(sizeOfCollection: Int, item: BenchmarkItem): Long {
         val map = createMap(sizeOfCollection, item.nameOfCollection)
         val startTime = System.nanoTime()
@@ -56,14 +56,14 @@ open class OperationsMaps @Inject constructor() : Benchmark {
     }
 
     private val mapsNames: List<Int>
-        private get() {
+        get() {
             val list: MutableList<Int> = ArrayList()
             list.add(R.string.tree_map)
             list.add(R.string.hash_map)
             return list
         }
     private val operationNames: List<Int>
-        private get() {
+        get() {
             val list: MutableList<Int> = ArrayList()
             list.add(R.string.adding_new_in)
             list.add(R.string.search_by_key_in)

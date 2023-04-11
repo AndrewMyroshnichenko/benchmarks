@@ -35,7 +35,7 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
         itemsLiveData.value = benchmark.createBenchmarkList(false)
     }
 
-    fun onButtonToggle(){
+    fun onButtonToggle() {
         if (disposable.isDisposed) {
             onStartProcess()
         } else {
@@ -48,18 +48,16 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
         calculationStartLiveData.value = true
         val testSize = testSizeLiveData.value ?: 0
 
-        disposable = Flowable.fromIterable(items)
-            .map { it ->
-                val time = benchmark.measureTime(testSize, it)
-                Pair(items.indexOf(it), it.updateBenchmarkItem(time))
-            }
+        disposable = Flowable.fromIterable(items).map {
+            val time = benchmark.measureTime(testSize, it)
+            Pair(items.indexOf(it), it.updateBenchmarkItem(time))
+        }
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete{onStopProcess()}
-            .subscribe { benchmarkResult: Pair<Int, BenchmarkItem> -> recreateItemsList(benchmarkResult) }
-
-
-
+            .doOnComplete { onStopProcess() }
+            .subscribe { benchmarkResult: Pair<Int, BenchmarkItem> ->
+                recreateItemsList(benchmarkResult)
+            }
     }
 
     private fun onStopProcess() {
@@ -70,7 +68,7 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
     }
 
     private fun recreateItemsList(benchmarkResult: Pair<Int, BenchmarkItem>){
-        itemsLiveData.value?.let{
+        itemsLiveData.value?.let {
             val newList: MutableList<BenchmarkItem> = ArrayList(it)
             newList[benchmarkResult.first] = benchmarkResult.second
             itemsLiveData.value = newList
@@ -81,15 +79,15 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
         return benchmark.getSpansCount()
     }
 
-    fun setSizeCollectionLiveData(size: Int){
+    fun setSizeCollectionLiveData(size: Int) {
         testSizeLiveData.value = size
     }
 
-    fun getItemsLiveData(): LiveData<List<BenchmarkItem>>{
+    fun getItemsLiveData(): LiveData<List<BenchmarkItem>> {
         return itemsLiveData
     }
 
-    fun getCalculationStartLiveData(): LiveData<Boolean>{
+    fun getCalculationStartLiveData(): LiveData<Boolean> {
         return calculationStartLiveData
     }
 }
