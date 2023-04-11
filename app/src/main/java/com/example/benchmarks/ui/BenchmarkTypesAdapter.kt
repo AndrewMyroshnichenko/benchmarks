@@ -6,8 +6,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.benchmarks.ui.benchmark.BenchmarkFragment
 
-class BenchmarkTypesAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle, private val nameOfTabs: List<String>) :
-    FragmentStateAdapter(fragmentManager, lifecycle) {
+class BenchmarkTypesAdapter(
+    fragmentManager: FragmentManager, lifecycle: Lifecycle,
+    private val nameOfTabs: List<String>
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int {
         return nameOfTabs.size

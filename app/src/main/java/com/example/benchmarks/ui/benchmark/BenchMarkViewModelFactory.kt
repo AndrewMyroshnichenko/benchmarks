@@ -9,9 +9,9 @@ import javax.inject.Named
 
 class BenchMarkViewModelFactory(private val fragmentPosition: Int) : ViewModelProvider.Factory {
 
-    companion object{
+    companion object {
         const val POSITION_LIST = 0
-        const val POSITION_MAP  = 1
+        const val POSITION_MAP = 1
     }
 
     @Inject
@@ -27,9 +27,9 @@ class BenchMarkViewModelFactory(private val fragmentPosition: Int) : ViewModelPr
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return when(fragmentPosition){
+        return when (fragmentPosition) {
             POSITION_LIST -> BenchmarksViewModel(benchmarkCollections) as T
-            POSITION_MAP  -> BenchmarksViewModel(benchmarkMaps) as T
+            POSITION_MAP -> BenchmarksViewModel(benchmarkMaps) as T
             else -> throw RuntimeException("Wrong option in the factory!")
         }
     }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
@@ -18,7 +17,6 @@ import com.example.benchmarks.ui.benchmark.BenchmarksViewModel
 import com.example.benchmarks.ui.input.InputFragment.Constants.INPUT_REQUEST_KEY
 import com.example.benchmarks.ui.input.InputFragment.Constants.LONG_COLLECTION_SIZE_KEY
 import com.example.benchmarks.ui.input.InputFragment.Constants.STRING_COLLECTION_SIZE_KEY
-import com.example.benchmarks.utils.Pair
 
 class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
 
@@ -29,22 +27,27 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     }
 
     private var bind: FragmentInputBinding? = null
-    private var errorView : PopupWindow? = null
-
+    private var errorView: PopupWindow? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         bind = FragmentInputBinding.inflate(layoutInflater)
+
         val dialog = Dialog(requireContext())
         dialog.setContentView(bind!!.root)
-        dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
         dialog.setCancelable(false)
         bind?.edDialogFragment?.addTextChangedListener(this)
         bind?.btDialogFragment?.setOnClickListener(this)
 
-        errorView = PopupWindow(layoutInflater.inflate(R.layout.error_message, null),
+        errorView = PopupWindow(
+            layoutInflater.inflate(R.layout.error_message, null),
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT,
-            false)
+            false
+        )
 
         return dialog
     }
@@ -54,7 +57,11 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        bind?.edDialogFragment?.textSize = if (TextUtils.isEmpty(bind?.edDialogFragment?.text)) 14.0F else 20.0F
+        bind?.edDialogFragment?.textSize = if (TextUtils.isEmpty(bind?.edDialogFragment?.text)) {
+            14.0F
+        } else {
+            20.0F
+        }
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -64,12 +71,14 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     override fun onClick(view: View?) {
         val collectionSize = bind?.edDialogFragment?.text.toString()
         val result = BenchmarksViewModel.isNumberCorrect(collectionSize)
-        if(result!!.first){
-            bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(resources, R.drawable.et_standart_background, null)
+        if (result!!.first) {
+            bind?.edDialogFragment?.background =
+                ResourcesCompat.getDrawable(resources, R.drawable.et_standart_background, null)
             sendCollectionSize(collectionSize, result.second)
             dismiss()
         } else {
-            bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(resources, R.drawable.et_error_backgroumd, null)
+            bind?.edDialogFragment?.background =
+                ResourcesCompat.getDrawable(resources, R.drawable.et_error_backgroumd, null)
             errorView?.showAsDropDown(bind?.edDialogFragment, 80, 0)
         }
     }
@@ -85,6 +94,4 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
         super.onDestroyView()
         errorView = null
     }
-
-
 }
