@@ -23,7 +23,7 @@ class BenchMarkViewModelFactory(private val fragmentPosition: Int) : ViewModelPr
     lateinit var benchmarkMaps: Benchmark
 
     init {
-        BenchmarksApplication.getAppComponent()!!.inject(this)
+        BenchmarksApplication.getAppComponent()?.inject(this)
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

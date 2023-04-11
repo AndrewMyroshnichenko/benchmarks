@@ -1,13 +1,11 @@
 package com.example.benchmarks.ui.benchmark
 
 import android.os.Bundle
-import android.provider.SyncStateContract.Constants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.benchmarks.R
@@ -18,7 +16,7 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
 
     private val adapter = BenchmarksAdapter()
     private val inputFragment = InputFragment()
-    private lateinit var viewModel: BenchmarksViewModel
+    private var viewModel: BenchmarksViewModel? = null
     private var bind: FragmentBenchmarkBinding? = null
 
     companion object {
@@ -37,8 +35,8 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             val factory = BenchMarkViewModelFactory(requireArguments().getInt(POSITION_KEY))
-            viewModel = ViewModelProvider(this, factory).get(BenchmarksViewModel::class.java)
-            viewModel.onCreate()
+            viewModel = ViewModelProvider(this, factory)[BenchmarksViewModel::class.java]
+            viewModel?.onCreate()
         }
     }
 
@@ -55,16 +53,16 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
         bind = FragmentBenchmarkBinding.bind(view)
         bind?.edCollectionsFragment?.setOnClickListener(this)
         bind?.btCollections?.setOnClickListener(this)
-        bind?.rvMain?.layoutManager = GridLayoutManager(context, viewModel.getCountOfSpans())
+        bind?.rvMain?.layoutManager = viewModel?.let { GridLayoutManager(context, it.getCountOfSpans()) }
         bind?.rvMain?.adapter = adapter
 
-        viewModel.getItemsLiveData().observe(viewLifecycleOwner, adapter::submitList)
-        viewModel.getCalculationStartLiveData().observe(viewLifecycleOwner,
-            Observer { aBoolean: Boolean ->
-                bind?.btCollections?.setText(
-                    if (aBoolean) R.string.bt_stop else R.string.bt_start
-                )
-            })
+        viewModel?.getItemsLiveData()?.observe(viewLifecycleOwner, adapter::submitList)
+        viewModel?.getCalculationStartLiveData()?.observe(viewLifecycleOwner
+        ) { aBoolean: Boolean ->
+            bind?.btCollections?.setText(
+                if (aBoolean) R.string.bt_stop else R.string.bt_start
+            )
+        }
         childFragmentManager.setFragmentResultListener(
             InputFragment.Constants.INPUT_REQUEST_KEY,this, this)
     }
@@ -74,15 +72,15 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
             inputFragment.show(childFragmentManager, null)
         } else if (view === bind?.btCollections) {
             if (!bind?.edCollectionsFragment?.text.toString().matches(Regex("^\\d+$"))) {
-                bind?.btCollections!!.setText(R.string.et_fragment_text)
+                bind?.btCollections?.setText(R.string.et_fragment_text)
             } else {
-                viewModel.onButtonToggle()
+                viewModel?.onButtonToggle()
             }
         }
     }
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
-        viewModel.setSizeCollectionLiveData(result.getInt(InputFragment.Constants.LONG_COLLECTION_SIZE_KEY))
+        viewModel?.setSizeCollectionLiveData(result.getInt(InputFragment.Constants.LONG_COLLECTION_SIZE_KEY))
         val size = result.getString(InputFragment.Constants.STRING_COLLECTION_SIZE_KEY)
         bind?.edCollectionsFragment?.setText(size)
     }
@@ -91,8 +89,5 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
         super.onDestroyView()
         bind = null
     }
-
-
-
 
 }

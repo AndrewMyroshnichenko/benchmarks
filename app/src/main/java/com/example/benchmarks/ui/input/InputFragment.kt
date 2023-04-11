@@ -28,18 +28,18 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
         const val LONG_COLLECTION_SIZE_KEY = "LONG_KEY_COLLECTION"
     }
 
-    private lateinit var bind: FragmentInputBinding
+    private var bind: FragmentInputBinding? = null
     private var errorView : PopupWindow? = null
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         bind = FragmentInputBinding.inflate(layoutInflater)
         val dialog = Dialog(requireContext())
-        dialog.setContentView(bind.root)
+        dialog.setContentView(bind!!.root)
         dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
         dialog.setCancelable(false)
-        bind.edDialogFragment.addTextChangedListener(this)
-        bind.btDialogFragment.setOnClickListener(this)
+        bind?.edDialogFragment?.addTextChangedListener(this)
+        bind?.btDialogFragment?.setOnClickListener(this)
 
         errorView = PopupWindow(layoutInflater.inflate(R.layout.error_message, null),
             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -54,7 +54,7 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        bind.edDialogFragment.textSize = if (TextUtils.isEmpty(bind.edDialogFragment.text)) 14.0F else 20.0F
+        bind?.edDialogFragment?.textSize = if (TextUtils.isEmpty(bind?.edDialogFragment?.text)) 14.0F else 20.0F
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -62,22 +62,22 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     }
 
     override fun onClick(view: View?) {
-        val collectionSize = bind.edDialogFragment.text.toString()
+        val collectionSize = bind?.edDialogFragment?.text.toString()
         val result = BenchmarksViewModel.isNumberCorrect(collectionSize)
         if(result!!.first){
-            bind.edDialogFragment.background = ResourcesCompat.getDrawable(resources, R.drawable.et_standart_background, null)
+            bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(resources, R.drawable.et_standart_background, null)
             sendCollectionSize(collectionSize, result.second)
             dismiss()
         } else {
-            bind.edDialogFragment.background = ResourcesCompat.getDrawable(resources, R.drawable.et_error_backgroumd, null)
-            errorView?.showAsDropDown(bind.edDialogFragment, 80, 0)
+            bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(resources, R.drawable.et_error_backgroumd, null)
+            errorView?.showAsDropDown(bind?.edDialogFragment, 80, 0)
         }
     }
 
     private fun sendCollectionSize(textSize: String, size: Int?) {
         val result = Bundle()
         result.putString(STRING_COLLECTION_SIZE_KEY, textSize)
-        result.putInt(LONG_COLLECTION_SIZE_KEY, size!!)
+        size?.let { result.putInt(LONG_COLLECTION_SIZE_KEY, it) }
         parentFragmentManager.setFragmentResult(INPUT_REQUEST_KEY, result)
     }
 

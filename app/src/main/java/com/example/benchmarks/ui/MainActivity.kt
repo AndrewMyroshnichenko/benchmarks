@@ -11,33 +11,33 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity(), OnTabSelectedListener {
 
-    private lateinit var bind : ActivityMainBinding
-    private lateinit var tabLayoutMediator : TabLayoutMediator
+    private var bind : ActivityMainBinding? = null
+    private var tabLayoutMediator : TabLayoutMediator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bind = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(bind.root)
+        setContentView(bind?.root)
         val nameOfTabs : List<String> = resources.getStringArray(R.array.name_tabs).toList()
-        bind.mainViewPager.adapter = BenchmarkTypesAdapter(supportFragmentManager, lifecycle, nameOfTabs)
-        tabLayoutMediator = TabLayoutMediator(bind.mainTabLayout, bind.mainViewPager) { tab, position ->
+        bind?.mainViewPager?.adapter = BenchmarkTypesAdapter(supportFragmentManager, lifecycle, nameOfTabs)
+        tabLayoutMediator = TabLayoutMediator(bind!!.mainTabLayout, bind!!.mainViewPager) { tab, position ->
             tab.text = nameOfTabs[position]
         }
-        tabLayoutMediator.attach()
-        bind.mainTabLayout.addOnTabSelectedListener(this)
+        tabLayoutMediator?.attach()
+        bind?.mainTabLayout?.addOnTabSelectedListener(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        tabLayoutMediator.detach()
+        tabLayoutMediator?.detach()
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        val id = when(bind.mainTabLayout.selectedTabPosition) {
+        val id = when(bind?.mainTabLayout?.selectedTabPosition) {
             0 -> R.drawable.tab_item_left_background
             else -> R.drawable.tab_item_right_background
         }
-        bind.mainTabLayout.setSelectedTabIndicator(ResourcesCompat.getDrawable(resources, id, theme))
+        bind?.mainTabLayout?.setSelectedTabIndicator(ResourcesCompat.getDrawable(resources, id, theme))
     }
 
     override fun onTabUnselected(tab: TabLayout.Tab?) {
