@@ -1,6 +1,7 @@
 package com.example.benchmarks.ui.benchmark
 
 import android.os.Bundle
+import android.provider.SyncStateContract.Constants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,21 +16,21 @@ import com.example.benchmarks.ui.input.InputFragment
 
 class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListener {
 
-    companion object{
-        const val POSITION_KEY = "POSITION"
-    }
-
     private val adapter = BenchmarksAdapter()
     private val inputFragment = InputFragment()
     private lateinit var viewModel: BenchmarksViewModel
     private var bind: FragmentBenchmarkBinding? = null
 
-    fun createFragment(position: Int): BenchmarkFragment {
-        val benchmarkFragment = BenchmarkFragment()
-        val bundle = Bundle()
-        bundle.putInt(POSITION_KEY, position)
-        benchmarkFragment.arguments = bundle
-        return benchmarkFragment
+    companion object {
+        const val POSITION_KEY = "POSITION"
+
+        fun createFragment(position: Int): BenchmarkFragment {
+            val benchmarkFragment = BenchmarkFragment()
+            val bundle = Bundle()
+            bundle.putInt(POSITION_KEY, position)
+            benchmarkFragment.arguments = bundle
+            return benchmarkFragment
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,11 +55,11 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
         bind = FragmentBenchmarkBinding.bind(view)
         bind?.edCollectionsFragment?.setOnClickListener(this)
         bind?.btCollections?.setOnClickListener(this)
-        bind?.rvMain?.layoutManager = GridLayoutManager(context, viewModel.countOfSpans)
+        bind?.rvMain?.layoutManager = GridLayoutManager(context, viewModel.getCountOfSpans())
         bind?.rvMain?.adapter = adapter
 
-        viewModel.itemsLiveData.observe(viewLifecycleOwner, adapter::submitList)
-        viewModel.calculationStartLiveData.observe(viewLifecycleOwner,
+        viewModel.getItemsLiveData().observe(viewLifecycleOwner, adapter::submitList)
+        viewModel.getCalculationStartLiveData().observe(viewLifecycleOwner,
             Observer { aBoolean: Boolean ->
                 bind?.btCollections?.setText(
                     if (aBoolean) R.string.bt_stop else R.string.bt_start
@@ -90,6 +91,8 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
         super.onDestroyView()
         bind = null
     }
+
+
 
 
 }

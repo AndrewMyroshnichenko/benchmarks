@@ -64,7 +64,7 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     override fun onClick(view: View?) {
         val collectionSize = bind.edDialogFragment.text.toString()
         val result = BenchmarksViewModel.isNumberCorrect(collectionSize)
-        if(result.first){
+        if(result!!.first){
             bind.edDialogFragment.background = ResourcesCompat.getDrawable(resources, R.drawable.et_standart_background, null)
             sendCollectionSize(collectionSize, result.second)
             dismiss()
