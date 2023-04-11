@@ -35,7 +35,7 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         bind = FragmentInputBinding.inflate(layoutInflater)
         val dialog = Dialog(requireContext())
-        dialog.setContentView(bind!!.root)
+        dialog.setContentView(bind?.root ?: View(requireContext()))
         dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
         dialog.setCancelable(false)
         bind?.edDialogFragment?.addTextChangedListener(this)
@@ -64,7 +64,7 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     override fun onClick(view: View?) {
         val collectionSize = bind?.edDialogFragment?.text.toString()
         val result = BenchmarksViewModel.isNumberCorrect(collectionSize)
-        if(result!!.first){
+        if(result?.first == true){
             bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(resources, R.drawable.et_standart_background, null)
             sendCollectionSize(collectionSize, result.second)
             dismiss()

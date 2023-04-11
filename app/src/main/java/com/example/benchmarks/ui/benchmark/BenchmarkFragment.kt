@@ -33,7 +33,7 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
+        arguments?.let {
             val factory = BenchMarkViewModelFactory(requireArguments().getInt(POSITION_KEY))
             viewModel = ViewModelProvider(this, factory)[BenchmarksViewModel::class.java]
             viewModel?.onCreate()
@@ -72,12 +72,13 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
             inputFragment.show(childFragmentManager, null)
         } else if (view === bind?.btCollections) {
             if (!bind?.edCollectionsFragment?.text.toString().matches(Regex("^\\d+$"))) {
-                bind?.btCollections?.setText(R.string.et_fragment_text)
+                inputFragment.show(childFragmentManager, null)
             } else {
                 viewModel?.onButtonToggle()
             }
         }
     }
+
 
     override fun onFragmentResult(requestKey: String, result: Bundle) {
         viewModel?.setSizeCollectionLiveData(result.getInt(InputFragment.Constants.LONG_COLLECTION_SIZE_KEY))
