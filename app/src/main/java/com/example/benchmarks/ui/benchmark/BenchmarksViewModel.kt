@@ -70,9 +70,8 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
     }
 
     private fun recreateItemsList(benchmarkResult: Pair<Int, BenchmarkItem>){
-        val list = itemsLiveData.value
-        if(list != null){
-            val newList: MutableList<BenchmarkItem> = ArrayList(list)
+        itemsLiveData.value?.let{
+            val newList: MutableList<BenchmarkItem> = ArrayList(it)
             newList[benchmarkResult.first] = benchmarkResult.second
             itemsLiveData.value = newList
         }
