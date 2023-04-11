@@ -1,26 +1,23 @@
-package com.example.benchmarks.models;
+package com.example.benchmarks.models
 
-import com.example.benchmarks.models.benchmark.Benchmark;
-import com.example.benchmarks.models.benchmark.TestOperationsCollections;
-import com.example.benchmarks.models.benchmark.TestOperationsMaps;
-
-import javax.inject.Named;
-
-import dagger.Module;
-import dagger.Provides;
+import com.example.benchmarks.models.benchmark.Benchmark
+import com.example.benchmarks.models.benchmark.TestOperationsCollections
+import com.example.benchmarks.models.benchmark.TestOperationsMaps
+import dagger.Module
+import dagger.Provides
+import javax.inject.Named
 
 @Module
-public class TestBenchmarksModule extends BenchmarksModule {
-
+class TestBenchmarksModule : BenchmarksModule() {
     @Provides
     @Named("collections")
-    public Benchmark provideOperationsCollections() {
-        return new TestOperationsCollections();
+    override fun provideOperationsCollections(): Benchmark {
+        return TestOperationsCollections()
     }
 
     @Provides
     @Named("maps")
-    public Benchmark provideOperationMaps() {
-        return new TestOperationsMaps();
+    override fun provideOperationMaps(): Benchmark {
+        return TestOperationsMaps()
     }
 }

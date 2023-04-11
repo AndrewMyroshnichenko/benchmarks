@@ -1,47 +1,44 @@
-package com.example.benchmarks.ui;
+package com.example.benchmarks.ui
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.swipeLeft;
-import static androidx.test.espresso.action.ViewActions.swipeRight;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import android.content.Context
+import org.junit.runner.RunWith
+import androidx.test.core.app.ApplicationProvider
+import com.example.benchmarks.R
+import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.example.benchmarks.ui.MainActivity
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Rule
+import org.junit.Test
 
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+@RunWith(AndroidJUnit4::class)
+class MainActivityTest {
+    private val nameOfTabs =
+        ApplicationProvider.getApplicationContext<Context>().resources.getStringArray(R.array.name_tabs)
 
-import com.example.benchmarks.R;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-@RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
-
-    private final String[] nameOfTabs = ApplicationProvider.getApplicationContext().getResources().getStringArray(R.array.name_tabs);
-    @Rule
-    public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
+    @get:Rule
+    var activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    public void testSwipeTabs() {
-        onView(withId(R.id.mainViewPager)).perform(swipeLeft());
-        onView(withText(nameOfTabs[1])).check(matches(isSelected()));
-
-        onView(withId(R.id.mainViewPager)).perform(swipeRight());
-        onView(withText(nameOfTabs[0])).check(matches(isSelected()));
+    fun testSwipeTabs() {
+        Espresso.onView(ViewMatchers.withId(R.id.mainViewPager)).perform(ViewActions.swipeLeft())
+        Espresso.onView(ViewMatchers.withText(nameOfTabs[1]))
+            .check(ViewAssertions.matches(ViewMatchers.isSelected()))
+        Espresso.onView(ViewMatchers.withId(R.id.mainViewPager)).perform(ViewActions.swipeRight())
+        Espresso.onView(ViewMatchers.withText(nameOfTabs[0]))
+            .check(ViewAssertions.matches(ViewMatchers.isSelected()))
     }
 
     @Test
-    public void testClickOnTabs() {
-        onView(withText(nameOfTabs[1])).perform(click());
-        onView(withText(nameOfTabs[1])).check(matches(isSelected()));
-
-        onView(withText(nameOfTabs[0])).perform(click());
-        onView(withText(nameOfTabs[0])).check(matches(isSelected()));
+    fun testClickOnTabs() {
+        Espresso.onView(ViewMatchers.withText(nameOfTabs[1])).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withText(nameOfTabs[1]))
+            .check(ViewAssertions.matches(ViewMatchers.isSelected()))
+        Espresso.onView(ViewMatchers.withText(nameOfTabs[0])).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withText(nameOfTabs[0]))
+            .check(ViewAssertions.matches(ViewMatchers.isSelected()))
     }
-
 }

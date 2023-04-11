@@ -1,18 +1,12 @@
-package com.example.benchmarks.models.benchmark;
+package com.example.benchmarks.models.benchmark
 
-public class TestOperationsCollections extends OperationsCollections {
-
-    public TestOperationsCollections() {
-        super();
-    }
-
-    @Override
-    public long measureTime(int sizeOfCollection, BenchmarkItem item) {
+class TestOperationsCollections : OperationsCollections() {
+    override fun measureTime(sizeOfCollection: Int, item: BenchmarkItem): Long {
         try {
-            Thread.sleep(Tests.DELAY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.sleep(Tests.DELAY)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
         }
-        return Tests.MEASURE_TIME;
+        return Tests.MEASURE_TIME
     }
 }
