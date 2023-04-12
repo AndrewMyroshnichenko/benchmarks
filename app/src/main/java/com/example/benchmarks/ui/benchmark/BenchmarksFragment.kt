@@ -12,7 +12,7 @@ import com.example.benchmarks.R
 import com.example.benchmarks.databinding.FragmentBenchmarkBinding
 import com.example.benchmarks.ui.input.InputFragment
 
-class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListener {
+class BenchmarksFragment : Fragment(), View.OnClickListener, FragmentResultListener {
 
     private val adapter = BenchmarksAdapter()
     private val inputFragment = InputFragment()
@@ -22,12 +22,12 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
     companion object {
         const val POSITION_KEY = "POSITION"
 
-        fun createFragment(position: Int): BenchmarkFragment {
-            val benchmarkFragment = BenchmarkFragment()
+        fun createFragment(position: Int): BenchmarksFragment {
+            val benchmarksFragment = BenchmarksFragment()
             val bundle = Bundle()
             bundle.putInt(POSITION_KEY, position)
-            benchmarkFragment.arguments = bundle
-            return benchmarkFragment
+            benchmarksFragment.arguments = bundle
+            return benchmarksFragment
         }
     }
 
@@ -70,7 +70,7 @@ class BenchmarkFragment : Fragment(), View.OnClickListener, FragmentResultListen
         if (view === bind?.edCollectionsFragment) {
             inputFragment.show(childFragmentManager, null)
         } else if (view === bind?.btCollections) {
-            if (!bind?.edCollectionsFragment?.text.toString().matches(Regex("^\\d+$"))) {
+            if (bind?.edCollectionsFragment?.text.toString().isEmpty()) {
                 inputFragment.show(childFragmentManager, null)
             } else {
                 viewModel?.onButtonToggle()

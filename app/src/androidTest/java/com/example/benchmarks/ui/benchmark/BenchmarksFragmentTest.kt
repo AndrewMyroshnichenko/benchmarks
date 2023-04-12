@@ -26,12 +26,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class BenchmarkFragmentTest {
+class BenchmarksFragmentTest {
 
     @get:Rule
     public val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
-    companion object{
+    companion object {
         @BeforeClass
         @JvmStatic
         fun set() {

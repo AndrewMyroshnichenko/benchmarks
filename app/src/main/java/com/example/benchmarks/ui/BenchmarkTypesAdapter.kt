@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.benchmarks.ui.benchmark.BenchmarkFragment
+import com.example.benchmarks.ui.benchmark.BenchmarksFragment
 
 class BenchmarkTypesAdapter(
     fragmentManager: FragmentManager, lifecycle: Lifecycle,
@@ -16,6 +16,6 @@ class BenchmarkTypesAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        return BenchmarkFragment.createFragment(position)
+        return BenchmarksFragment.createFragment(position)
     }
 }
