@@ -3,6 +3,8 @@ package com.example.benchmarks.models
 import com.example.benchmarks.models.benchmark.Benchmark
 import com.example.benchmarks.models.benchmark.OperationsCollections
 import com.example.benchmarks.models.benchmark.OperationsMaps
+import com.example.benchmarks.utils.DispatchersHolder
+import com.example.benchmarks.utils.DispatchersHolderImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -21,5 +23,11 @@ open class BenchmarksModule {
     @Named("maps")
     open fun provideOperationMaps(): Benchmark {
         return OperationsMaps()
+    }
+
+    @Provides
+    @Named("dispatchers")
+    open fun provideDispatchersHolderImpl(): DispatchersHolder {
+        return DispatchersHolderImpl()
     }
 }

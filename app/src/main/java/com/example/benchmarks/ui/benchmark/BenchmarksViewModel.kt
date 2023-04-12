@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.benchmarks.models.benchmark.Benchmark
 import com.example.benchmarks.models.benchmark.BenchmarkItem
+import com.example.benchmarks.utils.DispatchersHolder
 import com.example.benchmarks.utils.Pair
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 
-class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
+class BenchmarksViewModel(
+    private val benchmark: Benchmark,
+    private val dispatchers: DispatchersHolder
+    ) : ViewModel() {
 
     private val itemsLiveData = MutableLiveData<List<BenchmarkItem>>()
     private val testSizeLiveData = MutableLiveData<Int>()
@@ -47,15 +50,12 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
         calculationStartLiveData.value = true
         val testSize = testSizeLiveData.value ?: 0
 
-        job = viewModelScope.launch(Dispatchers.Default) {
+        job = viewModelScope.launch(dispatchers.getIO()) {
             val newList: MutableList<BenchmarkItem> = ArrayList(items)
-            items.asFlow().map {
+            items.forEachIndexed { index, it ->
                 val time = benchmark.measureTime(testSize, it)
-                Pair(items.indexOf(it), it.updateBenchmarkItem(time))
+                newList[index] = it.updateBenchmarkItem(time)
             }
-                .collect { it ->
-                    newList[it.first] = it.second
-                }
             itemsLiveData.postValue(newList)
             calculationStartLiveData.postValue(false)
         }
