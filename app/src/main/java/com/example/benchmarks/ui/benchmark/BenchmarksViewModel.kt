@@ -3,21 +3,21 @@ package com.example.benchmarks.ui.benchmark
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.benchmarks.models.benchmark.Benchmark
 import com.example.benchmarks.models.benchmark.BenchmarkItem
 import com.example.benchmarks.utils.Pair
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.map
 
 class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
 
     private val itemsLiveData = MutableLiveData<List<BenchmarkItem>>()
     private val testSizeLiveData = MutableLiveData<Int>()
     private val calculationStartLiveData = MutableLiveData(false)
-    private var disposable = Disposable.disposed()
-
+    //private var disposable = Disposable.disposed()
+    private var job: Job? = null
 
     companion object{
         @JvmStatic
@@ -36,10 +36,13 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
     }
 
     fun onButtonToggle() {
-        if (disposable.isDisposed) {
-            onStartProcess()
-        } else {
+        //if (disposable.isDisposed){
+        if (job?.isActive == true){
             onStopProcess()
+            //onStartProcess()
+        } else {
+            onStartProcess()
+            //onStopProcess()
         }
     }
 
@@ -48,6 +51,18 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
         calculationStartLiveData.value = true
         val testSize = testSizeLiveData.value ?: 0
 
+    job = viewModelScope.launch(Dispatchers.Default) {
+        items.asFlow().map {
+            val time = benchmark.measureTime(testSize, it)
+            Pair(items.indexOf(it), it.updateBenchmarkItem(time))
+        }
+            .collect() {
+                it -> recreateItemsList(it)
+            }
+        calculationStartLiveData.postValue(false)
+    }
+
+        /*
         disposable = Flowable.fromIterable(items).map {
             val time = benchmark.measureTime(testSize, it)
             Pair(items.indexOf(it), it.updateBenchmarkItem(time))
@@ -58,20 +73,26 @@ class BenchmarksViewModel(private val benchmark: Benchmark) : ViewModel() {
             .subscribe { benchmarkResult: Pair<Int, BenchmarkItem> ->
                 recreateItemsList(benchmarkResult)
             }
+        */
+
     }
 
     private fun onStopProcess() {
         calculationStartLiveData.value = false
+        job?.cancel()
+/*
         if(!disposable.isDisposed){
             disposable.dispose()
         }
+*/
+
     }
 
     private fun recreateItemsList(benchmarkResult: Pair<Int, BenchmarkItem>){
         itemsLiveData.value?.let {
-            val newList: MutableList<BenchmarkItem> = ArrayList(it)
+            val newList: MutableList<BenchmarkItem> = it.toMutableList()
             newList[benchmarkResult.first] = benchmarkResult.second
-            itemsLiveData.value = newList
+            itemsLiveData.postValue(newList)
         }
     }
 
