@@ -10,6 +10,9 @@ import com.example.benchmarks.models.benchmark.BenchmarkItem
 import com.example.benchmarks.utils.DispatchersHolder
 import com.example.benchmarks.utils.Pair
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 class BenchmarksViewModel(
     private val benchmark: Benchmark,
@@ -47,6 +50,7 @@ class BenchmarksViewModel(
 
     private fun onStartProcess() {
         val items = benchmark.createBenchmarkList(true)
+        itemsLiveData.postValue(items)
         calculationStartLiveData.value = true
         val testSize = testSizeLiveData.value ?: 0
 
