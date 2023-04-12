@@ -42,7 +42,7 @@ class BenchmarksFragmentTest {
     }
 
 
-    fun atPosition(position: Int, itemMatcher: Matcher<View?>): Matcher<View?> {
+    private fun atPosition(position: Int, itemMatcher: Matcher<View?>): Matcher<View?> {
         return object : BoundedMatcher<View?, RecyclerView>(RecyclerView::class.java) {
             override fun describeTo(description: Description) {
                 description.appendText("at position $position: ")
@@ -194,7 +194,7 @@ class BenchmarksFragmentTest {
         onView(withId(R.id.bt_collections)).perform(click())
 
         try {
-            Thread.sleep(1000)
+            Thread.sleep(3000)
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }

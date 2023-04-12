@@ -21,10 +21,7 @@ class BenchmarksAdapter : ListAdapter<BenchmarkItem, BenchmarksAdapter.Benchmark
                 return oldItem.nameOfCollection == newItem.nameOfCollection && oldItem.nameOfOperation == newItem.nameOfOperation
             }
 
-            override fun areContentsTheSame(
-                oldItem: BenchmarkItem,
-                newItem: BenchmarkItem
-            ): Boolean {
+            override fun areContentsTheSame(oldItem: BenchmarkItem, newItem: BenchmarkItem): Boolean {
                 return (oldItem == newItem)
             }
 
