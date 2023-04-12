@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
@@ -44,10 +43,12 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
         bind?.edDialogFragment?.addTextChangedListener(this)
         bind?.btDialogFragment?.setOnClickListener(this)
 
-        errorView = PopupWindow(layoutInflater.inflate(R.layout.error_message, null),
+        errorView = PopupWindow(
+            layoutInflater.inflate(R.layout.error_message, null),
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT,
-            false)
+            false
+        )
 
         return dialog
     }
@@ -57,7 +58,11 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     }
 
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        bind?.edDialogFragment?.textSize = if (TextUtils.isEmpty(bind?.edDialogFragment?.text)) 14.0F else 20.0F
+        bind?.edDialogFragment?.textSize = if (TextUtils.isEmpty(bind?.edDialogFragment?.text)) {
+            14.0F
+        } else {
+            20.0F
+        }
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -67,13 +72,16 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
     override fun onClick(view: View?) {
         val collectionSize = bind?.edDialogFragment?.text.toString()
         val result = BenchmarksViewModel.isNumberCorrect(collectionSize)
-        if(result?.first == true){
-            bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(resources, R.drawable.et_standart_background, null)
+        if(result?.first == true) {
+            bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(
+                resources, R.drawable.et_standart_background, null
+            )
             sendCollectionSize(collectionSize, result.second)
             dismiss()
         } else {
-            bind?.edDialogFragment?.background =
-                ResourcesCompat.getDrawable(resources, R.drawable.et_error_backgroumd, null)
+            bind?.edDialogFragment?.background = ResourcesCompat.getDrawable(
+                resources, R.drawable.et_error_backgroumd, null
+            )
             errorView?.showAsDropDown(bind?.edDialogFragment, 80, 0)
         }
     }
