@@ -1,5 +1,6 @@
 package com.example.benchmarks.ui.benchmark
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -44,19 +45,20 @@ class BenchmarksViewModel(
         }
     }
 
-
     private fun onStartProcess() {
         val items = benchmark.createBenchmarkList(true)
         calculationStartLiveData.value = true
         val testSize = testSizeLiveData.value ?: 0
 
         job = viewModelScope.launch(dispatchers.getIO()) {
-            val newList: MutableList<BenchmarkItem> = ArrayList(items)
-            items.forEachIndexed { index, it ->
-                val time = benchmark.measureTime(testSize, it)
-                newList[index] = it.updateBenchmarkItem(time)
+            val deferredList: List<Deferred<BenchmarkItem>> = items.map { item ->
+                async {
+                    val time = benchmark.measureTime(testSize, item)
+                    item.updateBenchmarkItem(time)
+                }
             }
-            itemsLiveData.postValue(newList)
+            val resultList = deferredList.awaitAll()
+            itemsLiveData.postValue(resultList)
             calculationStartLiveData.postValue(false)
         }
     }
@@ -67,7 +69,6 @@ class BenchmarksViewModel(
             calculationStartLiveData.value = false
         }
     }
-
 
     fun getCountOfSpans(): Int {
         return benchmark.getSpansCount()
