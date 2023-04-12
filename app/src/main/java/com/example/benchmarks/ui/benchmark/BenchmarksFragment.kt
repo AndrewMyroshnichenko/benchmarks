@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.lifecycle.ViewModelProvider
@@ -70,7 +71,7 @@ class BenchmarksFragment : Fragment(), View.OnClickListener, FragmentResultListe
         if (view === bind?.edCollectionsFragment) {
             inputFragment.show(childFragmentManager, null)
         } else if (view === bind?.btCollections) {
-            if (bind?.edCollectionsFragment?.text.toString().isEmpty()) {
+            if (!bind?.edCollectionsFragment?.text.toString().isDigitsOnly()) {
                 inputFragment.show(childFragmentManager, null)
             } else {
                 viewModel?.onButtonToggle()
