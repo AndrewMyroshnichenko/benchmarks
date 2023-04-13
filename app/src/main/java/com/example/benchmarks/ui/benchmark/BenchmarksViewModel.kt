@@ -10,6 +10,7 @@ import com.example.benchmarks.models.benchmark.BenchmarkItem
 import com.example.benchmarks.utils.DispatchersHolder
 import com.example.benchmarks.utils.Pair
 import kotlinx.coroutines.*
+import java.util.concurrent.atomic.AtomicInteger
 
 class BenchmarksViewModel(
     private val benchmark: Benchmark,
@@ -50,6 +51,7 @@ class BenchmarksViewModel(
         itemsLiveData.postValue(items)
         calculationStartLiveData.value = true
         val testSize = testSizeLiveData.value ?: 0
+        val counterOfTasks = AtomicInteger(items.size)
 
         job = viewModelScope.launch(dispatchers.getIO()) {
           items.mapIndexed() { index, item ->
@@ -57,10 +59,12 @@ class BenchmarksViewModel(
                     val time = benchmark.measureTime(testSize, item)
                     withContext(dispatchers.getMain()){
                         recreateItemsList(Pair(index, item.updateBenchmarkItem(time)))
+                        if(counterOfTasks.decrementAndGet() == 0){
+                            onStopProcess()
+                        }
                     }
                 }
             }
-            calculationStartLiveData.postValue(false)
         }
     }
 
