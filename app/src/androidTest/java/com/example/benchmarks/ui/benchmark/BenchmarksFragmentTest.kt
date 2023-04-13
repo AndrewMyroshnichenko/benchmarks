@@ -180,7 +180,7 @@ class BenchmarksFragmentTest {
     @Test
     fun testIsButtonStoppingProcess() {
         onView(withId(R.id.ed_collections_fragment)).perform(click())
-        onView(withId(R.id.ed_dialog_fragment)).perform(typeText("90000000"))
+        onView(withId(R.id.ed_dialog_fragment)).perform(typeText("10000000"))
         onView(withId(R.id.bt_dialog_fragment)).perform(click())
         onView(withId(R.id.bt_collections)).perform(click()).check(matches(withText("STOP")))
         onView(withId(R.id.bt_collections)).perform(click()).check(matches(withText("START")))

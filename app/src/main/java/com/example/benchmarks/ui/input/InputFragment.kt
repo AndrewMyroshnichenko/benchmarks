@@ -35,7 +35,7 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
         val dialog = Dialog(requireContext())
         dialog.setContentView(bind?.root ?: View(requireContext()))
         dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
-        dialog.setContentView(bind!!.root)
+        dialog.setContentView(bind?.root ?: View(requireContext()))
         dialog.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT)
