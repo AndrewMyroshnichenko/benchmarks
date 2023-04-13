@@ -65,9 +65,9 @@ class BenchmarksViewModel(
                     }
                 }
             }.awaitAll()
-            withContext(dispatchers.getMain()){
+            //withContext(dispatchers.getMain()){
                 onStopProcess()
-            }
+            //}
         }
     }
 
