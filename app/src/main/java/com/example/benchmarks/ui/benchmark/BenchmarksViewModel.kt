@@ -1,6 +1,5 @@
 package com.example.benchmarks.ui.benchmark
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,14 +9,11 @@ import com.example.benchmarks.models.benchmark.BenchmarkItem
 import com.example.benchmarks.utils.DispatchersHolder
 import com.example.benchmarks.utils.Pair
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 
 class BenchmarksViewModel(
     private val benchmark: Benchmark,
     private val dispatchers: DispatchersHolder
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val itemsLiveData = MutableLiveData<List<BenchmarkItem>>()
     private val testSizeLiveData = MutableLiveData<Int>()
@@ -74,19 +70,13 @@ class BenchmarksViewModel(
         }
     }
 
-    fun getCountOfSpans(): Int {
-        return benchmark.getSpansCount()
-    }
+    fun getCountOfSpans(): Int = benchmark.getSpansCount()
 
     fun setSizeCollectionLiveData(size: Int) {
         testSizeLiveData.value = size
     }
 
-    fun getItemsLiveData(): LiveData<List<BenchmarkItem>> {
-        return itemsLiveData
-    }
+    fun getItemsLiveData(): LiveData<List<BenchmarkItem>> = itemsLiveData
 
-    fun getCalculationStartLiveData(): LiveData<Boolean> {
-        return calculationStartLiveData
-    }
+    fun getCalculationStartLiveData(): LiveData<Boolean> = calculationStartLiveData
 }
