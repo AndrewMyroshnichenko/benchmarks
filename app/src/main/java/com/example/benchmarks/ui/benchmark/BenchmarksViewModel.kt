@@ -51,7 +51,7 @@ class BenchmarksViewModel(
         itemsLiveData.postValue(items)
         calculationStartLiveData.value = true
         val testSize = testSizeLiveData.value ?: 0
-        val counterOfTasks = AtomicInteger(items.size)
+        //val counterOfTasks = AtomicInteger(items.size)
 
         job = viewModelScope.launch(dispatchers.getIO()) {
           items.mapIndexed() { index, item ->
@@ -59,11 +59,14 @@ class BenchmarksViewModel(
                     val time = benchmark.measureTime(testSize, item)
                     withContext(dispatchers.getMain()){
                         recreateItemsList(Pair(index, item.updateBenchmarkItem(time)))
-                        if(counterOfTasks.decrementAndGet() == 0){
-                            onStopProcess()
-                        }
+                        //if(counterOfTasks.decrementAndGet() == 0){
+                        //    onStopProcess()
+                        //}
                     }
                 }
+            }.awaitAll()
+            withContext(dispatchers.getMain()){
+                onStopProcess()
             }
         }
     }
