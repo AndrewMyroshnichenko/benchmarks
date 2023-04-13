@@ -33,7 +33,8 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
         bind = FragmentInputBinding.inflate(layoutInflater)
 
         val dialog = Dialog(requireContext())
-        bind?.let { dialog.setContentView(it.root)
+        bind?.let { 
+            dialog.setContentView(it.root)
             it.edDialogFragment.addTextChangedListener(this)
             it.btDialogFragment.setOnClickListener(this)
         }
