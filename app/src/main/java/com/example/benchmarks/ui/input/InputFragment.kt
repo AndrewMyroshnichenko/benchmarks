@@ -33,7 +33,6 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
         bind = FragmentInputBinding.inflate(layoutInflater)
 
         val dialog = Dialog(requireContext())
-        dialog.setContentView(bind?.root ?: View(requireContext()))
         dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
         bind?.let { dialog.setContentView(it.root)
             it.edDialogFragment.addTextChangedListener(this)
@@ -41,8 +40,6 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
         }
         dialog.setContentView(bind?.root ?: View(requireContext()))
         dialog.setCancelable(false)
-        bind?.edDialogFragment?.addTextChangedListener(this)
-        bind?.btDialogFragment?.setOnClickListener(this)
 
         errorView = PopupWindow(
             layoutInflater.inflate(R.layout.error_message, null),
