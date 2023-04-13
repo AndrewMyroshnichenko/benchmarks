@@ -1,5 +1,6 @@
 package com.example.benchmarks.ui.benchmark
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,21 +46,30 @@ class BenchmarksViewModel(
     }
 
     private fun onStartProcess() {
-        val items = benchmark.createBenchmarkList(true)
+        val items = benchmark.createBenchmarkList(true).toMutableList()
         itemsLiveData.postValue(items)
         calculationStartLiveData.value = true
         val testSize = testSizeLiveData.value ?: 0
 
         job = viewModelScope.launch(dispatchers.getIO()) {
-            val deferredList: List<Deferred<BenchmarkItem>> = items.map { item ->
+          items.mapIndexed() { index, item ->
                 async {
                     val time = benchmark.measureTime(testSize, item)
-                    item.updateBenchmarkItem(time)
+                    withContext(dispatchers.getMain()){
+                        recreateItemsList(Pair(index, item.updateBenchmarkItem(time)))
+                    }
                 }
             }
-            val resultList = deferredList.awaitAll()
-            itemsLiveData.postValue(resultList)
             calculationStartLiveData.postValue(false)
+        }
+    }
+
+    private fun recreateItemsList(benchmarkResult: Pair<Int, BenchmarkItem>) {
+        val list = itemsLiveData.value
+        list?.let {
+            val newList: MutableList<BenchmarkItem> = ArrayList(list)
+            newList[benchmarkResult.first] = benchmarkResult.second
+            itemsLiveData.value = newList
         }
     }
 
