@@ -7,6 +7,8 @@ import com.example.benchmarks.R
 import com.example.benchmarks.models.benchmark.Benchmark
 import com.example.benchmarks.models.benchmark.BenchmarkItem
 import com.example.benchmarks.ui.benchmark.BenchmarksViewModel.Companion.isNumberCorrect
+import com.example.benchmarks.utils.DispatchersHolder
+import com.example.benchmarks.utils.DispatchersHolderImpl
 import com.example.benchmarks.utils.Pair
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -34,13 +36,15 @@ class BenchmarksViewModelTest {
     private lateinit var mockItemsLiveData: Observer<List<BenchmarkItem>>
     private lateinit var mockCalculationStartLiveData: Observer<Boolean>
     private lateinit var mockBenchmark: Benchmark
+    private lateinit var dispatchers: DispatchersHolder
 
     @Before
     fun setup() {
+        dispatchers = DispatchersHolderImpl()
         mockBenchmark = mock(Benchmark::class.java)
         mockItemsLiveData = mock(Observer::class.java) as Observer<List<BenchmarkItem>>
         mockCalculationStartLiveData = mock(Observer::class.java) as Observer<Boolean>
-        viewModel = BenchmarksViewModel(mockBenchmark)
+        viewModel = BenchmarksViewModel(mockBenchmark, dispatchers)
     }
 
     private fun setWhenAndObserveForever(list: List<BenchmarkItem>) {
@@ -92,7 +96,7 @@ class BenchmarksViewModelTest {
         viewModel.onButtonToggle()
 
         verify(mockCalculationStartLiveData).onChanged(true)
-        verify(mockCalculationStartLiveData, times(2)).onChanged(false)
+        verify(mockCalculationStartLiveData, times(1)).onChanged(false)
         verify(mockBenchmark).createBenchmarkList(true)
         verify(mockBenchmark).createBenchmarkList(false)
         verify(mockBenchmark).measureTime(COLLECTION_SIZE, item)
@@ -147,7 +151,7 @@ class BenchmarksViewModelTest {
         verify(mockCalculationStartLiveData, times(2)).onChanged(false)
         verify(mockBenchmark).createBenchmarkList(false)
         verify(mockBenchmark, times(1)).createBenchmarkList(true)
-        verify(mockItemsLiveData, times(1)).onChanged(anyList())
+        verify(mockItemsLiveData, times(2)).onChanged(anyList())
         verify(mockBenchmark, times(1)).measureTime(COLLECTION_SIZE, item)
         assertFalse(viewModel.getCalculationStartLiveData().value!!)
         commonVerifyNoMoreInteractions()

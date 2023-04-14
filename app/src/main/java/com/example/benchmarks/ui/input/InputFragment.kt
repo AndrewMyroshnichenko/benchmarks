@@ -39,7 +39,6 @@ class InputFragment : DialogFragment(), TextWatcher, View.OnClickListener {
             it.btDialogFragment.setOnClickListener(this)
         }
         dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
-        dialog.setContentView(bind?.root ?: View(requireContext()))
         dialog.setCancelable(false)
 
         errorView = PopupWindow(

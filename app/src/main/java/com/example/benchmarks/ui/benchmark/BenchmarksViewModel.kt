@@ -53,31 +53,30 @@ class BenchmarksViewModel(
         val testSize = testSizeLiveData.value ?: 0
 
         job = viewModelScope.launch(dispatchers.getIO()) {
-          items.mapIndexed() { index, item ->
+            items.mapIndexed() { index, item ->
                 async {
                     val time = benchmark.measureTime(testSize, item)
-                    withContext(dispatchers.getMain()){
+                    withContext(dispatchers.getMain()) {
                         recreateItemsList(Pair(index, item.updateBenchmarkItem(time)))
                     }
                 }
             }.awaitAll()
-            withContext(dispatchers.getMain()){
+            withContext(dispatchers.getMain()) {
                 onStopProcess()
             }
         }
     }
 
     private fun recreateItemsList(benchmarkResult: Pair<Int, BenchmarkItem>) {
-        val list = itemsLiveData.value
-        list?.let {
-            val newList: MutableList<BenchmarkItem> = ArrayList(list)
+        itemsLiveData.value?.let {
+            val newList: MutableList<BenchmarkItem> = ArrayList(it)
             newList[benchmarkResult.first] = benchmarkResult.second
             itemsLiveData.value = newList
         }
     }
 
     private fun onStopProcess() {
-        if (job?.isActive == true){
+        if (job?.isActive == true) {
             job?.cancel()
             calculationStartLiveData.value = false
         }
