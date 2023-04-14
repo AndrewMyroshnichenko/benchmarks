@@ -57,7 +57,7 @@ class BenchmarksViewModel(
                 async {
                     val time = benchmark.measureTime(testSize, item)
                     withContext(dispatchers.getMain()) {
-                        recreateItemsList(Pair(index, item.updateBenchmarkItem(time)))
+                        recreateItemsList(Pair(index, item.copy(durationOfOperation = time, isProgressBarRunning = false)))
                     }
                 }
             }.awaitAll()
